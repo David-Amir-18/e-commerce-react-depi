@@ -18,7 +18,8 @@ It lets users search for flights, book tickets, and manage their bookings all in
 ### Main Features (we plan to build)
 - Search flights by origin, destination, and date  
 - Book and cancel tickets
-- User accounts to view/manage bookings  
+- User accounts to view/edit bookings
+- Admin account to manage bookings  
 - A basic payment simulation 
 
 ### Future Enhancements (Nice-to-Have)
@@ -35,6 +36,7 @@ It lets users search for flights, book tickets, and manage their bookings all in
 - **Database**: MongoDB 
 - **Version Control**: Git + GitHub 
  
+
 
 
 
