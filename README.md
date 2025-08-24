@@ -1,4 +1,4 @@
-<div aling="center">
+<div align="center">
  
 # ✈️ Airline Booking WebApp
 
@@ -35,6 +35,7 @@ It lets users search for flights, book tickets, and manage their bookings all in
 - **Database**: MongoDB 
 - **Version Control**: Git + GitHub 
  
+
 
 
 
