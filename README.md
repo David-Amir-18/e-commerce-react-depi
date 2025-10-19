@@ -1,58 +1,16 @@
-<div align="center">
- 
-# ✈️ Airline Booking WebApp
+# React + Vite
 
-![Frontend](https://img.shields.io/badge/frontend-React-blue)
-![Backend](https://img.shields.io/badge/backend-Node.js-green)
-![Database](https://img.shields.io/badge/database-MongoDB-brightgreen)
+This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
 
-This is a web app our team is building to make booking flights easier.  
-It lets users search for flights, book tickets, and manage their bookings all in one place.
+Currently, two official plugins are available:
 
-</div>
+- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
+- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
 
----
+## React Compiler
 
-## Features
+The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
 
-### Main Features (we plan to build)
-- Search flights by origin, destination, and date  
-- Book and cancel tickets
-- User accounts to view/edit bookings
-- Admin account to manage bookings  
-- A basic payment simulation 
+## Expanding the ESLint configuration
 
-### Future Enhancements (Nice-to-Have)
--  Multi-language support  
--  Mobile-friendly responsive design  
--  Seat selection & check-in options  
--  E-ticket PDF generation
-
----
-
-##  Tech Stack
-- **Frontend**: React 
-- **Backend**: Node.js + Express  
-- **Database**: MongoDB 
-- **Version Control**: Git + GitHub 
-
-
-##  Team
-
-- [David-Amir-18](https://github.com/David-Amir-18) 
-- [Fares-Metwaly](https://github.com/Fares-Metwaly)   
-- [karimhammad11307](https://github.com/karimhammad11307)  
-- [Yousf167](https://github.com/Yousf167)   
-- [Kero2004-A](https://github.com/Kero2004-A) 
-- [rehabmohamed2](https://github.com/rehabmohamed2)
-
-### Our Drive
-- [E-commerce](https://drive.google.com/drive/folders/1toH7fXVbsZoyOfSLLY8pajN-iBx_bFp6?usp=sharing)
-
-
-
-
-
-
-
-
+If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
