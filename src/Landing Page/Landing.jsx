@@ -66,12 +66,12 @@ function Landing() {
     let date = new Date()
     date = `${getWeekDay()}, ${date.getDate()} ${getMonth()} ${date.getFullYear()}`
     return (
-        <div id='hero' className="video-background min-h-screen overflow-y-auto max-md:pt-10 md:pt-32 xl:pt-0 bg-white">
+        <div id='hero' className="video-background min-h-screen overflow-y-auto bg-white">
             <video className="fixed top-0 left-1/2 -translate-x-1/2 w-full max-w-[9200px] mx-auto h-full object-cover" autoPlay muted loop playsInline>
                 <source src={WideVideo} />
             </video>
-            <section className="relative z-20 flex items-center justify-center min-h-screen">
-                <div className="grid grid-cols-1 xl:grid-cols-[2fr_1fr] w-full gap-10">
+            <section className="relative z-10 flex items-center justify-center min-h-screen">
+                <div className="max-md:px-0 md: px-8 grid grid-cols-1 xl:grid-cols-[2fr_1fr] w-full gap-10">
                     {/*
                     Original Images 
                     <div className="flex flex-col items-center justify-end gap-5 mb-5 md:mb-0">

@@ -45,8 +45,8 @@ function Navbar() {
                 </>
             )}
 
-            <nav className="absolute top-0 z-50 w-full px-8 md:px-0 py-8 flex items-center justify-center">
-                <div className="container flex items-center justify-between">
+            <nav className="relative top-0 z-10 w-full py-8 flex items-center justify-center">
+                <div className="container px-8 flex items-center justify-between">
                     <Link className="text-white mr-auto md:mr-0 hover:cursor-pointer transition-colors hover:text-amber-400" to="/">LADEN</Link>
                     {!isMobile && (
                         <div className="text-white w-[65.5%] flex items-center justify-between">
