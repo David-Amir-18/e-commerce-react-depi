@@ -67,7 +67,7 @@ function Landing() {
     date = `${getWeekDay()}, ${date.getDate()} ${getMonth()} ${date.getFullYear()}`
     return (
         <div id='hero' className="video-background min-h-screen overflow-y-auto bg-white">
-            <video className="fixed top-0 left-1/2 -translate-x-1/2 w-full max-w-[9200px] mx-auto h-full object-cover" autoPlay muted loop playsInline>
+            <video className="fixed top-0 w-full mx-auto h-full object-cover" autoPlay muted loop playsInline>
                 <source src={WideVideo} />
             </video>
             <section className="relative z-10 flex items-center justify-center min-h-screen">
