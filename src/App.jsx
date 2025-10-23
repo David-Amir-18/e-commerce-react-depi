@@ -1,7 +1,7 @@
 import { Route, Routes } from "react-router-dom"
 import Landing from "./Landing Page/Landing"
 import Navbar from "./Navbar/Navbar"
-import SignIn from "./Signin"
+import SignIn from "./Login/Signin"
 
 function App() {
   return (
