@@ -25,7 +25,7 @@ function Navbar() {
                 <>
                     <button
                         onClick={toggleMenu}
-                        className={`flex items-center rounded-full absolute top-2 right-8 z-150 text-white transition-all duration-300 hover:bg-white hover:text-amber-500 ${isMenuOpen ? "bg-white text-amber-500" : ""}`}
+                        className={`flex items-center rounded-full top-6 right-8 z-150 text-white transition-all duration-300 hover:bg-white hover:text-amber-400 ${isMenuOpen ? "bg-white text-amber-400 fixed" : "absolute"}`}
                         aria-label="Toggle menu"
                     >
                         <div className={`w-[40px] h-[40px] flex flex-col items-center justify-center space-y-1 rounded-full transition-all duration-300 ${isMenuOpen ? "pb-[11.5147px]" : ""}`}>
@@ -50,9 +50,9 @@ function Navbar() {
                     {!isMobile && (
                         <div className="text-white w-[70%] flex items-center justify-between">
                             <div className="flex sm:w-[200px] lg:w-[300px] justify-between">
-                                <Link className="hover:cursor-pointer transition-colors hover:text-amber-400" to="/">Home</Link>
                                 <Link className="hover:cursor-pointer transition-colors hover:text-amber-400" to="/deals">Deals</Link>
-                                <Link className="hover:cursor-pointer transition-colors hover:text-amber-400" to="/support">Support</Link>
+                                <Link className="hover:cursor-pointer transition-colors hover:text-amber-400" to="/contact">Contact</Link>
+                                <Link className="hover:cursor-pointer transition-colors hover:text-amber-400" to="/about">About</Link>
                             </div>
 
                             <div className="flex items-center gap-4">

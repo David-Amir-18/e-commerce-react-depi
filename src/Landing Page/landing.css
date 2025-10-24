@@ -1,0 +1,55 @@
+@import "tailwindcss";
+
+section{
+      @apply container mx-auto min-h-[100vh] p-8 md:p-0;
+}
+
+.card{
+      @apply flex flex-col rounded-2xl;
+}
+.card-util1{
+      @apply bg-[#6161612c] backdrop-blur-sm text-white;
+}
+/* .card-util2{
+      @apply bg-[#6161612c] backdrop-blur-sm text-white;
+} */
+#hero .card > div button{
+      
+      @apply transition-all hover:text-amber-400 hover:bg-white rounded-full px-2 py-1 ;
+      background-color: rgba(255, 255, 255, 0.143);
+}
+.p1{
+      color: rgba(255, 255, 255, 0.683);
+      font-size: 20px
+}
+.innercard{
+      @apply my-1 rounded-lg p-3 backdrop-blur-md;
+      background-color: rgba(255, 255, 255, 0.137);
+      color: white;
+}
+.innercard p{
+      font-size: 12px !important;
+}
+
+/* .video-background {
+  position: relative;
+  width: 100%;
+  height: 100vh;
+  overflow: hidden;
+}
+
+.video-background video {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  min-width: 100%;
+  min-height: 100%;
+  object-fit: cover;
+  transform: translate(-50%, -50%);
+  z-index: -1;
+} */
+
+html {
+  scroll-behavior: smooth;
+}
+
