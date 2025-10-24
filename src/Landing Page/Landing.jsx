@@ -1,15 +1,16 @@
 // import Gevora from "./private assets/Gevora.jpg"
 // import korea from "./private assets/korea.jpg"
+// import globe from "./private assets/globe-regular-full.svg"
+import goldParticles from './private assets/gold-particle.1920x1080.mp4'
 import takeoff from "./private assets/takeoff-the-plane-svgrepo-com.svg"
 import landing from "./private assets/plane-landing.svg"
 import WideVideo from "./private assets/3042099-hd_1920_1080_30fps.mp4"
-// import globe from "./private assets/globe-regular-full.svg"
 import { faGem } from "@fortawesome/free-regular-svg-icons/faGem"
 import { faBellConcierge } from "@fortawesome/free-solid-svg-icons/faBellConcierge"
 import { faShieldHalved } from "@fortawesome/free-solid-svg-icons/faShieldHalved"
 import { faGlobe } from "@fortawesome/free-solid-svg-icons"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
-
+import "./landing.css";
 function getWeekDay(n = new Date().getDay()) {
     switch (n) {
         case 0:
@@ -64,11 +65,11 @@ function getMonth(n = new Date().getMonth()) {
 
 function Landing() {
     let date = new Date()
-    date = `${getWeekDay()}, ${date.getDate()} ${getMonth()} ${date.getFullYear()}`
+    date = `${getWeekDay()}, ${date.getDate()} ${getMonth()} ${date.getFullYear()}` 
     return (
-        <div id='hero' className="video-background min-h-screen overflow-y-auto bg-white">
-            <video className="fixed top-0 w-full mx-auto h-full object-cover" autoPlay muted loop playsInline>
-                <source src={WideVideo} />
+        <div id='hero' className="video-background min-h-screen overflow-y-auto bg-black">
+            <video className="fixed top-0 w-full mx-auto h-full object-cover blur-[50px]" autoPlay muted loop playsInline>
+                <source src={goldParticles} />
             </video>
             <section className="relative z-10 flex items-center justify-center min-h-screen">
                 <div className="py-25 max-md:px-0 md: px-8 grid grid-cols-1 xl:grid-cols-[2fr_1fr] w-full gap-10">
@@ -90,28 +91,28 @@ function Landing() {
                         <div className="card gap-5 h-full w-full justify-between">
                             <h1 className="text-5xl lg:text-6xl xl:text-8xl text-amber-300 leading-[1.3]">Experience Flight Beyond First Class</h1>
                             <div className="hidden md:grid grid-cols-1 md:grid-cols-2 gap-6 w-full">
-                                <div className="card card-util2 p-6">
+                                <div className="card card-util1 p-6">
                                     <div className="flex">
                                         <p className="text-amber-400 mr-2"><FontAwesomeIcon icon={faBellConcierge} /></p>
                                         <h3 className="text-amber-400">24/7 Concierge</h3>
                                     </div>
                                     <p>Personalized flight planning and on-demand scheduling.</p>
                                 </div>
-                                <div className="card card-util2 p-6">
+                                <div className="card card-util1 p-6">
                                     <div className="flex">
                                         <p className="text-amber-400 mr-2"><FontAwesomeIcon icon={faShieldHalved} /></p>
                                         <h3 className="text-amber-400">Executive Privacy</h3>
                                     </div>
                                     <p>Discreet, secure, and seamless travel for elite clients.</p>
                                 </div>
-                                <div className="card card-util2 p-6">
+                                <div className="card card-util1 p-6">
                                     <div className="flex">
                                         <p className="text-amber-400 mr-2"><FontAwesomeIcon icon={faGlobe} /></p>
                                         <h3 className="text-amber-400">Global Reach</h3>
                                     </div>
                                     <p>Private access to 1,200+ airports worldwide.</p>
                                 </div>
-                                <div className="card card-util2 p-6">
+                                <div className="card card-util1 p-6">
                                     <div className="flex">
                                         <p className="text-amber-400 mr-2"><FontAwesomeIcon icon={faGem} /></p>
                                         <h3 className="text-amber-400">Sky Luxury</h3>
@@ -158,7 +159,7 @@ function Landing() {
                                 <h2 className="text-lg">Economy</h2>
                             </div>
                         </div>
-                        <button className="mt-5 rounded-full transition-all bg-amber-400 hover:bg-amber-500 h-10">Search flights</button>
+                        <button className="mt-5 rounded-full transition-all border-2 text-amber-300 hover:bg-amber-300 hover:border-0 hover:text-black h-10">Search flights</button>
                     </div>
                 </div>
             </section>
