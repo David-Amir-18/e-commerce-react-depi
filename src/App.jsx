@@ -4,6 +4,7 @@ import Navbar from "./Navbar/Navbar"
 import SignIn from "./Login/Signin"
 import Register from "./Login/Register"
 import ForgetPass from "./Login/ForgetPass"
+import Footer from "./Footer/Footer"
 
 function App() {
   return (
@@ -16,6 +17,7 @@ function App() {
         <Route path="/register" element={<Register />}></Route>
         <Route path="/forgetpass" element={<ForgetPass />}></Route>
       </Routes>
+      <Footer />
     </>
   )
 }

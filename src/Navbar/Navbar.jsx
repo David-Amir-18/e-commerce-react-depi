@@ -5,7 +5,7 @@ import Overlay from "./Overlay";
 function Navbar() {
     const [isMenuOpen, setIsMenuOpen] = useState(false);
     const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
-    
+
     useEffect(() => {
         const handleResize = () => {
             setIsMobile(window.innerWidth < 768);
@@ -14,7 +14,7 @@ function Navbar() {
         window.addEventListener('resize', handleResize);
         return () => window.removeEventListener('resize', handleResize);
     }, []);
-    
+
     function toggleMenu() {
         setIsMenuOpen(!isMenuOpen);
     }
@@ -44,27 +44,52 @@ function Navbar() {
                 </>
             )}
 
-            <nav className="absolute top-0 z-20 w-full py-8 flex items-center justify-center">
-                <div className="container px-8 flex items-center justify-between">
-                    <Link className="text-white mr-auto md:mr-0 hover:cursor-pointer transition-colors hover:text-amber-400" to="/">LADEN</Link>
+            <nav className="absolute top-0 z-20 w-full py-6 md:py-8 backdrop-blur-md bg-black/30">
+                <div className="container mx-auto px-8 flex items-center justify-between">
+                    {/* Brand */}
+                    <Link
+                        to="/"
+                        className="text-2xl font-semibold tracking-wide text-amber-400 hover:text-amber-300 transition-colors"
+                    >
+                        LADEN
+                    </Link>
+
+                    {/* Desktop Menu */}
                     {!isMobile && (
-                        <div className="text-white w-[70%] flex items-center justify-between">
-                            <div className="flex sm:w-[200px] lg:w-[300px] justify-between">
-                                <Link className="hover:cursor-pointer transition-colors hover:text-amber-400" to="/deals">Deals</Link>
-                                <Link className="hover:cursor-pointer transition-colors hover:text-amber-400" to="/contact">Contact</Link>
-                                <Link className="hover:cursor-pointer transition-colors hover:text-amber-400" to="/about">About</Link>
+                        <div className="flex items-center justify-between w-[70%] text-sm text-white">
+                            {/* Nav Links */}
+                            <div className="flex sm:w-[220px] lg:w-[300px] justify-between">
+                                <Link
+                                    to="/deals"
+                                    className="hover:text-amber-400 transition-colors duration-200"
+                                >
+                                    Deals
+                                </Link>
+                                <Link
+                                    to="/contact"
+                                    className="hover:text-amber-400 transition-colors duration-200"
+                                >
+                                    Contact
+                                </Link>
+                                <Link
+                                    to="/about"
+                                    className="hover:text-amber-400 transition-colors duration-200"
+                                >
+                                    About
+                                </Link>
                             </div>
 
+                            {/* Right Side */}
                             <div className="flex items-center gap-4">
-                                <Link 
-                                    className="text-white hover:text-amber-400 transition-colors px-4 py-2" 
+                                <Link
                                     to="/signin"
+                                    className="px-4 py-2 hover:text-amber-400 transition-colors duration-200"
                                 >
                                     Sign In
                                 </Link>
-                                <Link 
-                                    className="bg-[#ffffff1e] px-4 py-2 border rounded-full transition-all hover:bg-amber-400 hover:border-amber-400" 
+                                <Link
                                     to="/booking"
+                                    className="px-5 py-2 rounded-full border border-amber-400 text-amber-400 hover:bg-amber-400 hover:text-black transition-all duration-300"
                                 >
                                     Manage my booking
                                 </Link>
