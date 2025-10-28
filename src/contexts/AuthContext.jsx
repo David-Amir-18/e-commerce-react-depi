@@ -60,6 +60,26 @@ export const AuthProvider = ({ children }) => {
     }
   };
 
+  // Google Login function
+  const googleLogin = async (credential) => {
+    try {
+      const response = await authAPI.googleLogin(credential);
+
+      if (response.success) {
+        tokenService.setToken(response.token);
+        tokenService.setUser(response.user);
+        setUser(response.user);
+        setIsAuthenticated(true);
+        return { success: true };
+      }
+    } catch (error) {
+      return {
+        success: false,
+        error: error.message || 'Google login failed. Please try again.'
+      };
+    }
+  };
+
   // Register function
   const register = async (userData) => {
     try {
@@ -126,6 +146,7 @@ export const AuthProvider = ({ children }) => {
     loading,
     isAuthenticated,
     login,
+    googleLogin,
     register,
     logout,
     updateUser,
