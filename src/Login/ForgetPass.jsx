@@ -1,14 +1,34 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { authAPI } from "../services/api";
 
 function ForgetPass() {
+  const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [isSubmitted, setIsSubmitted] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState("");
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log("Password reset requested for:", email);
-    setIsSubmitted(true);
+    setError("");
+    setLoading(true);
+
+    try {
+      const response = await authAPI.forgotPassword(email, "otp");
+
+      if (response.success) {
+        setIsSubmitted(true);
+        // Navigate to OTP verification page after 2 seconds
+        setTimeout(() => {
+          navigate("/verify-otp", { state: { email } });
+        }, 2000);
+      }
+    } catch (err) {
+      setError(err.message || "Failed to send reset instructions. Please try again.");
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -47,6 +67,13 @@ function ForgetPass() {
               </p>
             </div>
 
+            {/* Error Message */}
+            {error && (
+              <div className="mb-6 p-4 bg-red-500/10 border border-red-500/50 rounded-lg">
+                <p className="text-red-400 text-sm">{error}</p>
+              </div>
+            )}
+
             <form onSubmit={handleSubmit} className="space-y-6">
               <div>
                 <label
@@ -68,9 +95,10 @@ function ForgetPass() {
 
               <button
                 type="submit"
-                className="w-full bg-amber-400 text-gray-900 py-3 rounded-lg font-medium hover:bg-amber-500 transition-all duration-300 shadow-lg hover:shadow-amber-400/50"
+                disabled={loading}
+                className="w-full bg-amber-400 text-gray-900 py-3 rounded-lg font-medium hover:bg-amber-500 transition-all duration-300 shadow-lg hover:shadow-amber-400/50 disabled:opacity-50 disabled:cursor-not-allowed"
               >
-                Send Reset Link
+                {loading ? "Sending..." : "Send Reset Code"}
               </button>
 
               <Link
@@ -116,16 +144,17 @@ function ForgetPass() {
                 Check Your Email
               </h1>
               <p className="text-gray-300 text-sm mb-6">
-                We've sent a password reset link to
+                We've sent a 6-digit OTP code to
               </p>
               <p className="text-amber-400 font-medium mb-6">{email}</p>
+              <p className="text-gray-400 text-xs">Redirecting to verification page...</p>
             </div>
 
             <div className="space-y-4">
               <div className="bg-[#ffffff05] border border-[#ffffff20] rounded-lg p-4">
                 <p className="text-gray-300 text-sm leading-relaxed">
-                  Click the link in the email to reset your password. If you
-                  don't see the email, check your spam folder.
+                  Enter the code from your email on the next page. The code will expire in 10 minutes.
+                  If you don't see the email, check your spam folder.
                 </p>
               </div>
 
