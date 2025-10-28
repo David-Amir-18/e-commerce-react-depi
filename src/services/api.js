@@ -68,6 +68,14 @@ export const authAPI = {
     });
   },
 
+  // Google OAuth login
+  googleLogin: async (credential) => {
+    return apiCall('/auth/google', {
+      method: 'POST',
+      body: JSON.stringify({ credential }),
+    });
+  },
+
   // Forgot password
   forgotPassword: async (email, method = 'otp') => {
     return apiCall('/auth/forgot-password', {
