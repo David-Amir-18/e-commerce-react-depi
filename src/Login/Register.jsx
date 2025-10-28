@@ -1,5 +1,6 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
+import { useAuth } from "../contexts/AuthContext";
 import {
   Dialog,
   DialogContent,
@@ -11,11 +12,16 @@ import {
 import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area";
 
 function Register() {
+  const navigate = useNavigate();
+  const { register } = useAuth();
+
   const [fullName, setFullName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [agreeToTerms, setAgreeToTerms] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState("");
 
   // --- STYLING CONSTANTS (Using the flex-col layout to fix spacing) ---
   const dialogContentClasses = `
@@ -32,13 +38,47 @@ function Register() {
   const listClasses = "list-disc pl-6 space-y-1 text-gray-200";
   // --- END STYLING CONSTANTS ---
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
+    setError("");
+
+    // Validate passwords match
     if (password !== confirmPassword) {
-      console.log("Passwords don't match");
+      setError("Passwords don't match");
       return;
     }
-    console.log("Register with:", fullName, email, password);
+
+    // Validate password length
+    if (password.length < 6) {
+      setError("Password must be at least 6 characters");
+      return;
+    }
+
+    if (!agreeToTerms) {
+      setError("You must agree to the Terms of Service and Privacy Policy");
+      return;
+    }
+
+    setLoading(true);
+
+    try {
+      const result = await register({
+        name: fullName,
+        email,
+        password,
+      });
+
+      if (result.success) {
+        // Redirect to home page after successful registration
+        navigate("/", { replace: true });
+      } else {
+        setError(result.error);
+      }
+    } catch (err) {
+      setError("An unexpected error occurred. Please try again.");
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -58,6 +98,13 @@ function Register() {
             Join us for an exclusive private flight experience
           </p>
         </div>
+
+        {/* Error Message */}
+        {error && (
+          <div className="mb-6 p-4 bg-red-500/10 border border-red-500/50 rounded-lg">
+            <p className="text-red-400 text-sm">{error}</p>
+          </div>
+        )}
 
         <form onSubmit={handleSubmit} className="space-y-5">
           {/* Form Inputs (Full Name, Email, Password...) */}
@@ -363,9 +410,10 @@ function Register() {
 
           <button
             type="submit"
-            className="w-full bg-amber-400 text-gray-900 py-3 rounded-lg font-medium hover:bg-amber-500 transition-all duration-300 shadow-lg hover:shadow-amber-400/50"
+            disabled={loading}
+            className="w-full bg-amber-400 text-gray-900 py-3 rounded-lg font-medium hover:bg-amber-500 transition-all duration-300 shadow-lg hover:shadow-amber-400/50 disabled:opacity-50 disabled:cursor-not-allowed"
           >
-            Create Account
+            {loading ? "Creating Account..." : "Create Account"}
           </button>
         </form>
 
