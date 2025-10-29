@@ -10,6 +10,7 @@ import {
     DropdownMenuSeparator,
     DropdownMenuTrigger,
 } from "../components/ui/dropdown-menu";
+// import SearchBar from "@/Searchbars/SearchBar";
 
 function Navbar() {
     const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -80,7 +81,7 @@ function Navbar() {
                     >
                         LADEN
                     </Link>
-
+                    {/* <SearchBar/> */}
                     {/* Desktop Menu */}
                     {!isMobile && (
                         <div className="flex items-center justify-between w-[70%] text-sm text-white">
