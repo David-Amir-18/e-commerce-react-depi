@@ -6,6 +6,7 @@ import Navbar from "./Navbar/Navbar"
 import SignIn from "./Login/Signin"
 import Register from "./Login/Register"
 import ForgetPass from "./Login/ForgetPass"
+import Footer from "./Footer/Footer"
 import VerifyOTP from "./Login/VerifyOTP"
 import ResetPassword from "./Login/ResetPassword"
 import UserProfile from "./Profile/UserProfile"
@@ -30,6 +31,7 @@ function App() {
           {/* Protected Routes */}
           <Route path="/profile" element={<ProtectedRoute><UserProfile /></ProtectedRoute>}></Route>
         </Routes>
+        <Footer />
       </AuthProvider>
     </GoogleOAuthProvider>
   )

@@ -8,7 +8,7 @@ section{
       @apply flex flex-col rounded-2xl;
 }
 .card-util1{
-      @apply bg-[#6161612c] backdrop-blur-sm text-white;
+      @apply bg-[#7474742c] backdrop-blur-lg text-white;
 }
 /* .card-util2{
       @apply bg-[#6161612c] backdrop-blur-sm text-white;
