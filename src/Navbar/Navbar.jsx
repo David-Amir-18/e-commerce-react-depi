@@ -41,7 +41,7 @@ function Navbar() {
                     >
                         LADEN
                     </Link>
-
+                    {/* <SearchBar/> */}
                     {/* Desktop Menu */}
                     {!isMobile && (
                         <div className="flex items-center justify-between w-[70%] text-sm text-white">
