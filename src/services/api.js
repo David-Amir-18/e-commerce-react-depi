@@ -124,6 +124,17 @@ export const authAPI = {
   },
 };
 
+// Flight API Service
+export const flightAPI = {
+  // Search flights using Google Flights API (SerpAPI)
+  searchExternalFlights: async (searchParams) => {
+    const queryParams = new URLSearchParams(searchParams).toString();
+    return apiCall(`/flights/search/external?${queryParams}`, {
+      method: 'GET',
+    });
+  },
+};
+
 // Token Management
 export const tokenService = {
   setToken: (token) => {

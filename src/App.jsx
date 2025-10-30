@@ -1,6 +1,7 @@
 import { Route, Routes } from "react-router-dom"
 import { GoogleOAuthProvider } from "@react-oauth/google"
 import { AuthProvider } from "./contexts/AuthContext"
+import { FlightProvider } from "./contexts/FlightContext"
 import Landing from "./Landing Page/Landing"
 import Navbar from "./Navbar/Navbar"
 import SignIn from "./Login/Signin"
@@ -17,19 +18,21 @@ function App() {
   return (
     <GoogleOAuthProvider clientId={googleClientId}>
       <AuthProvider>
-        <Navbar />
-        <Routes>
-          <Route index element={<Landing />}></Route>
-          <Route path="/" element={<Landing />}></Route>
-          <Route path="/signin" element={<SignIn />}></Route>
-          <Route path="/register" element={<Register />}></Route>
-          <Route path="/forgetpass" element={<ForgetPass />}></Route>
-          <Route path="/verify-otp" element={<VerifyOTP />}></Route>
-          <Route path="/reset-password" element={<ResetPassword />}></Route>
+        <FlightProvider>
+          <Navbar />
+          <Routes>
+            <Route index element={<Landing />}></Route>
+            <Route path="/" element={<Landing />}></Route>
+            <Route path="/signin" element={<SignIn />}></Route>
+            <Route path="/register" element={<Register />}></Route>
+            <Route path="/forgetpass" element={<ForgetPass />}></Route>
+            <Route path="/verify-otp" element={<VerifyOTP />}></Route>
+            <Route path="/reset-password" element={<ResetPassword />}></Route>
 
-          {/* Protected Routes */}
-          <Route path="/profile" element={<ProtectedRoute><UserProfile /></ProtectedRoute>}></Route>
-        </Routes>
+            {/* Protected Routes */}
+            <Route path="/profile" element={<ProtectedRoute><UserProfile /></ProtectedRoute>}></Route>
+          </Routes>
+        </FlightProvider>
       </AuthProvider>
     </GoogleOAuthProvider>
   )
