@@ -8,11 +8,17 @@ function FlightTypeSelector({ selected, onChange }) {
       {types.map((type) => (
         <button
           key={type}
+          type="button" // Prevents the button from submitting the form
           onClick={() => onChange(type)}
-          className={`px-4 py-2 rounded-full text-sm font-semibold transition-all
+          
+          
+          className={`px-5 py-2 rounded-full text-sm font-semibold transition-all duration-200
             ${selected === type
-              ? "bg-yellow-500 text-gray-900 shadow-md"
-              : "bg-gray-100 text-gray-700 border border-gray-300 hover:bg-gray-200"
+              // ACTIVE STATE: (White background, Yellow text, Bold)
+              ? "bg-white text-yellow-400 font-bold shadow-lg"
+              
+              // INACTIVE STATE: (Dark background, Gray text, with hover)
+              : "bg-zinc-800 text-zinc-300 border border-zinc-700 hover:bg-zinc-700 hover:text-zinc-100"
             }`}
         >
           {type}
