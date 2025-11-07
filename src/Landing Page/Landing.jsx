@@ -129,8 +129,7 @@ function Landing() {
                     </div>
 
                     {/* <div className="card card-util1 p-8"> */}
-                     <SearchBar/>
-                        <button className="mt-5 rounded-full transition-all border-2 text-amber-300 hover:bg-amber-300 hover:border-0 hover:text-black h-10" onClick={() => navigate('/flights')}>Search flights</button>
+                      <SearchBar/>
                     {/* </div> */}
                 </div>
             </section>

@@ -22,12 +22,10 @@ const formatDuration = (minutes) => {
   return `${h}h ${m}m`;
 };
 
-// This is the main function that converts the API data
-export const transformSerpApiData = (serpApiData) => {
-  const flights = serpApiData.best_flights || serpApiData.other_flights || [];
-
+// Helper to transform a flight array
+const transformFlightArray = (flights) => {
   return flights.map((flight, index) => {
-    const firstLeg = flight.flights[0]; 
+    const firstLeg = flight.flights[0];
 
     return {
       id: flight.flight_token || index,
@@ -46,8 +44,19 @@ export const transformSerpApiData = (serpApiData) => {
       currency: "USD",
       departDate: formatDate(firstLeg.departure_airport.time),
       cabinClass: firstLeg.travel_class || "Economy",
-      available: 0, 
+      available: 0,
       class: firstLeg.travel_class || "Economy",
     };
   });
+};
+
+// This is the main function that converts the API data
+export const transformSerpApiData = (serpApiData) => {
+  const bestFlights = serpApiData.best_flights || [];
+  const otherFlights = serpApiData.other_flights || [];
+
+  return {
+    bestFlights: transformFlightArray(bestFlights),
+    otherFlights: transformFlightArray(otherFlights)
+  };
 };
