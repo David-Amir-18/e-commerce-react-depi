@@ -1,11 +1,14 @@
 import React, { useEffect, useState } from "react";
 import FlightTypeSelector from "./FlightTypeSelector";
-import { useNavigate } from "react-router-dom"; // --- 1. IMPORT useNavigate ---
+import { useNavigate } from "react-router-dom";
+import { Globe, Building2, Plane } from "lucide-react";
 
 function SearchBar() {
   const [flightType, setFlightType] = useState("Round Trip");
   const [from, setFrom] = useState("");
+  const [fromCode, setFromCode] = useState(""); // Store airport code
   const [to, setTo] = useState("");
+  const [toCode, setToCode] = useState(""); // Store airport code
   const [departDate, setDepartDate] = useState("");
   const [returnDate, setReturnDate] = useState("");
   const [destinations, setDestinations] = useState([]);
@@ -17,10 +20,14 @@ function SearchBar() {
 
   const navigate = useNavigate(); // --- 2. INITIALIZE useNavigate ---
 
-  // Swap function (no changes)
+  // Swap function
   const swapLocations = () => {
+    const tempCity = from;
+    const tempCode = fromCode;
     setFrom(to);
-    setTo(from);
+    setFromCode(toCode);
+    setTo(tempCity);
+    setToCode(tempCode);
   };
 
   // Fetch destinations from JSON
@@ -42,26 +49,63 @@ function SearchBar() {
     return () => document.removeEventListener("click", handleClickOutside);
   }, []);
 
-  // Handle input change
+  // Handle input change with smart filtering
   const handleInputChange = (e, type) => {
     const value = e.target.value;
     setActiveInput(type);
     if (type === "from") setFrom(value);
     else setTo(value);
-    if (value.trim().length > 0) {
-      const filtered = destinations.filter((item) =>
-        item.city.toLowerCase().includes(value.toLowerCase())
-      );
-      setSuggestions(filtered);
-    } else {
+
+    // Require at least 2 characters before searching
+    if (value.trim().length < 2) {
       setSuggestions([]);
+      return;
     }
+
+    const searchTerm = value.toLowerCase();
+
+    // Filter and prioritize results
+    const filtered = destinations.filter((item) =>
+      item.name && item.name.toLowerCase().includes(searchTerm) ||
+      (item.code && item.code.toLowerCase().includes(searchTerm))
+    );
+
+    // Sort by relevance and type priority
+    const sorted = filtered.sort((a, b) => {
+      // Priority order: country > city > airport
+      const typeOrder = { country: 0, city: 1, airport: 2 };
+      const typeDiff = typeOrder[a.type] - typeOrder[b.type];
+      if (typeDiff !== 0) return typeDiff;
+
+      // Then by exact code match
+      const aCodeMatch = a.code?.toLowerCase() === searchTerm;
+      const bCodeMatch = b.code?.toLowerCase() === searchTerm;
+      if (aCodeMatch && !bCodeMatch) return -1;
+      if (!aCodeMatch && bCodeMatch) return 1;
+
+      // Then by starts with
+      const aStartsWith = a.name? a.name.toLowerCase().startsWith(searchTerm) : "";
+      const bStartsWith = b.name ? b.name.toLowerCase().startsWith(searchTerm) : "";
+      if (aStartsWith && !bStartsWith) return -1;
+      if (!aStartsWith && bStartsWith) return 1;
+
+      // Finally alphabetically
+      return a.name? a.name.localeCompare(b.name) : "";
+    });
+
+    // Limit to 30 suggestions for performance
+    setSuggestions(sorted.slice(0, 30));
   };
 
   // Handle selecting a suggestion
-  const handleSelectSuggestion = (city, type) => {
-    if (type === "from") setFrom(city);
-    else setTo(city);
+  const handleSelectSuggestion = (destination, type) => {
+    if (type === "from") {
+      setFrom(destination.name);
+      setFromCode(destination.code);
+    } else {
+      setTo(destination.name);
+      setToCode(destination.code);
+    }
     setSuggestions([]);
   };
 
@@ -73,9 +117,16 @@ function SearchBar() {
       return;
     }
 
+    if (!fromCode || !toCode) {
+      alert("Please select a city or airport from the dropdown suggestions.");
+      return;
+    }
+
     const queryParams = new URLSearchParams({
-      origin: from.toUpperCase(),
-      destination: to.toUpperCase(),
+      origin: fromCode, // Use airport/city/country code
+      destination: toCode, // Use airport/city/country code
+      originName: from, // Display name
+      destinationName: to, // Display name
       date: departDate,
       passengers: adults + infants,
       cabin: "Economy", // Assuming a default, you can add state for this
@@ -111,7 +162,7 @@ function SearchBar() {
               </label>
               <input
                 type="text"
-                placeholder="Enter departure city"
+                placeholder="Type at least 2 letters..."
                 value={from}
                 onChange={(e) => handleInputChange(e, "from")}
                 onClick={(e) => {
@@ -131,13 +182,36 @@ function SearchBar() {
                       key={item.id}
                       onClick={(e) => {
                         e.stopPropagation();
-                        handleSelectSuggestion(item.city, "from");
+                        handleSelectSuggestion(item, "from");
                       }}
-                      className="px-4 py-3 hover:bg-amber-50/80 cursor-pointer border-b border-white/20 last:border-b-0"
+                      className="px-4 py-3 hover:bg-amber-50/80 cursor-pointer border-b border-white/20"
                     >
-                      <span className="text-gray-800 font-medium">{item.city}</span>
+                      <div className="flex items-center justify-between">
+                        <div className="flex items-center gap-2">
+                          {item.type === "country" ? (
+                            <Globe className="w-5 h-5 text-blue-600" />
+                          ) : item.type === "city" ? (
+                            <Building2 className="w-5 h-5 text-purple-600" />
+                          ) : (
+                            <Plane className="w-5 h-5 text-amber-600" />
+                          )}
+                          <div>
+                            <span className="text-gray-800 font-medium">{item.name}</span>
+                            <span className="text-gray-500 text-xs ml-2">
+                              {item.type === "country" ? "All cities & airports" :
+                               item.type === "city" ? "All airports" : item.code}
+                            </span>
+                          </div>
+                        </div>
+                        <span className="text-gray-400 text-xs">{item.country}</span>
+                      </div>
                     </div>
                   ))}
+                  {suggestions.length === 30 && (
+                    <div className="px-4 py-2 text-xs text-gray-500 bg-gray-50 text-center border-t border-gray-200">
+                      Showing top 30 results. Type more letters for specific results.
+                    </div>
+                  )}
                 </div>
               </div>
             )}
@@ -169,7 +243,7 @@ function SearchBar() {
               </label>
               <input
                 type="text"
-                placeholder="Enter destination city"
+                placeholder="Type at least 2 letters..."
                 value={to}
                 onChange={(e) => handleInputChange(e, "to")}
                 onClick={(e) => {
@@ -189,13 +263,36 @@ function SearchBar() {
                       key={item.id}
                       onClick={(e) => {
                         e.stopPropagation();
-                        handleSelectSuggestion(item.city, "to");
+                        handleSelectSuggestion(item, "to");
                       }}
-                      className="px-4 py-3 hover:bg-amber-50/80 cursor-pointer border-b border-white/20 last:border-b-0"
+                      className="px-4 py-3 hover:bg-amber-50/80 cursor-pointer border-b border-white/20"
                     >
-                      <span className="text-gray-800 font-medium">{item.city}</span>
+                      <div className="flex items-center justify-between">
+                        <div className="flex items-center gap-2">
+                          {item.type === "country" ? (
+                            <Globe className="w-5 h-5 text-blue-600" />
+                          ) : item.type === "city" ? (
+                            <Building2 className="w-5 h-5 text-purple-600" />
+                          ) : (
+                            <Plane className="w-5 h-5 text-amber-600" />
+                          )}
+                          <div>
+                            <span className="text-gray-800 font-medium">{item.name}</span>
+                            <span className="text-gray-500 text-xs ml-2">
+                              {item.type === "country" ? "All cities & airports" :
+                               item.type === "city" ? "All airports" : item.code}
+                            </span>
+                          </div>
+                        </div>
+                        <span className="text-gray-400 text-xs">{item.country}</span>
+                      </div>
                     </div>
                   ))}
+                  {suggestions.length === 30 && (
+                    <div className="px-4 py-2 text-xs text-gray-500 bg-gray-50 text-center border-t border-gray-200">
+                      Showing top 30 results. Type more letters for specific results.
+                    </div>
+                  )}
                 </div>
               </div>
             )}
@@ -308,9 +405,9 @@ function SearchBar() {
           </div>
 
           {/* --- 6. UNCOMMENT THE SEARCH BUTTON and make it type="submit" --- */}
-          {/* <button type="submit" className="bg-amber-400 text-gray-900 rounded-xl py-4 w-full hover:bg-amber-500 transition-all font-semibold shadow-lg text-lg">
+          <button type="submit" className="bg-amber-400 text-gray-900 rounded-xl py-4 w-full hover:bg-amber-500 transition-all font-semibold shadow-lg text-lg">
             Search Flights
-          </button> */}
+          </button>
         </div>
 
       </form> {/* --- 8. CLOSE THE <form> TAG --- */}

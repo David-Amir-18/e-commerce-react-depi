@@ -14,6 +14,8 @@ const useFlightSearch = () => {
   return {
     origin: searchParams.get("origin"),
     destination: searchParams.get("destination"),
+    originName: searchParams.get("originName"),
+    destinationName: searchParams.get("destinationName"),
     date: searchParams.get("date"),
     passengers: searchParams.get("passengers"),
     cabin: searchParams.get("cabin"),
@@ -24,14 +26,20 @@ const FlightResultsPage = () => {
   const criteria = useFlightSearch();
   const navigate = useNavigate();
 
-  // Get your INSECURE API key from .env
-  const SERPAPI_KEY = import.meta.env.VITE_SERPAPI_KEY;
+  // Get backend API URL from .env
+  const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
-  const [allFlights, setAllFlights] = useState([]);
-  const [filteredFlights, setFilteredFlights] = useState([]);
+  const [allFlights, setAllFlights] = useState({ bestFlights: [], otherFlights: [] });
+  const [filteredBestFlights, setFilteredBestFlights] = useState([]);
+  const [filteredOtherFlights, setFilteredOtherFlights] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [sortCriteria, setSortCriteria] = useState("recommended");
+
+  // Pagination state
+  const [visibleBestCount, setVisibleBestCount] = useState(5);
+  const [visibleOtherCount, setVisibleOtherCount] = useState(5);
+  const FLIGHTS_PER_PAGE = 5;
 
   const [filters, setFilters] = useState({
     stops: [],
@@ -46,41 +54,41 @@ const FlightResultsPage = () => {
     // If there's no origin in the URL, don't do anything
     if (!criteria.origin || !criteria.destination || !criteria.date) {
       setLoading(false);
-      setAllFlights([]); 
-      setFilteredFlights([]);
-      return; 
+      setAllFlights({ bestFlights: [], otherFlights: [] });
+      setFilteredBestFlights([]);
+      setFilteredOtherFlights([]);
+      return;
     }
     
     const fetchData = async () => {
       setLoading(true);
       setError(null);
 
-      // Build the full SerpApi URL
-      const serpApiUrl = new URL('https://serpapi.com/search.json');
-      serpApiUrl.searchParams.append('engine', 'google_flights');
-      serpApiUrl.searchParams.append('api_key', SERPAPI_KEY); // Your key is used here
-      serpApiUrl.searchParams.append('departure_id', criteria.origin);
-      serpApiUrl.searchParams.append('arrival_id', criteria.destination);
-      serpApiUrl.searchParams.append('outbound_date', criteria.date);
-      serpApiUrl.searchParams.append('currency', 'USD');
-      serpApiUrl.searchParams.append('hl', 'en');
-      
+      // Build the backend API URL
+      const backendUrl = new URL(`${API_BASE_URL}/flights/search`);
+      backendUrl.searchParams.append('origin', criteria.origin);
+      backendUrl.searchParams.append('destination', criteria.destination);
+      backendUrl.searchParams.append('date', criteria.date);
+      backendUrl.searchParams.append('passengers', criteria.passengers || '1');
+      backendUrl.searchParams.append('cabin', criteria.cabin || 'Economy');
+
       try {
-        // Call SerpApi directly using 'fetch'
-        const response = await fetch(serpApiUrl.toString());
-        
+        // Call backend API (which calls SerpAPI server-side)
+        const response = await fetch(backendUrl.toString());
+
         if (!response.ok) {
           const errData = await response.json();
-          throw new Error(errData.error || "Failed to fetch data from SerpApi.");
+          throw new Error(errData.message || "Failed to fetch flight data from server.");
         }
-        
-        const serpApiData = await response.json();
+
+        const responseData = await response.json();
+        const serpApiData = responseData.data;
 
         // Transform the data
         const cleanData = transformSerpApiData(serpApiData);
-        
+
         setAllFlights(cleanData);
-        
+
       } catch (err) {
         setError(err.message);
       } finally {
@@ -89,65 +97,89 @@ const FlightResultsPage = () => {
     };
 
     fetchData();
-    
-  }, [criteria.origin, criteria.destination, criteria.date, SERPAPI_KEY]); // Reruns if search criteria change
+
+  }, [criteria.origin, criteria.destination, criteria.date, API_BASE_URL]); // Reruns if search criteria change
 
   
   // Wrap 'applyFilters' in 'useCallback'
   const applyFilters = useCallback((currentFilters, currentSort) => {
-    let tempFlights = [...allFlights];
+    const filterFlightArray = (flights) => {
+      let tempFlights = [...flights];
 
-    // Filter by stops
-    if (currentFilters.stops.length > 0) {
-      tempFlights = tempFlights.filter((flight) => {
-        const flightStops =
-          flight.stops === 0 ? "Non-stop" : flight.stops === 1 ? "1 stop" : "2+ stops";
-        return currentFilters.stops.includes(flightStops);
-      });
-    }
-    // Filter by price range
-    tempFlights = tempFlights.filter(
-      (flight) =>
-        flight.price >= currentFilters.priceRange[0] &&
-        flight.price <= currentFilters.priceRange[1]
-    );
-    // Filter by airlines
-    if (currentFilters.airlines.length > 0) {
-      tempFlights = tempFlights.filter((flight) =>
-        currentFilters.airlines.includes(flight.airline)
+      // Filter by stops
+      if (currentFilters.stops.length > 0) {
+        tempFlights = tempFlights.filter((flight) => {
+          const flightStops =
+            flight.stops === 0 ? "Non-stop" : flight.stops === 1 ? "1 stop" : "2+ stops";
+          return currentFilters.stops.includes(flightStops);
+        });
+      }
+      // Filter by price range
+      tempFlights = tempFlights.filter(
+        (flight) =>
+          flight.price >= currentFilters.priceRange[0] &&
+          flight.price <= currentFilters.priceRange[1]
       );
-    }
-    // Filter by departure time
-    if (currentFilters.departureTime.length > 0) {
-      tempFlights = tempFlights.filter((flight) => {
-        const departureHour = parseInt(flight.departTime.split(":")[0]);
-        let timeCategory = "";
-        if (departureHour >= 6 && departureHour < 12) timeCategory = "morning";
-        else if (departureHour >= 12 && departureHour < 18) timeCategory = "afternoon";
-        else if (departureHour >= 18 && departureHour < 24) timeCategory = "evening";
-        else timeCategory = "night";
-        return currentFilters.departureTime.includes(timeCategory);
-      });
-    }
-    // Filter by cabin class
-    if (currentFilters.cabinClass.length > 0) {
-      tempFlights = tempFlights.filter((flight) =>
-        currentFilters.cabinClass.includes(flight.class)
-      );
-    }
-    // Sorting logic
-    if (currentSort === 'price-low-high') {
-      tempFlights.sort((a, b) => a.price - b.price);
-    } else if (currentSort === 'price-high-low') {
-      tempFlights.sort((a, b) => b.price - a.price);
-    }
-    setFilteredFlights(tempFlights);
+      // Filter by airlines
+      if (currentFilters.airlines.length > 0) {
+        tempFlights = tempFlights.filter((flight) =>
+          currentFilters.airlines.includes(flight.airline)
+        );
+      }
+      // Filter by departure time
+      if (currentFilters.departureTime.length > 0) {
+        tempFlights = tempFlights.filter((flight) => {
+          const departureHour = parseInt(flight.departTime.split(":")[0]);
+          let timeCategory = "";
+          if (departureHour >= 6 && departureHour < 12) timeCategory = "morning";
+          else if (departureHour >= 12 && departureHour < 18) timeCategory = "afternoon";
+          else if (departureHour >= 18 && departureHour < 24) timeCategory = "evening";
+          else timeCategory = "night";
+          return currentFilters.departureTime.includes(timeCategory);
+        });
+      }
+      // Filter by cabin class
+      if (currentFilters.cabinClass.length > 0) {
+        tempFlights = tempFlights.filter((flight) =>
+          currentFilters.cabinClass.includes(flight.class)
+        );
+      }
+      // Sorting logic
+      if (currentSort === 'price-low-high') {
+        tempFlights.sort((a, b) => a.price - b.price);
+      } else if (currentSort === 'price-high-low') {
+        tempFlights.sort((a, b) => b.price - a.price);
+      }
+      return tempFlights;
+    };
+
+    setFilteredBestFlights(filterFlightArray(allFlights.bestFlights));
+    setFilteredOtherFlights(filterFlightArray(allFlights.otherFlights));
   }, [allFlights]);
 
   // useEffect to apply filters when state changes
   useEffect(() => {
     applyFilters(filters, sortCriteria);
+    // Reset pagination when filters change
+    setVisibleBestCount(5);
+    setVisibleOtherCount(5);
   }, [filters, allFlights, sortCriteria, applyFilters]);
+
+  // Load More handlers
+  const loadMoreBestFlights = () => {
+    setVisibleBestCount(prev => prev + FLIGHTS_PER_PAGE);
+  };
+
+  const loadMoreOtherFlights = () => {
+    setVisibleOtherCount(prev => prev + FLIGHTS_PER_PAGE);
+  };
+
+  // Get visible flights
+  const visibleBestFlights = filteredBestFlights.slice(0, visibleBestCount);
+  const visibleOtherFlights = filteredOtherFlights.slice(0, visibleOtherCount);
+
+  const hasMoreBestFlights = visibleBestCount < filteredBestFlights.length;
+  const hasMoreOtherFlights = visibleOtherCount < filteredOtherFlights.length;
 
 
   // --- Render Logic ---
@@ -189,7 +221,7 @@ const FlightResultsPage = () => {
         <div className="flex flex-col lg:flex-row lg:justify-between lg:items-center mb-4">
           <div>
             <h1 className="text-3xl font-bold text-yellow-400 mb-1">
-              {criteria.origin || "Origin"} → {criteria.destination || "Destination"}
+              {criteria.originName || criteria.origin || "Origin"} → {criteria.destinationName || criteria.destination || "Destination"}
             </h1>
             <p className="text-zinc-400 text-sm">
               {criteria.date || "Select a Date"} · {criteria.passengers || 1} Passenger · {criteria.cabin || "Economy"}
@@ -228,22 +260,68 @@ const FlightResultsPage = () => {
 
           {/* RIGHT COLUMN: Results */}
           <div className="w-full lg:w-3/4 space-y-4">
-            
+
             {/* "X flights found" banner */}
             <div className="bg-zinc-900 border border-zinc-800 p-4 rounded-xl text-yellow-400 flex items-center">
               <Plane className="w-5 h-5 mr-3" />
               <span className="font-semibold">
-                {filteredFlights.length} flights found
+                {filteredBestFlights.length + filteredOtherFlights.length} flights found
               </span>
             </div>
 
-            {/* Flight Cards List */}
-            {filteredFlights.length > 0 ? (
-              filteredFlights.map((flight) => (
-                <FlightCard key={flight.id} {...flight} />
-              ))
-            ) : (
-              // This shows if no flights are found
+            {/* Best Flights Section */}
+            {filteredBestFlights.length > 0 && (
+              <>
+                <div className="bg-gradient-to-r from-yellow-500/20 to-amber-500/20 border border-yellow-500/30 p-3 rounded-xl">
+                  <h2 className="text-yellow-400 font-bold text-lg flex items-center">
+                    <span className="mr-2">⭐</span>
+                    Best Flights — Top picks based on price, duration, and convenience
+                  </h2>
+                  <p className="text-yellow-300/70 text-xs mt-1">
+                    Showing {visibleBestFlights.length} of {filteredBestFlights.length} flights
+                  </p>
+                </div>
+                {visibleBestFlights.map((flight) => (
+                  <FlightCard key={flight.id} {...flight} />
+                ))}
+                {hasMoreBestFlights && (
+                  <button
+                    onClick={loadMoreBestFlights}
+                    className="w-full bg-yellow-500/10 hover:bg-yellow-500/20 border border-yellow-500/30 text-yellow-400 py-3 rounded-xl font-semibold transition-all duration-200"
+                  >
+                    Load More Best Flights ({filteredBestFlights.length - visibleBestFlights.length} remaining)
+                  </button>
+                )}
+              </>
+            )}
+
+            {/* Other Flights Section */}
+            {filteredOtherFlights.length > 0 && (
+              <>
+                <div className="bg-zinc-800/50 border border-zinc-700 p-3 rounded-xl mt-6">
+                  <h2 className="text-zinc-300 font-bold text-lg">
+                    Other Available Flights
+                  </h2>
+                  <p className="text-zinc-400 text-xs mt-1">
+                    Showing {visibleOtherFlights.length} of {filteredOtherFlights.length} flights
+                  </p>
+                </div>
+                {visibleOtherFlights.map((flight) => (
+                  <FlightCard key={flight.id} {...flight} />
+                ))}
+                {hasMoreOtherFlights && (
+                  <button
+                    onClick={loadMoreOtherFlights}
+                    className="w-full bg-zinc-800/50 hover:bg-zinc-700/50 border border-zinc-600 text-zinc-300 py-3 rounded-xl font-semibold transition-all duration-200"
+                  >
+                    Load More Flights ({filteredOtherFlights.length - visibleOtherFlights.length} remaining)
+                  </button>
+                )}
+              </>
+            )}
+
+            {/* No Flights Found */}
+            {filteredBestFlights.length === 0 && filteredOtherFlights.length === 0 && (
               <div className="bg-zinc-900 border border-zinc-800 p-6 rounded-lg text-zinc-400">
                 <h3 className="text-lg font-semibold text-white mb-2">
                   0 flights found
