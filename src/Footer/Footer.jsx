@@ -5,7 +5,7 @@ function Footer() {
                   <div className=" container mx-auto px-8 grid md:grid-cols-3 gap-10 items-start">
                         {/* Brand + Description */}
                         <div>
-                              <h2 className="text-2xl font-semibold text-amber-400 tracking-wide mb-4">LADEN</h2>
+                              <h2 className="text-2xl font-semibold text-amber-400 tracking-wide mb-4">ELYSIUM</h2>
                               <p className="text-sm text-gray-400 leading-relaxed">
                                     Experience flight beyond first class — luxury, privacy, and global reach for those who expect more from air travel.
                               </p>
@@ -54,7 +54,7 @@ function Footer() {
 
                   {/* Bottom Bar */}
                   <div className="border-t border-[#ffffff1e] mt-12 pt-6 text-center text-xs text-gray-400">
-                        &copy; {new Date().getFullYear()} LADEN. All rights reserved.
+                        &copy; {new Date().getFullYear()} ELYSIUM. All rights reserved.
                   </div>
             </footer>
 

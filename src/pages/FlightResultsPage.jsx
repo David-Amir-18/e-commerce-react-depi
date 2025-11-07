@@ -7,6 +7,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from ".
 
 // Import your transformer
 import { transformSerpApiData } from "../services/dataTransformer"; 
+import SearchBar from "@/Searchbars/SearchBar";
 
 // Helper hook to read URL params
 const useFlightSearch = () => {
@@ -206,7 +207,7 @@ const FlightResultsPage = () => {
   }
 
   return (
-    <div className="min-h-screen bg-black text-white pt-24">
+    <div className="min-h-screen bg-black text-white">
       <div className="container mx-auto p-6">
         
         {/* "Back to Search" button */}
@@ -214,7 +215,7 @@ const FlightResultsPage = () => {
           onClick={() => navigate("/")}
           className="text-yellow-400 hover:text-yellow-300 mb-6 flex items-center space-x-2 text-sm"
         >
-          &larr; <span>Back to Search</span>
+          <span>&larr;</span><span>Back to Search</span>
         </button>
 
         {/* RESPONSIVE HEADER */}
@@ -247,7 +248,7 @@ const FlightResultsPage = () => {
         </div>
 
         {/* RESPONSIVE MAIN CONTENT AREA */}
-        <div className="flex flex-col lg:flex-row w-full lg:space-x-8 space-y-8 lg:space-y-0">
+        <div className="flex flex-col lg:flex-row w-full lg:space-x-8 space-y-8 lg:space-y-0 pb-25">
           
           {/* LEFT COLUMN: Filters */}
           <div className="w-full lg:w-1/4">
@@ -298,7 +299,7 @@ const FlightResultsPage = () => {
             {/* Other Flights Section */}
             {filteredOtherFlights.length > 0 && (
               <>
-                <div className="bg-zinc-800/50 border border-zinc-700 p-3 rounded-xl mt-6">
+                <div className="bg-zinc-800/50 border border-zinc-700 p-3 rounded-xl my-8">
                   <h2 className="text-zinc-300 font-bold text-lg">
                     Other Available Flights
                   </h2>
@@ -312,7 +313,7 @@ const FlightResultsPage = () => {
                 {hasMoreOtherFlights && (
                   <button
                     onClick={loadMoreOtherFlights}
-                    className="w-full bg-zinc-800/50 hover:bg-zinc-700/50 border border-zinc-600 text-zinc-300 py-3 rounded-xl font-semibold transition-all duration-200"
+                    className="w-full bg-zinc-800/50 hover:bg-zinc-700/50 border border-zinc-600 text-zinc-300 py-3 rounded-xl font-semibold transition-all duration-200 mb-8 mt-4"
                   >
                     Load More Flights ({filteredOtherFlights.length - visibleOtherFlights.length} remaining)
                   </button>
@@ -329,6 +330,7 @@ const FlightResultsPage = () => {
                 <p>No flights found for this search or your current filter settings.</p>
               </div>
             )}
+            <SearchBar />
           </div>
         </div>
       </div>
