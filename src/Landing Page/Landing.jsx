@@ -1,9 +1,11 @@
 // import Gevora from "./private assets/Gevora.jpg"
 // import korea from "./private assets/korea.jpg"
 // import globe from "./private assets/globe-regular-full.svg"
+
+import { useNavigate } from 'react-router-dom';
 import goldParticles from './private assets/gold-particle.1920x1080.mp4'
-import takeoff from "./private assets/takeoff-the-plane-svgrepo-com.svg"
-import landing from "./private assets/plane-landing.svg"
+// import takeoff from "./private assets/takeoff-the-plane-svgrepo-com.svg"
+// import landing from "./private assets/plane-landing.svg"
 import WideVideo from "./private assets/3042099-hd_1920_1080_30fps.mp4"
 import { faGem } from "@fortawesome/free-regular-svg-icons/faGem"
 import { faBellConcierge } from "@fortawesome/free-solid-svg-icons/faBellConcierge"
@@ -11,61 +13,64 @@ import { faShieldHalved } from "@fortawesome/free-solid-svg-icons/faShieldHalved
 import { faGlobe } from "@fortawesome/free-solid-svg-icons"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import "./landing.css";
-function getWeekDay(n = new Date().getDay()) {
-    switch (n) {
-        case 0:
-            return "Sun"
-        case 1:
-            return "Mon"
-        case 2:
-            return "Tue"
-        case 3:
-            return "Wed"
-        case 4:
-            return "Thu"
-        case 5:
-            return "Fri"
-        case 6:
-            return "Sat"
-        default:
-            return "Invalid day"
-    }
-}
+import SearchBar from '@/Searchbars/SearchBar';
 
-function getMonth(n = new Date().getMonth()) {
-    switch (n) {
-        case 0:
-            return "Jan"
-        case 1:
-            return "Feb"
-        case 2:
-            return "Mar"
-        case 3:
-            return "Apr"
-        case 4:
-            return "May"
-        case 5:
-            return "Jun"
-        case 6:
-            return "Jul"
-        case 7:
-            return "Aug"
-        case 8:
-            return "Sep"
-        case 9:
-            return "Oct"
-        case 10:
-            return "Nov"
-        case 11:
-            return "Dec"
-        default:
-            return "Invalid month"
-    }
-}
+// function getWeekDay(n = new Date().getDay()) {
+//     switch (n) {
+//         case 0:
+//             return "Sun"
+//         case 1:
+//             return "Mon"
+//         case 2:
+//             return "Tue"
+//         case 3:
+//             return "Wed"
+//         case 4:
+//             return "Thu"
+//         case 5:
+//             return "Fri"
+//         case 6:
+//             return "Sat"
+//         default:
+//             return "Invalid day"
+//     }
+// }
+
+// function getMonth(n = new Date().getMonth()) {
+//     switch (n) {
+//         case 0:
+//             return "Jan"
+//         case 1:
+//             return "Feb"
+//         case 2:
+//             return "Mar"
+//         case 3:
+//             return "Apr"
+//         case 4:
+//             return "May"
+//         case 5:
+//             return "Jun"
+//         case 6:
+//             return "Jul"
+//         case 7:
+//             return "Aug"
+//         case 8:
+//             return "Sep"
+//         case 9:
+//             return "Oct"
+//         case 10:
+//             return "Nov"
+//         case 11:
+//             return "Dec"
+//         default:
+//             return "Invalid month"
+//     }
+// }
 
 function Landing() {
-    let date = new Date()
-    date = `${getWeekDay()}, ${date.getDate()} ${getMonth()} ${date.getFullYear()}` 
+    const navigate = useNavigate();
+    // let date = new Date()
+    // date = `${getWeekDay()}, ${date.getDate()} ${getMonth()} ${date.getFullYear()}` 
     return (
         <div id='hero' className="video-background min-h-screen overflow-y-auto bg-black">
             <video className="fixed top-0 w-full mx-auto h-full object-cover blur-[50px]" autoPlay muted loop playsInline>
@@ -123,44 +128,9 @@ function Landing() {
                         </div>
                     </div>
 
-                    <div className="card card-util1 p-8">
-                        <h2 className="text-4xl">Plan Your Journey</h2>
-                        <p className="my-5 p1">Select your destinations and let us tailor every detail of your private flight.</p>
-                        <div className="mb-5 flex flex-wrap gap-3">
-                            <button className="">One way</button>
-                            <button className="">Round way</button>
-                            <button className="">Multi-city</button>
-                        </div>
-                        <div className="innercard flex items-center">
-                            <div className="flex flex-col border-r w-12">
-                                <img src={takeoff} width={25}></img>
-                                <h2 className=" font-extrabold">DXB</h2>
-                            </div>
-                            <h3 className="text-lg ml-3">Dubai, UAE</h3>
-                        </div>
-                        <div className="innercard flex items-center">
-                            <div className="flex flex-col border-r w-12">
-                                <img src={landing} width={25}></img>
-                                <h2 className=" font-extrabold">SEO</h2>
-                            </div>
-                            <h3 className="text-lg ml-3">Dubai, UAE</h3>
-                        </div>
-                        <div className="innercard">
-                            <p>Departure</p>
-                            <h3 className="text-xl">{date}</h3>
-                        </div>
-                        <div className="innercard grid grid-cols-2">
-                            <div className="border-r">
-                                <p>Passengers</p>
-                                <h2 className="text-lg">2 Adults</h2>
-                            </div>
-                            <div className="ml-3">
-                                <p>Class</p>
-                                <h2 className="text-lg">Economy</h2>
-                            </div>
-                        </div>
-                        <button className="mt-5 rounded-full transition-all border-2 text-amber-300 hover:bg-amber-300 hover:border-0 hover:text-black h-10">Search flights</button>
-                    </div>
+                    {/* <div className="card card-util1 p-8"> */}
+                      <SearchBar/>
+                    {/* </div> */}
                 </div>
             </section>
         </div>

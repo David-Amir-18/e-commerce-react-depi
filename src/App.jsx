@@ -1,16 +1,17 @@
-import { Route, Routes } from "react-router-dom"
-import { GoogleOAuthProvider } from "@react-oauth/google"
-import { AuthProvider } from "./contexts/AuthContext"
-import Landing from "./Landing Page/Landing"
-import Navbar from "./Navbar/Navbar"
-import SignIn from "./Login/Signin"
-import Register from "./Login/Register"
-import ForgetPass from "./Login/ForgetPass"
-import Footer from "./Footer/Footer"
-import VerifyOTP from "./Login/VerifyOTP"
-import ResetPassword from "./Login/ResetPassword"
-import UserProfile from "./Profile/UserProfile"
-import ProtectedRoute from "./components/ProtectedRoute"
+import { Route, Routes } from "react-router-dom";
+import { GoogleOAuthProvider } from "@react-oauth/google";
+import { AuthProvider } from "./contexts/AuthContext";
+import Landing from "./Landing Page/Landing";
+import Navbar from "./Navbar/Navbar";
+import SignIn from "./Login/Signin";
+import Register from "./Login/Register";
+import ForgetPass from "./Login/ForgetPass";
+import Footer from "./Footer/Footer";
+import VerifyOTP from "./Login/VerifyOTP";
+import ResetPassword from "./Login/ResetPassword";
+import UserProfile from "./Profile/UserProfile";
+import ProtectedRoute from "./components/ProtectedRoute";
+import FlightResultsPage from "./pages/FlightResultsPage";
 
 function App() {
   const googleClientId = import.meta.env.VITE_GOOGLE_CLIENT_ID;
@@ -27,14 +28,22 @@ function App() {
           <Route path="/forgetpass" element={<ForgetPass />}></Route>
           <Route path="/verify-otp" element={<VerifyOTP />}></Route>
           <Route path="/reset-password" element={<ResetPassword />}></Route>
+          <Route path="/flights" element={<FlightResultsPage />}></Route>
 
           {/* Protected Routes */}
-          <Route path="/profile" element={<ProtectedRoute><UserProfile /></ProtectedRoute>}></Route>
+          <Route
+            path="/profile"
+            element={
+              <ProtectedRoute>
+                <UserProfile />
+              </ProtectedRoute>
+            }
+          ></Route>
         </Routes>
         <Footer />
       </AuthProvider>
     </GoogleOAuthProvider>
-  )
+  );
 }
 
-export default App
+export default App;

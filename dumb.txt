@@ -1,0 +1,703 @@
+==============Landing before changes=================
+// import Gevora from "./private assets/Gevora.jpg"
+// import korea from "./private assets/korea.jpg"
+// import globe from "./private assets/globe-regular-full.svg"
+
+import { useNavigate } from 'react-router-dom';
+import goldParticles from './private assets/gold-particle.1920x1080.mp4'
+import takeoff from "./private assets/takeoff-the-plane-svgrepo-com.svg"
+import landing from "./private assets/plane-landing.svg"
+import WideVideo from "./private assets/3042099-hd_1920_1080_30fps.mp4"
+import { faGem } from "@fortawesome/free-regular-svg-icons/faGem"
+import { faBellConcierge } from "@fortawesome/free-solid-svg-icons/faBellConcierge"
+import { faShieldHalved } from "@fortawesome/free-solid-svg-icons/faShieldHalved"
+import { faGlobe } from "@fortawesome/free-solid-svg-icons"
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
+import "./landing.css";
+import SearchBar from '@/Searchbars/SearchBar';
+
+// function getWeekDay(n = new Date().getDay()) {
+//     switch (n) {
+//         case 0:
+//             return "Sun"
+//         case 1:
+//             return "Mon"
+//         case 2:
+//             return "Tue"
+//         case 3:
+//             return "Wed"
+//         case 4:
+//             return "Thu"
+//         case 5:
+//             return "Fri"
+//         case 6:
+//             return "Sat"
+//         default:
+//             return "Invalid day"
+//     }
+// }
+
+// function getMonth(n = new Date().getMonth()) {
+//     switch (n) {
+//         case 0:
+//             return "Jan"
+//         case 1:
+//             return "Feb"
+//         case 2:
+//             return "Mar"
+//         case 3:
+//             return "Apr"
+//         case 4:
+//             return "May"
+//         case 5:
+//             return "Jun"
+//         case 6:
+//             return "Jul"
+//         case 7:
+//             return "Aug"
+//         case 8:
+//             return "Sep"
+//         case 9:
+//             return "Oct"
+//         case 10:
+//             return "Nov"
+//         case 11:
+//             return "Dec"
+//         default:
+//             return "Invalid month"
+//     }
+// }
+
+function Landing() {
+    const navigate = useNavigate();
+    // let date = new Date()
+    // date = `${getWeekDay()}, ${date.getDate()} ${getMonth()} ${date.getFullYear()}` 
+    return (
+        <div id='hero' className="video-background min-h-screen overflow-y-auto bg-black">
+            <video className="fixed top-0 w-full mx-auto h-full object-cover blur-[50px]" autoPlay muted loop playsInline>
+                <source src={goldParticles} />
+            </video>
+            <section className="relative z-10 flex items-center justify-center min-h-screen">
+                <div className="py-25 max-md:px-0 md: px-8 grid grid-cols-1 xl:grid-cols-[2fr_1fr] w-full gap-10">
+                    {/*
+                    Original Images 
+                    <div className="flex flex-col items-center justify-end gap-5 mb-5 md:mb-0">
+                        <p className="text-[#ffffff] text-3xl">Popular Locations</p>
+                        <div className="flex">
+                            <div className="aspect-square w-[180px] mr-4">
+                                <img className="w-full h-full rounded-2xl" src={korea}></img>
+                            </div>
+                            <div className="aspect-square w-[180px]">
+                                <img className="w-full h-full rounded-2xl" src={Gevora}></img>
+                            </div>
+                        </div>
+                    </div> */
+                    }
+                    <div className="flex items-center">
+                        <div className="card gap-5 h-full w-full justify-between">
+                            <h1 className="text-5xl lg:text-6xl xl:text-8xl text-amber-300 leading-[1.3]">Experience Flight Beyond First Class</h1>
+                            <div className="hidden md:grid grid-cols-1 md:grid-cols-2 gap-6 w-full">
+                                <div className="card card-util1 p-6">
+                                    <div className="flex">
+                                        <p className="text-amber-400 mr-2"><FontAwesomeIcon icon={faBellConcierge} /></p>
+                                        <h3 className="text-amber-400">24/7 Concierge</h3>
+                                    </div>
+                                    <p>Personalized flight planning and on-demand scheduling.</p>
+                                </div>
+                                <div className="card card-util1 p-6">
+                                    <div className="flex">
+                                        <p className="text-amber-400 mr-2"><FontAwesomeIcon icon={faShieldHalved} /></p>
+                                        <h3 className="text-amber-400">Executive Privacy</h3>
+                                    </div>
+                                    <p>Discreet, secure, and seamless travel for elite clients.</p>
+                                </div>
+                                <div className="card card-util1 p-6">
+                                    <div className="flex">
+                                        <p className="text-amber-400 mr-2"><FontAwesomeIcon icon={faGlobe} /></p>
+                                        <h3 className="text-amber-400">Global Reach</h3>
+                                    </div>
+                                    <p>Private access to 1,200+ airports worldwide.</p>
+                                </div>
+                                <div className="card card-util1 p-6">
+                                    <div className="flex">
+                                        <p className="text-amber-400 mr-2"><FontAwesomeIcon icon={faGem} /></p>
+                                        <h3 className="text-amber-400">Sky Luxury</h3>
+                                    </div>
+                                    <p>Fine dining, private lounges, and bespoke in-flight comfort.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div className="card card-util1 p-8">
+                        <h2 className="text-4xl">Plan Your Journey</h2>
+                        <p className="my-5 p1">Select your destinations and let us tailor every detail of your private flight.</p>
+                        <div className="mb-5 flex flex-wrap gap-3">
+                            <button className="">One way</button>
+                            <button className="">Round way</button>
+                            <button className="">Multi-city</button>
+                        </div>
+                        <div className="innercard flex items-center">
+                            <div className="flex flex-col border-r w-12">
+                                <img src={takeoff} width={25}></img>
+                                <h2 className=" font-extrabold">DXB</h2>
+                            </div>
+                            <h3 className="text-lg ml-3">Dubai, UAE</h3>
+                        </div>
+                        <div className="innercard flex items-center">
+                            <div className="flex flex-col border-r w-12">
+                                <img src={landing} width={25}></img>
+                                <h2 className=" font-extrabold">SEO</h2>
+                            </div>
+                            <h3 className="text-lg ml-3">Dubai, UAE</h3>
+                        </div>
+                        <div className="innercard">
+                            <p>Departure</p>
+                            <h3 className="text-xl">2 Nov,</h3>
+                        </div>
+                        <div className="innercard grid grid-cols-2">
+                            <div className="border-r">
+                                <p>Passengers</p>
+                                <h2 className="text-lg">2 Adults</h2>
+                            </div>
+                            <div className="ml-3">
+                                <p>Class</p>
+                                <h2 className="text-lg">Economy</h2>
+                            </div>
+                        </div>
+                        <button className="mt-5 rounded-full transition-all border-2 text-amber-300 hover:bg-amber-300 hover:border-0 hover:text-black h-10" onClick={() => navigate('/flights')}>Search flights</button>
+                    </div>
+                </div>
+            </section>
+        </div>
+    );
+}
+
+export default Landing;
+=====================
+=====================
+=====================
+
+
+after API integration 
+// src/pages/FlightResultsPage.jsx
+import React, { useState, useEffect, useCallback } from "react";
+import { useSearchParams, useNavigate } from "react-router-dom";
+import FlightCard from "../components/FlightCard";
+import FilterSidebar from "../components/FilterSidebar";
+import { Plane } from "lucide-react";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "../components/ui/select";
+
+// Import your transformer
+import { transformSerpApiData } from "../services/dataTransformer"; 
+
+// Helper hook to read URL params
+const useFlightSearch = () => {
+  const [searchParams] = useSearchParams();
+  return {
+    origin: searchParams.get("origin"),
+    destination: searchParams.get("destination"),
+    date: searchParams.get("date"),
+    passengers: searchParams.get("passengers"),
+    cabin: searchParams.get("cabin"),
+  };
+};
+
+const FlightResultsPage = () => {
+  const criteria = useFlightSearch();
+  const navigate = useNavigate();
+
+  // Get your INSECURE API key from .env
+  const SERPAPI_KEY = import.meta.env.VITE_SERPAPI_KEY;
+
+  const [allFlights, setAllFlights] = useState([]);
+  const [filteredFlights, setFilteredFlights] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+  const [sortCriteria, setSortCriteria] = useState("recommended");
+
+  const [filters, setFilters] = useState({
+    stops: [],
+    priceRange: [0, 2000],
+    airlines: [],
+    departureTime: [],
+    cabinClass: [],
+  });
+
+  // useEffect to FETCH data on page load
+  useEffect(() => {
+    // If there's no origin in the URL, don't do anything
+    if (!criteria.origin || !criteria.destination || !criteria.date) {
+      setLoading(false);
+      setAllFlights([]); 
+      setFilteredFlights([]);
+      return; 
+    }
+    
+    const fetchData = async () => {
+      setLoading(true);
+      setError(null);
+
+      // Build the full SerpApi URL
+      const serpApiUrl = new URL('https://serpapi.com/search.json');
+      serpApiUrl.searchParams.append('engine', 'google_flights');
+      serpApiUrl.searchParams.append('api_key', SERPAPI_KEY); // Your key is used here
+      serpApiUrl.searchParams.append('departure_id', criteria.origin);
+      serpApiUrl.searchParams.append('arrival_id', criteria.destination);
+      serpApiUrl.searchParams.append('outbound_date', criteria.date);
+      serpApiUrl.searchParams.append('currency', 'USD');
+      serpApiUrl.searchParams.append('hl', 'en');
+      
+      try {
+        // Call SerpApi directly using 'fetch'
+        const response = await fetch(serpApiUrl.toString());
+        
+        if (!response.ok) {
+          const errData = await response.json();
+          throw new Error(errData.error || "Failed to fetch data from SerpApi.");
+        }
+        
+        const serpApiData = await response.json();
+
+        // Transform the data
+        const cleanData = transformSerpApiData(serpApiData);
+        
+        setAllFlights(cleanData);
+        
+      } catch (err) {
+        setError(err.message);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchData();
+    
+  }, [criteria.origin, criteria.destination, criteria.date, SERPAPI_KEY]); // Reruns if search criteria change
+
+  
+  // Wrap 'applyFilters' in 'useCallback'
+  const applyFilters = useCallback((currentFilters, currentSort) => {
+    let tempFlights = [...allFlights];
+
+    // Filter by stops
+    if (currentFilters.stops.length > 0) {
+      tempFlights = tempFlights.filter((flight) => {
+        const flightStops =
+          flight.stops === 0 ? "Non-stop" : flight.stops === 1 ? "1 stop" : "2+ stops";
+        return currentFilters.stops.includes(flightStops);
+      });
+    }
+    // Filter by price range
+    tempFlights = tempFlights.filter(
+      (flight) =>
+        flight.price >= currentFilters.priceRange[0] &&
+        flight.price <= currentFilters.priceRange[1]
+    );
+    // Filter by airlines
+    if (currentFilters.airlines.length > 0) {
+      tempFlights = tempFlights.filter((flight) =>
+        currentFilters.airlines.includes(flight.airline)
+      );
+    }
+    // Filter by departure time
+    if (currentFilters.departureTime.length > 0) {
+      tempFlights = tempFlights.filter((flight) => {
+        const departureHour = parseInt(flight.departTime.split(":")[0]);
+        let timeCategory = "";
+        if (departureHour >= 6 && departureHour < 12) timeCategory = "morning";
+        else if (departureHour >= 12 && departureHour < 18) timeCategory = "afternoon";
+        else if (departureHour >= 18 && departureHour < 24) timeCategory = "evening";
+        else timeCategory = "night";
+        return currentFilters.departureTime.includes(timeCategory);
+      });
+    }
+    // Filter by cabin class
+    if (currentFilters.cabinClass.length > 0) {
+      tempFlights = tempFlights.filter((flight) =>
+        currentFilters.cabinClass.includes(flight.class)
+      );
+    }
+    // Sorting logic
+    if (currentSort === 'price-low-high') {
+      tempFlights.sort((a, b) => a.price - b.price);
+    } else if (currentSort === 'price-high-low') {
+      tempFlights.sort((a, b) => b.price - a.price);
+    }
+    setFilteredFlights(tempFlights);
+  }, [allFlights]);
+
+  // useEffect to apply filters when state changes
+  useEffect(() => {
+    applyFilters(filters, sortCriteria);
+  }, [filters, allFlights, sortCriteria, applyFilters]);
+
+
+  // --- Render Logic ---
+  if (loading) {
+    return (
+      <div className="min-h-screen bg-black text-white flex items-center justify-center pt-24 text-2xl">
+        Loading flight results...
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div className="min-h-screen bg-black text-white flex flex-col items-center justify-center pt-24">
+        <p className="text-red-500 text-xl">Error: {error}</p>
+        <button 
+          onClick={() => navigate('/')} 
+          className="mt-4 text-yellow-400 hover:text-yellow-300"
+        >
+          Back to Search
+        </button>
+      </div>
+    );
+  }
+
+  return (
+    <div className="min-h-screen bg-black text-white pt-24">
+      <div className="container mx-auto p-6">
+        
+        {/* "Back to Search" button */}
+        <button
+          onClick={() => navigate("/")}
+          className="text-yellow-400 hover:text-yellow-300 mb-6 flex items-center space-x-2 text-sm"
+        >
+          &larr; <span>Back to Search</span>
+        </button>
+
+        {/* RESPONSIVE HEADER */}
+        <div className="flex flex-col lg:flex-row lg:justify-between lg:items-center mb-4">
+          <div>
+            <h1 className="text-3xl font-bold text-zinc-100 mb-1">
+              {criteria.origin || "Origin"} → {criteria.destination || "Destination"}
+            </h1>
+            <p className="text-zinc-400 text-sm">
+              {criteria.date || "Select a Date"} · {criteria.passengers || 1} Passenger · {criteria.cabin || "Economy"}
+            </p>
+          </div>
+          
+          <div className="flex items-center text-sm space-x-3 mt-4 lg:mt-0">
+            <span className="text-zinc-400">Sort by:</span>
+            <Select 
+              value={sortCriteria} 
+              onValueChange={setSortCriteria}
+            >
+              <SelectTrigger className="w-[200px] bg-zinc-900 border-zinc-800 text-zinc-100 focus:ring-yellow-400">
+                <SelectValue placeholder="Sort by" />
+              </SelectTrigger>
+              <SelectContent className="bg-zinc-900 border-zinc-800 text-zinc-100">
+                <SelectItem value="recommended">Recommended</SelectItem>
+                <SelectItem value="price-low-high">Price (Lower to Higher)</SelectItem>
+                <SelectItem value="price-high-low">Price (Higher to Lower)</SelectItem>
+              </SelectContent>
+            </Select>
+          </div>
+        </div>
+
+        {/* RESPONSIVE MAIN CONTENT AREA */}
+        <div className="flex flex-col lg:flex-row w-full lg:space-x-8 space-y-8 lg:space-y-0">
+          
+          {/* LEFT COLUMN: Filters */}
+          <div className="w-full lg:w-1/4">
+            <FilterSidebar
+              filters={filters}
+              setFilters={setFilters}
+              onApplyFilters={applyFilters} 
+            />
+          </div>
+
+          {/* RIGHT COLUMN: Results */}
+          <div className="w-full lg:w-3/4 space-y-4">
+            
+            {/* "X flights found" banner */}
+            <div className="bg-zinc-900 border border-zinc-800 p-4 rounded-xl text-yellow-400 flex items-center">
+              <Plane className="w-5 h-5 mr-3" />
+              <span className="font-semibold">
+                {filteredFlights.length} flights found
+              </span>
+            </div>
+
+            {/* Flight Cards List */}
+            {filteredFlights.length > 0 ? (
+              filteredFlights.map((flight) => (
+                <FlightCard key={flight.id} {...flight} />
+              ))
+            ) : (
+              // This shows if no flights are found
+              <div className="bg-zinc-900 border border-zinc-800 p-6 rounded-lg text-zinc-400">
+                <h3 className="text-lg font-semibold text-white mb-2">
+                  0 flights found
+                </h3>
+                <p>No flights found for this search or your current filter settings.</p>
+              </div>
+            )}
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export default FlightResultsPage;
+==============
+===============\
+================
+===============
+
+
+Before API integration
+import React, { useState, useEffect, useCallback } from "react";
+import { useSearchParams, useNavigate } from "react-router-dom";
+import FlightCard from "../components/FlightCard";
+import FilterSidebar from "../components/FilterSidebar";
+import { Plane } from "lucide-react";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "../components/ui/select";
+
+// Helper hook to read URL params
+const useFlightSearch = () => {
+  const [searchParams] = useSearchParams();
+  return {
+    origin: searchParams.get("origin"),
+    destination: searchParams.get("destination"),
+    date: searchParams.get("date"),
+    passengers: searchParams.get("passengers"),
+    cabin: searchParams.get("cabin"),
+  };
+};
+
+const FlightResultsPage = () => {
+  const criteria = useFlightSearch();
+  const navigate = useNavigate();
+
+  const [allFlights, setAllFlights] = useState([]);
+  const [filteredFlights, setFilteredFlights] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+  const [sortCriteria, setSortCriteria] = useState("recommended");
+
+  const [filters, setFilters] = useState({
+    stops: [],
+    priceRange: [0, 2000],
+    airlines: [],
+    departureTime: [],
+    cabinClass: [],
+  });
+
+  // --- useEffect to FETCH data on page load ---
+  useEffect(() => {
+    const fetchData = async () => {
+      setLoading(true);
+      setError(null);
+      try {
+        await new Promise((resolve) => setTimeout(resolve, 250));
+        
+        // Mock data 
+        const mockResults = [
+          { id: 1, airline: "Delta Airlines", flightNumber: "DL 1234", departTime: "08:30", arriveTime: "11:45", duration: "6h 15m", stops: 0, fromCode: "JFK", from: "New York", toCode: "LAX", to: "Los Angeles", price: 459, departDate: "Oct 25, 2025", cabinClass: "Economy", available: 12, class: "Economy" },
+          { id: 2, airline: "Emirates", flightNumber: "EK 3456", departTime: "19:30", arriveTime: "22:45", duration: "6h 15m", stops: 1, fromCode: "JFK", from: "New York", toCode: "LAX", to: "Los Angeles", price: 689, departDate: "Oct 25, 2025", cabinClass: "Business", available: 6, class: "Business" },
+          { id: 3, airline: "United Airlines", flightNumber: "UA 2468", departTime: "12:45", arriveTime: "18:30", duration: "8h 45m", stops: 2, fromCode: "JFK", from: "New York", toCode: "LAX", to: "Los Angeles", price: 299, departDate: "Oct 25, 2025", cabinClass: "Economy", available: 20, class: "Economy" }
+        ];
+        setAllFlights(mockResults);
+      } catch (err) {
+        setError(err.message);
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchData();
+  }, []); // Empty array ensures this runs only once on mount
+
+  
+  // Wrap 'applyFilters' in 'useCallback' to fix the ESLint warning
+  const applyFilters = useCallback((currentFilters, currentSort) => {
+    let tempFlights = [...allFlights];
+
+    // Filter by stops
+    if (currentFilters.stops.length > 0) {
+      tempFlights = tempFlights.filter((flight) => {
+        const flightStops =
+          flight.stops === 0
+            ? "Non-stop"
+            : flight.stops === 1
+            ? "1 stop"
+            : "2+ stops";
+        return currentFilters.stops.includes(flightStops);
+      });
+    }
+
+    // Filter by price range
+    tempFlights = tempFlights.filter(
+      (flight) =>
+        flight.price >= currentFilters.priceRange[0] &&
+        flight.price <= currentFilters.priceRange[1]
+    );
+
+    // Filter by airlines
+    if (currentFilters.airlines.length > 0) {
+      tempFlights = tempFlights.filter((flight) =>
+        currentFilters.airlines.includes(flight.airline)
+      );
+    }
+
+    // Filter by departure time
+    if (currentFilters.departureTime.length > 0) {
+      tempFlights = tempFlights.filter((flight) => {
+        const departureHour = parseInt(flight.departTime.split(":")[0]);
+        let timeCategory = "";
+        
+        if (departureHour >= 6 && departureHour < 12) {
+          timeCategory = "morning";
+        } else if (departureHour >= 12 && departureHour < 18) {
+          timeCategory = "afternoon";
+        } else if (departureHour >= 18 && departureHour < 24) {
+          timeCategory = "evening";
+        } else {
+          timeCategory = "night";
+        }
+        return currentFilters.departureTime.includes(timeCategory);
+      });
+    }
+
+    // Filter by cabin class
+    if (currentFilters.cabinClass.length > 0) {
+      tempFlights = tempFlights.filter((flight) =>
+        currentFilters.cabinClass.includes(flight.class)
+      );
+    }
+
+    // Sorting logic
+    if (currentSort === 'price-low-high') {
+      tempFlights.sort((a, b) => a.price - b.price);
+    } else if (currentSort === 'price-high-low') {
+      tempFlights.sort((a, b) => b.price - a.price);
+    }
+
+    setFilteredFlights(tempFlights);
+  }, [allFlights]); // Dependency array for useCallback
+
+  
+  // This useEffect now correctly depends on 'applyFilters'
+  useEffect(() => {
+    applyFilters(filters, sortCriteria);
+  }, [filters, allFlights, sortCriteria, applyFilters]);
+
+
+  // --- Render Logic ---
+  if (loading) {
+    return (
+      <div className="min-h-screen bg-black text-white flex items-center justify-center pt-24 text-2xl">
+        Loading flight results...
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div className="min-h-screen bg-black text-white flex flex-col items-center justify-center pt-24">
+        <p className="text-red-500 text-xl">Error: {error}</p>
+        <button 
+          onClick={() => navigate('/')} 
+          className="mt-4 text-yellow-400 hover:text-yellow-300"
+        >
+          Back to Search
+        </button>
+      </div>
+    );
+  }
+
+  return (
+    <div className="min-h-screen bg-black text-white pt-24">
+      <div className="container mx-auto p-6">
+        
+        {/* "Back to Search" button */}
+        <button
+          onClick={() => navigate("/")}
+          className="text-yellow-400 hover:text-yellow-300 mb-6 flex items-center space-x-2 text-sm"
+        >
+          &larr; <span>Back to Search</span>
+        </button>
+
+        {/* --- RESPONSIVE HEADER --- */}
+        {/* Stacks on mobile (flex-col), side-by-side on large (lg:flex-row) */}
+        <div className="flex flex-col lg:flex-row lg:justify-between lg:items-center mb-4">
+          <div>
+            <h1 className="text-3xl font-bold text-yellow-400 mb-1">
+              {criteria.origin || "Origin"} →{" "}
+              {criteria.destination || "Destination"}
+            </h1>
+            <p className="text-zinc-400 text-sm">
+              {criteria.date || "Select a Date"} · {criteria.passengers || 1} Passenger ·{" "}
+              {criteria.cabin || "Economy"}
+            </p>
+          </div>
+          
+          {/* Stacks below title on mobile (mt-4), moves to right on large (lg:mt-0) */}
+          <div className="flex items-center text-sm space-x-3 mt-4 lg:mt-0">
+            <span className="text-zinc-400">Sort by:</span>
+            <Select 
+              value={sortCriteria} 
+              onValueChange={setSortCriteria}
+            >
+              <SelectTrigger className="w-[200px] bg-zinc-900 border-zinc-800 text-zinc-100 focus:ring-yellow-400">
+                <SelectValue placeholder="Sort by" />
+              </SelectTrigger>
+              <SelectContent className="bg-zinc-900 border-zinc-800 text-zinc-100">
+                <SelectItem value="recommended">Recommended</SelectItem>
+                <SelectItem value="price-low-high">Price (Lower to Higher)</SelectItem>
+                <SelectItem value="price-high-low">Price (Higher to Lower)</SelectItem>
+              </SelectContent>
+            </Select>
+          </div>
+        </div>
+
+        {/* --- RESPONSIVE MAIN CONTENT AREA --- */}
+        {/* Stacks on mobile (flex-col) with a gap (space-y-8) */}
+        {/* Side-by-side on large (lg:flex-row) with a gap (lg:space-x-8) */}
+        <div className="flex flex-col lg:flex-row w-full lg:space-x-8 space-y-8 lg:space-y-0">
+          
+          {/* LEFT COLUMN: Filters */}
+          {/* Full width on mobile (w-full), 1/4 width on large (lg:w-1/4) */}
+          <div className="w-full lg:w-1/4">
+            <FilterSidebar
+              filters={filters}
+              setFilters={setFilters}
+              onApplyFilters={applyFilters} 
+            />
+          </div>
+
+          {/* RIGHT COLUMN: Results */}
+          {/* Full width on mobile (w-full), 3/4 width on large (lg:w-3/4) */}
+          <div className="w-full lg:w-3/4 space-y-4">
+            
+            {/* "X flights found" banner */}
+            <div className="bg-zinc-900 border border-zinc-800 p-4 rounded-xl text-yellow-400 flex items-center">
+              <Plane className="w-5 h-5 mr-3" />
+              <span className="font-semibold">
+                {filteredFlights.length} flights found
+              </span>
+            </div>
+
+            {/* Flight Cards List */}
+            {filteredFlights.length > 0 ? (
+              filteredFlights.map((flight) => (
+                <FlightCard key={flight.id} {...flight} />
+              ))
+            ) : (
+              <div className="bg-zinc-900 border border-zinc-800 p-6 rounded-lg text-zinc-400">
+                <h3 className="text-lg font-semibold text-white mb-2">
+                  0 flights found
+                </h3>
+                <p>No flights found for this search or your current filter settings.</p>
+              </div>
+            )}
+          </div>
+        </div>
+      </div>
+    </div> 
+  );
+};
+
+export default FlightResultsPage;
