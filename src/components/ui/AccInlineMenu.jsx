@@ -15,7 +15,7 @@ export default function AccInlineMenu() {
   };
 
   return (
-    <div className="flex flex-col md:hidden bg-slate-800 text-white rounded-lg p-3 space-y-2">
+    <div className="flex flex-col md:hidden backdrop-blur-2xl bg-gray-500/30 text-white rounded-lg p-3 space-y-2">
       <UserMenuContent
         user={user}
         onProfileClick={handleProfileClick}

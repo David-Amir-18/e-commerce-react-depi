@@ -32,7 +32,7 @@ export default function AccDropDown() {
       </DropdownMenuTrigger>
       <DropdownMenuContent
         align="end"
-        className="w-56 blur-lg border-amber-400/20 text-white"
+        className="w-56 backdrop-blur-lg bg-transparent border-amber-400/20 text-white"
       >
         <UserMenuContent
           user={user}
