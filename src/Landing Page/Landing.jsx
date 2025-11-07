@@ -73,7 +73,7 @@ function Landing() {
     // date = `${getWeekDay()}, ${date.getDate()} ${getMonth()} ${date.getFullYear()}` 
     return (
         <div id='hero' className="video-background min-h-screen overflow-y-auto bg-black">
-            <video className="fixed top-0 w-full mx-auto h-full object-cover blur-[50px]" autoPlay muted loop playsInline>
+            <video className="fixed rotate-90 md:absolute md:rotate-0 top-0 w-[100vw] h-[100vh]  object-cover blur-[50px]" autoPlay muted loop playsInline>
                 <source src={goldParticles} />
             </video>
             <section className="relative z-10 flex items-center justify-center min-h-screen">
