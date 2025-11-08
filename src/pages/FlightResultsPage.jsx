@@ -286,7 +286,11 @@ const FlightResultsPage = () => {
                   </p>
                 </div>
                 {visibleBestFlights.map((flight) => (
-                  <FlightCard key={flight.id} {...flight} />
+                  <FlightCard
+                    key={flight.id}
+                    {...flight}
+                    onSelect={() => navigate('/passenger-details', { state: { flight, searchCriteria: criteria } })}
+                  />
                 ))}
                 {hasMoreBestFlights && (
                   <button
@@ -311,7 +315,11 @@ const FlightResultsPage = () => {
                   </p>
                 </div>
                 {visibleOtherFlights.map((flight) => (
-                  <FlightCard key={flight.id} {...flight} />
+                  <FlightCard
+                    key={flight.id}
+                    {...flight}
+                    onSelect={() => navigate('/passenger-details', { state: { flight, searchCriteria: criteria } })}
+                  />
                 ))}
                 {hasMoreOtherFlights && (
                   <button
