@@ -2,7 +2,7 @@
 // import korea from "./private assets/korea.jpg"
 // import globe from "./private assets/globe-regular-full.svg"
 
-import { useNavigate } from 'react-router-dom';
+// import { useNavigate } from 'react-router-dom';
 import goldParticles from './private assets/gold-particle.1920x1080.mp4'
 // import takeoff from "./private assets/takeoff-the-plane-svgrepo-com.svg"
 // import landing from "./private assets/plane-landing.svg"
@@ -68,7 +68,7 @@ import SearchBar from '@/Searchbars/SearchBar';
 // }
 
 function Landing() {
-    const navigate = useNavigate();
+    // const navigate = useNavigate();
     // let date = new Date()
     // date = `${getWeekDay()}, ${date.getDate()} ${getMonth()} ${date.getFullYear()}` 
     return (
@@ -77,7 +77,7 @@ function Landing() {
                 <source src={goldParticles} />
             </video>
             <section className="relative z-10 flex items-center justify-center min-h-screen">
-                <div className="py-25 max-md:px-0 md: px-8 grid grid-cols-1 xl:grid-cols-[2fr_1fr] w-full gap-10">
+                <div className="py-25 max-md:px-0 md: px-8 grid grid-cols-1 lg:grid-cols-[2fr_1fr] w-full gap-10">
                     {/*
                     Original Images 
                     <div className="flex flex-col items-center justify-end gap-5 mb-5 md:mb-0">
@@ -94,7 +94,7 @@ function Landing() {
                     }
                     <div className="flex items-center">
                         <div className="card gap-5 h-full w-full justify-between">
-                            <h1 className="text-5xl lg:text-6xl xl:text-8xl text-amber-300 leading-[1.3]">Experience Flight Beyond First Class</h1>
+                            <h1 className="text-5xl lg:text-7xl xl:text-8xl text-amber-300 leading-[1.3]">Experience Flight Beyond First Class</h1>
                             <div className="hidden md:grid grid-cols-1 md:grid-cols-2 gap-6 w-full">
                                 <div className="card card-util1 p-6">
                                     <div className="flex">

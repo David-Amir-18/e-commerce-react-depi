@@ -49,6 +49,9 @@ const FlightResultsPage = () => {
     departureTime: [],
     cabinClass: [],
   });
+  
+  // Scroll to the top of the page on load
+  useEffect(() => window.scrollTo(0, 0), [])
 
   // useEffect to FETCH data on page load
   useEffect(() => {

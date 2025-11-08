@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 function Footer() {
       return (
             <footer className="relative z-10 bg-[#000000ff] text-white py-20  border-t border-[#ffffff1e]">
-                  <div className=" container mx-auto px-8 grid md:grid-cols-3 gap-10 items-start">
+                  <div className=" container mx-auto px-8 grid md:grid-cols-2 gap-10 items-start">
                         {/* Brand + Description */}
                         <div>
                               <h2 className="text-2xl font-semibold text-amber-400 tracking-wide mb-4">ELYSIUM</h2>
@@ -33,7 +33,7 @@ function Footer() {
                         </div>
 
                         {/* Newsletter / Social */}
-                        <div className="flex flex-col items-start">
+                        {/* <div className="flex flex-col items-start">
                               <h3 className="text-amber-400 font-semibold mb-3">Stay Connected</h3>
                               <p className="text-sm text-gray-400 mb-4">Get the latest offers and luxury flight insights.</p>
                               <form className="flex w-full max-w-xs">
@@ -49,7 +49,7 @@ function Footer() {
                                           Subscribe
                                     </button>
                               </form>
-                        </div>
+                        </div> */}
                   </div>
 
                   {/* Bottom Bar */}

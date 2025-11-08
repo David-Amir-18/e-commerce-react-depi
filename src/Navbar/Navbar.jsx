@@ -44,7 +44,7 @@ function Navbar() {
                 </>
             )}
 
-            <nav className={`w-full py-5 ${configStyle}`}>
+            <nav className={`w-full py-5 ${configStyle} px-10`}>
                 <div className="relative h-full top-0 z-20 container mx-auto px-6 py-4 flex items-center justify-between backdrop-blur-md bg-gray-950/30 rounded-full border border-amber-300/30">
                     {/* Brand */}
                     <Link
