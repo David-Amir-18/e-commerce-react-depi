@@ -8,6 +8,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from ".
 // Import your transformer
 import { transformSerpApiData } from "../services/dataTransformer"; 
 import SearchBar from "@/Searchbars/SearchBar";
+import FlightSearchDropDown from "@/components/ui/FlightSearchDropDown";
 
 // Helper hook to read URL params
 const useFlightSearch = () => {
@@ -233,6 +234,7 @@ const FlightResultsPage = () => {
           </div>
           
           <div className="flex items-center text-sm space-x-3 mt-4 lg:mt-0">
+            <FlightSearchDropDown />
             <span className="text-zinc-400">Sort by:</span>
             <Select 
               value={sortCriteria} 

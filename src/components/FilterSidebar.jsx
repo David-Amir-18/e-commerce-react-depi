@@ -66,7 +66,7 @@ const FilterSidebar = ({ filters, setFilters, onApplyFilters }) => {
 
 
   return (
-    <aside className="bg-zinc-900 rounded-xl border border-zinc-800 p-6 w-full lg:sticky top-24">
+    <aside className="bg-zinc-900 rounded-xl border border-zinc-800 p-6 w-full lg:sticky top-[5vh]">
       <div className="space-y-6">
         {/* Filter Results Header */}
         <div>

@@ -12,13 +12,13 @@ function FlightTypeSelector({ selected, onChange }) {
           onClick={() => onChange(type)}
           
           
-          className={`px-5 py-2 rounded-full text-sm font-semibold transition-all duration-200
+          className={`px-5 py-2 rounded-full text-sm font-semibold transition-all duration-200 hover:cursor-pointer
             ${selected === type
-              // ACTIVE STATE: (White background, Yellow text, Bold)
-              ? "bg-white text-yellow-400 font-bold shadow-lg"
+              // ACTIVE STATE: (White background, amber text, Bold)
+              ? "bg-black text-amber-400 font-bold shadow-lg border border-amber-400"
               
               // INACTIVE STATE: (Dark background, Gray text, with hover)
-              : "bg-zinc-800 text-zinc-300 border border-zinc-700 hover:bg-zinc-700 hover:text-zinc-100"
+              : "bg-white/10 text-zinc-300 border border-zinc-700 hover:bg-zinc-700 hover:text-zinc-100"
             }`}
         >
           {type}

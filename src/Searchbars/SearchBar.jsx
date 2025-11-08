@@ -156,7 +156,7 @@ function SearchBar() {
         <div className="space-y-4">
           {/* From Input */}
           <div className="relative">
-            <div className="bg-white/20 rounded-xl p-4 border border-white/30">
+            <div className="bg-white/5 rounded-xl p-4 border border-white/30">
               <label className="block text-sm font-semibold mb-2 text-white/90">
                 From
               </label>
@@ -222,7 +222,7 @@ function SearchBar() {
             <button
               type="button" // Use type="button" to prevent form submission
               onClick={swapLocations}
-              className="p-4 rounded-full bg-white/20 hover:bg-white/30 text-white border border-white/30 transition-all shadow-lg active:scale-95 backdrop-blur-sm"
+              className="p-4 rounded-full bg-white/10 hover:bg-white/20 text-white border border-white/30 transition-all shadow-lg active:scale-95 backdrop-blur-sm"
             >
               <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path
@@ -237,7 +237,7 @@ function SearchBar() {
 
           {/* To Input */}
           <div className="relative">
-            <div className="bg-white/20 rounded-xl p-4 border border-white/30">
+            <div className="bg-white/5 rounded-xl p-4 border border-white/30">
               <label className="block text-sm font-semibold mb-2 text-white/90">
                 To
               </label>
@@ -304,7 +304,7 @@ function SearchBar() {
               flightType === "Round Trip" ? "grid-cols-2" : "grid-cols-1"
             } gap-3 relative z-10`}
           >
-            <div className="bg-white/20 rounded-xl p-4 border border-white/30">
+            <div className="bg-white/5 rounded-xl p-4 border border-white/30">
               <label className="block text-sm font-semibold mb-2 text-white/90">
                 Departure
               </label>
@@ -318,7 +318,7 @@ function SearchBar() {
             </div>
 
             {flightType === "Round Trip" && (
-              <div className="bg-white/20 rounded-xl p-4 border border-white/30">
+              <div className="bg-white/5 rounded-xl p-4 border border-white/30">
                 <label className="block text-sm font-semibold mb-2 text-white/90">
                   Return
                 </label>
@@ -336,7 +336,7 @@ function SearchBar() {
           {/* Travellers */}
           <div className="relative">
             <div
-              className="bg-white/20 rounded-xl p-4 border border-white/30 cursor-pointer"
+              className="bg-white/5 rounded-xl p-4 border border-white/30 cursor-pointer"
               onClick={(e) => {
                 e.stopPropagation();
                 setTravellersOpen(!travellersOpen);
