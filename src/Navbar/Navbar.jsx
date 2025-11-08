@@ -10,7 +10,7 @@ import BurgerMenu from "@/components/ui/BurgerMenu";
 function Navbar() {
     const [isMenuOpen, setIsMenuOpen] = useState(false);
     const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
-    const { isAuthenticated } = useAuth();
+    const { isAuthenticated, user } = useAuth();
 
     useEffect(() => {
         const handleResize = () => {
@@ -65,6 +65,14 @@ function Navbar() {
                                 >
                                     About
                                 </Link>
+                                {isAuthenticated && user?.role === 'admin' && (
+                                    <Link
+                                        to="/admin/dashboard"
+                                        className="hover:text-amber-400 transition-colors duration-200 font-semibold"
+                                    >
+                                        Admin
+                                    </Link>
+                                )}
                             </div>
 
                             {/* Right Side */}
