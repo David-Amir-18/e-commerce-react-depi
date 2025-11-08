@@ -12,6 +12,12 @@ import ResetPassword from "./Login/ResetPassword";
 import UserProfile from "./Profile/UserProfile";
 import ProtectedRoute from "./components/ProtectedRoute";
 import FlightResultsPage from "./pages/FlightResultsPage";
+import PassengerDetailsPage from "./pages/PassengerDetailsPage";
+import BookingOptionsPage from "./pages/BookingOptionsPage";
+import SeatSelectionPage from "./pages/SeatSelectionPage";
+import FoodSelectionPage from "./pages/FoodSelectionPage";
+import BaggageSelectionPage from "./pages/BaggageSelectionPage";
+import PaymentPage from "./pages/PaymentPage";
 
 function App() {
   const googleClientId = import.meta.env.VITE_GOOGLE_CLIENT_ID;
@@ -29,6 +35,12 @@ function App() {
           <Route path="/verify-otp" element={<VerifyOTP />}></Route>
           <Route path="/reset-password" element={<ResetPassword />}></Route>
           <Route path="/flights" element={<FlightResultsPage />}></Route>
+          <Route path="/passenger-details" element={<PassengerDetailsPage />}></Route>
+          <Route path="/booking/options" element={<BookingOptionsPage />}></Route>
+          <Route path="/booking/seat-selection" element={<SeatSelectionPage />}></Route>
+          <Route path="/booking/food-selection" element={<FoodSelectionPage />}></Route>
+          <Route path="/booking/baggage-selection" element={<BaggageSelectionPage />}></Route>
+          <Route path="/booking/payment" element={<PaymentPage />}></Route>
 
           {/* Protected Routes */}
           <Route
