@@ -11,7 +11,7 @@ import SearchBar from "@/Searchbars/SearchBar";
 function Navbar() {
     const [isMenuOpen, setIsMenuOpen] = useState(false);
     const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
-    const { isAuthenticated } = useAuth();
+    const { isAuthenticated, user } = useAuth();
     const location = useLocation()
     const [configStyle, setConfigStyle] = useState();
     useEffect(() => {
@@ -77,6 +77,14 @@ function Navbar() {
                                 >
                                     About
                                 </Link>
+                                {isAuthenticated && user?.role === 'admin' && (
+                                    <Link
+                                        to="/admin/dashboard"
+                                        className="hover:text-amber-400 transition-colors duration-200 font-semibold"
+                                    >
+                                        Admin
+                                    </Link>
+                                )}
                             </div>
                             {/* Right Side */}
                             <div className="flex items-center gap-4">
