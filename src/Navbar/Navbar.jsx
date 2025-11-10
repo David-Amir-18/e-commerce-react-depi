@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { useState, useEffect } from "react";
 import Overlay from "./Overlay";
 import { useAuth } from "../contexts/AuthContext";
@@ -6,12 +6,14 @@ import ManageMyBooking from "@/components/ui/ManageMyBooking";
 import SignInBtn from "@/components/ui/SignInBtn";
 import AccDropDown from "@/components/ui/AccDropDown";
 import BurgerMenu from "@/components/ui/BurgerMenu";
+import SearchBar from "@/Searchbars/SearchBar";
 
 function Navbar() {
     const [isMenuOpen, setIsMenuOpen] = useState(false);
     const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
     const { isAuthenticated, user } = useAuth();
-
+    const location = useLocation()
+    const [configStyle, setConfigStyle] = useState();
     useEffect(() => {
         const handleResize = () => {
             setIsMobile(window.innerWidth < 768);
@@ -21,25 +23,35 @@ function Navbar() {
         return () => window.removeEventListener('resize', handleResize);
     }, []);
 
+    useEffect(() => {
+        let exclusionList = ['/signin', "profile"]
+        setConfigStyle(exclusionList.indexOf(location.pathname) == -1
+            ? "relative bg-black"
+            : "absolute bg-black/0");
+    }, [location.pathname]);
+
+    useEffect(() => {
+        console.log('ConfigStyle changed to:', configStyle);
+    }, [configStyle]);
 
 
     return (
         <>
             {isMobile && (
                 <>
-                    <BurgerMenu isMenuOpen={isMenuOpen} setIsMenuOpen={setIsMenuOpen}/>
+                    <BurgerMenu isMenuOpen={isMenuOpen} setIsMenuOpen={setIsMenuOpen} />
                     <Overlay isMenuOpen={isMenuOpen} />
                 </>
             )}
 
-            <nav className="absolute top-0 z-20 w-full py-6 md:py-8 backdrop-blur-md bg-black/30">
-                <div className="container mx-auto px-8 flex items-center justify-between">
+            <nav className={`w-full py-5 ${configStyle} px-10`}>
+                <div className="relative h-full top-0 z-20 container mx-auto px-6 py-4 flex items-center justify-between backdrop-blur-md bg-gray-950/30 rounded-full border border-amber-300/30">
                     {/* Brand */}
                     <Link
                         to="/"
                         className="text-2xl font-semibold tracking-wide text-amber-400 hover:text-amber-300 transition-colors"
                     >
-                        LADEN
+                        ELYSIUM
                     </Link>
                     {/* <SearchBar/> */}
                     {/* Desktop Menu */}
@@ -74,16 +86,15 @@ function Navbar() {
                                     </Link>
                                 )}
                             </div>
-
                             {/* Right Side */}
                             <div className="flex items-center gap-4">
                                 {!isAuthenticated ? (
                                     <SignInBtn />
                                 ) : (
-                                <>
-                                    <AccDropDown />
-                                    <ManageMyBooking />
-                                </>
+                                    <>
+                                        <AccDropDown />
+                                        <ManageMyBooking />
+                                    </>
                                 )}
                             </div>
                         </div>

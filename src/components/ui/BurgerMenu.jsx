@@ -5,7 +5,7 @@ function BurgerMenu({isMenuOpen, setIsMenuOpen}) {
       return (
             <button
                   onClick={toggleMenu}
-                  className={`flex items-center rounded-full top-6 right-8 z-150 text-white transition-all duration-300 hover:bg-white hover:text-amber-400 ${isMenuOpen ? "bg-white text-amber-400 fixed" : "absolute"}`}
+                  className={`top-8 right-[70px] flex items-center rounded-full z-150 text-white transition-all duration-500 hover:bg-white hover:text-amber-400 ${isMenuOpen ? "bg-white text-amber-400 fixed" : "absolute"}`}
                   aria-label="Toggle menu"
             >
                   <div className={`w-[40px] h-[40px] flex flex-col items-center justify-center space-y-1 rounded-full transition-all duration-300 ${isMenuOpen ? "pb-[11.5147px]" : ""}`}>

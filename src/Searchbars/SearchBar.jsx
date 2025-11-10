@@ -141,10 +141,10 @@ function SearchBar() {
   };
 
   return (
-    <div className="flex items-center justify-center relative">
+    <div className="flex items-center justify-center relative ">
       {/* ---  WRAP THE CONTENT IN A <form> --- */}
       
-      <form onSubmit={handleSubmit} className="bg-white/10 backdrop-blur-md border border-white/20 rounded-2xl shadow-2xl p-6 w-full max-w-lg text-white"> 
+      <form onSubmit={handleSubmit} className="bg-white/5 backdrop-blur-md border border-white/20 rounded-2xl shadow-2xl p-6 w-full max-w- text-white"> 
     
         {/* Flight Type Buttons - Made more subtle */}
         <div className="mb-6">
@@ -156,7 +156,7 @@ function SearchBar() {
         <div className="space-y-4">
           {/* From Input */}
           <div className="relative">
-            <div className="bg-white/20 rounded-xl p-4 border border-white/30">
+            <div className="bg-white/5 rounded-xl p-4 border border-white/30">
               <label className="block text-sm font-semibold mb-2 text-white/90">
                 From
               </label>
@@ -222,7 +222,7 @@ function SearchBar() {
             <button
               type="button" // Use type="button" to prevent form submission
               onClick={swapLocations}
-              className="p-4 rounded-full bg-white/20 hover:bg-white/30 text-white border border-white/30 transition-all shadow-lg active:scale-95 backdrop-blur-sm"
+              className="p-4 rounded-full bg-white/10 hover:bg-white/20 text-white border border-white/30 transition-all shadow-lg active:scale-95 backdrop-blur-sm"
             >
               <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path
@@ -237,7 +237,7 @@ function SearchBar() {
 
           {/* To Input */}
           <div className="relative">
-            <div className="bg-white/20 rounded-xl p-4 border border-white/30">
+            <div className="bg-white/5 rounded-xl p-4 border border-white/30">
               <label className="block text-sm font-semibold mb-2 text-white/90">
                 To
               </label>
@@ -304,7 +304,7 @@ function SearchBar() {
               flightType === "Round Trip" ? "grid-cols-2" : "grid-cols-1"
             } gap-3 relative z-10`}
           >
-            <div className="bg-white/20 rounded-xl p-4 border border-white/30">
+            <div className="bg-white/5 rounded-xl p-4 border border-white/30">
               <label className="block text-sm font-semibold mb-2 text-white/90">
                 Departure
               </label>
@@ -318,7 +318,7 @@ function SearchBar() {
             </div>
 
             {flightType === "Round Trip" && (
-              <div className="bg-white/20 rounded-xl p-4 border border-white/30">
+              <div className="bg-white/5 rounded-xl p-4 border border-white/30">
                 <label className="block text-sm font-semibold mb-2 text-white/90">
                   Return
                 </label>
@@ -336,7 +336,7 @@ function SearchBar() {
           {/* Travellers */}
           <div className="relative">
             <div
-              className="bg-white/20 rounded-xl p-4 border border-white/30 cursor-pointer"
+              className="bg-white/5 rounded-xl p-4 border border-white/30 cursor-pointer"
               onClick={(e) => {
                 e.stopPropagation();
                 setTravellersOpen(!travellersOpen);
@@ -346,22 +346,22 @@ function SearchBar() {
                 Travellers
               </label>
               <div className="w-full bg-transparent text-white outline-none text-lg text-center">
-                {adults} Adult{adults > 1 ? "s" : ""}, {infants} Infant{infants > 1 ? "s" : ""}
+                {adults == 0 ? "No" : adults} Adult{adults != 1 ? "s" : ""}, {infants == 0 ? "No" : infants} Infant{infants != 1 ? "s" : ""}
               </div>
             </div>
 
             {travellersOpen && (
-              <div className="absolute top-full left-0 right-0 mt-2 z-50">
-                <div
-                  className="bg-white/95 backdrop-blur-md rounded-xl shadow-lg p-4 space-y-3 border border-white/20"
-                  onClick={(e) => e.stopPropagation()}
+              <div className="absolute top-full left-0 right-0 mt-2">
+                <div 
+                    className="relative backdrop-blur-xl bg-black rounded-xl p-4 space-y-3 border border-white/20 shadow-xl"
+                    onClick={(e) => e.stopPropagation()}
                 >
                   {[
                     ["Adults", adults, setAdults],
                     ["Infants", infants, setInfants],
                   ].map(([label, count, setter]) => (
                     <div className="flex justify-between items-center" key={label}>
-                      <span className="font-medium text-gray-800">{label}</span>
+                      <span className="font-medium text-gray-300">{label}</span>
                       <div className="flex items-center gap-3">
                         <button
                           type="button" // Use type="button"
@@ -369,11 +369,11 @@ function SearchBar() {
                             e.stopPropagation();
                             setter(Math.max(0, count - 1));
                           }}
-                          className="w-8 h-8 bg-gray-200 rounded-full hover:bg-gray-300 flex items-center justify-center transition-colors text-gray-700"
+                          className="w-8 h-8 text-2xl border rounded-full hover:bg-amber-400 hover:text-black flex items-center justify-center transition-colors text-amber-300"
                         >
                           -
                         </button>
-                        <span className="w-8 text-center font-semibold text-gray-800">
+                        <span className="w-8 text-center font-semibold text-gray-300">
                           {count}
                         </span>
                         <button
@@ -382,7 +382,7 @@ function SearchBar() {
                             e.stopPropagation();
                             setter(count + 1);
                           }}
-                          className="w-8 h-8 bg-gray-200 rounded-full hover:bg-gray-300 flex items-center justify-center transition-colors text-gray-700"
+                          className="w-8 h-8 text-2xl border rounded-full hover:bg-amber-400 hover:text-black flex items-center justify-center transition-colors text-amber-300"
                         >
                           +
                         </button>

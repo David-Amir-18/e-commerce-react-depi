@@ -58,6 +58,10 @@ html {
   scroll-behavior: smooth;
 }
 
+::selection{
+      @apply bg-amber-400 text-black;
+}
+
 @theme inline {
       --radius-sm: calc(var(--radius) - 4px);
       --radius-md: calc(var(--radius) - 2px);

@@ -3,6 +3,7 @@ import { useAuth } from "../contexts/AuthContext";
 import ManageMyBooking from "@/components/ui/ManageMyBooking";
 import SignInBtn from "@/components/ui/SignInBtn";
 import AccDropDown from "@/components/ui/AccDropDown";
+import AccInlineMenu from "@/components/ui/AccInlineMenu";
 function Overlay({ isMenuOpen }) {
   const { isAuthenticated } = useAuth();
   return (
@@ -11,7 +12,13 @@ function Overlay({ isMenuOpen }) {
         <div className="flex flex-col items-center justify-center space-y-8 text-white text-[16px] m-0">
           {isAuthenticated ? (
             <>
+            <div className="hidden md:block">
               <AccDropDown />
+            </div>
+            
+            <div className="block md:hidden">
+              <AccInlineMenu />
+            </div>
               <ManageMyBooking />
             </>
           ) : (
