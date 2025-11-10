@@ -24,7 +24,7 @@ function Navbar() {
     }, []);
 
     useEffect(() => {
-        let exclusionList = ['/signin', "profile"]
+        let exclusionList = ['/signin', "/profile", '/register', '/forgetpass', '/verify-otp', '/reset-password']
         setConfigStyle(exclusionList.indexOf(location.pathname) == -1
             ? "relative bg-black"
             : "absolute bg-black/0");
@@ -44,8 +44,8 @@ function Navbar() {
                 </>
             )}
 
-            <nav className={`w-full py-5 ${configStyle} px-10`}>
-                <div className="relative h-full top-0 z-20 container mx-auto px-6 py-4 flex items-center justify-between backdrop-blur-md bg-gray-950/30 rounded-full border border-amber-300/30">
+            <nav className={`w-full py-5 ${configStyle}`}>
+                <div className="relative h-full top-0 z-20 container mx-auto px-6 py-4 flex items-center justify-between backdrop-blur-md bg-white/5 rounded-2xl border border-white/10">
                     {/* Brand */}
                     <Link
                         to="/"

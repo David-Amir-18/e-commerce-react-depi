@@ -1,13 +1,13 @@
 import { Link } from "react-router-dom";
 function Footer() {
       return (
-            <footer className="relative z-10 bg-[#000000ff] text-white py-20  border-t border-[#ffffff1e]">
+            <footer className="relative z-10 bg-[#000000ff] text-white py-20 border-t border-white/20">
                   <div className=" container mx-auto px-8 grid md:grid-cols-2 gap-10 items-start">
                         {/* Brand + Description */}
                         <div>
                               <h2 className="text-2xl font-semibold text-amber-400 tracking-wide mb-4">ELYSIUM</h2>
                               <p className="text-sm text-gray-400 leading-relaxed">
-                                    Experience flight beyond first class — luxury, privacy, and global reach for those who expect more from air travel.
+                                    Experience flight beyond first class — luxury, privacy,<br /> and global reach for those who expect more from air travel.
                               </p>
                         </div>
 
@@ -53,7 +53,7 @@ function Footer() {
                   </div>
 
                   {/* Bottom Bar */}
-                  <div className="border-t border-[#ffffff1e] mt-12 pt-6 text-center text-xs text-gray-400">
+                  <div className="border-t border-white/20 mt-12 pt-6 text-center text-xs text-gray-400">
                         &copy; {new Date().getFullYear()} ELYSIUM. All rights reserved.
                   </div>
             </footer>
