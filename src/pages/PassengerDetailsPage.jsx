@@ -98,7 +98,7 @@ export function PassengerDetailsPage() {
   }
 
   return (
-    <div className="min-h-screen bg-black text-white pt-24 pb-12">
+    <div className="min-h-screen bg-black text-white pt-10 pb-12">
       <div className="container mx-auto px-6 max-w-7xl">
         {/* Back Button */}
         <button
@@ -111,14 +111,14 @@ export function PassengerDetailsPage() {
 
         {/* Page Title */}
         <h1 className="text-3xl font-bold text-yellow-400 mb-8">Complete Your Booking</h1>
+        <h2 className="text-2xl font-bold text-zinc-100 mb-4">Review Your Flight</h2>
 
         <div className="grid lg:grid-cols-3 gap-6">
           {/* Main Content - Left Column (2/3) */}
           <div className="lg:col-span-2 space-y-6">
             {/* Review Your Flight */}
             <div>
-              <h2 className="text-2xl font-bold text-zinc-100 mb-4">Review Your Flight</h2>
-
+              {/* "Review Your Flight" used to be here */}
               {/* Flight Card */}
               <div className="bg-zinc-900 rounded-xl border border-zinc-800 p-6">
                 <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-6">
@@ -245,7 +245,7 @@ export function PassengerDetailsPage() {
 
           {/* Sidebar - Right Column (1/3) */}
           <div className="lg:col-span-1">
-            <div className="sticky top-24 space-y-4">
+            <div className="sticky top-10 space-y-4">
               {/* Price Summary */}
               <div className="bg-zinc-900 border border-zinc-800 rounded-xl p-6">
                 <h3 className="text-xl font-bold text-zinc-100 mb-4">Price Summary</h3>

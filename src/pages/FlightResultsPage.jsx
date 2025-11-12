@@ -212,7 +212,7 @@ const FlightResultsPage = () => {
 
   return (
     <div className="min-h-screen bg-black text-white">
-      <div className="container mx-auto p-6">
+      <div className="container mx-auto py-6 px-8">
         
         {/* "Back to Search" button */}
         <button
