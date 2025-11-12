@@ -77,7 +77,7 @@ function Landing() {
                 <source src={goldParticles} />
             </video>
             <section className="relative z-10 flex items-center justify-center min-h-screen">
-                <div className=" max-md:px-0 md:px-0 px-8 grid grid-cols-1 lg:grid-cols-[2fr_1fr] w-full gap-10">
+                <div className=" max-md:px-0  px-8 grid grid-cols-1 lg:grid-cols-[2fr_1fr] w-full gap-10">
                     {/*
                     Original Images 
                     <div className="flex flex-col items-center justify-end gap-5 mb-5 md:mb-0">
