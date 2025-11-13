@@ -100,6 +100,9 @@ administrators.
 
   - Transaction Flow: Highly detailed ancillary selection (Interactive Seat Map, Add-ons) followed by a final, secure Payment Gateway utilizing an OTP-based verification system.
 
+  - Pages design link: 
+  https://drive.google.com/file/d/11ZpLfs4Au5Cm727lOcSPpaZM-LVDAK_q/view?usp=drive_link
+
 - Complementary Products
   - The system utilizes several external services and APIs to fulfill its core mandate.
 
