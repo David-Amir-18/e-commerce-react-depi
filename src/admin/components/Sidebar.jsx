@@ -49,8 +49,8 @@ const Sidebar = () => {
       }`}>
       {/* Header */}
       <div className="p-6 border-b border-amber-400/20">
-        <h1 className="text-3xl font-extrabold text-amber-400 ">
-          Laden Admin
+        <h1 className="text-2xl font-extrabold text-amber-400 ">
+          ELYSIUM Admin
         </h1>
         <p className="text-gray-400 text-sm mt-1">Flight Management</p>
       </div>
