@@ -7,6 +7,7 @@ import SignInBtn from "@/components/ui/SignInBtn";
 import AccDropDown from "@/components/ui/AccDropDown";
 import BurgerMenu from "@/components/ui/BurgerMenu";
 import SearchBar from "@/Searchbars/SearchBar";
+import logo from "../../public/Elysium Wings.svg"
 
 function Navbar() {
     const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -49,9 +50,9 @@ function Navbar() {
                         {/* Brand */}
                         <Link
                             to="/"
-                            className="text-2xl font-semibold tracking-wide text-amber-400 hover:text-amber-300 transition-colors"
+                            className="flex flex-col items-center justify-center text-2xl font-semibold tracking-wide text-amber-400 hover:text-amber-300 transition-colors"
                         >
-                            ELYSIUM
+                            <img src={logo} width={50} className="mr-5"/>
                         </Link>
                         {/* <SearchBar/> */}
                         {/* Desktop Menu */}
