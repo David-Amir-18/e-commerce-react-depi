@@ -21,6 +21,7 @@ const Flights = () => {
     arrivalTime: "",
     price: "",
     totalSeats: "",
+    availableSeats: "" 
   });
 
   const showAlert = (type, title, message, onConfirm = null, showCancel = false) => {
@@ -48,7 +49,6 @@ const Flights = () => {
     }
   };
 
-  
   const formatDateForInput = (isoString) => {
     if (!isoString) return '';
     const date = new Date(isoString);
@@ -84,7 +84,8 @@ const Flights = () => {
   const handleSubmit = async () => {
     // Validation
     if (!formData.flightNumber || !formData.origin || !formData.destination || 
-        !formData.departureTime || !formData.arrivalTime || !formData.price || !formData.totalSeats) {
+        !formData.departureTime || !formData.arrivalTime || !formData.price || 
+        !formData.totalSeats || !formData.availableSeats) { // Added availableSeats validation
       showAlert('warning', 'Missing Fields!', 'Please fill in all required fields');
       return;
     }
@@ -108,6 +109,16 @@ const Flights = () => {
       return;
     }
 
+    if (Number(formData.availableSeats) < 0) {
+      showAlert('warning', 'Invalid Available Seats!', 'Available seats cannot be negative');
+      return;
+    }
+
+    if (Number(formData.availableSeats) > Number(formData.totalSeats)) {
+      showAlert('warning', 'Invalid Seats!', 'Available seats cannot exceed total seats');
+      return;
+    }
+
     try {
       // Prepare data matching backend schema
       const flightData = {
@@ -118,12 +129,12 @@ const Flights = () => {
         arrivalTime: new Date(formData.arrivalTime).toISOString(),
         price: Number(formData.price),
         totalSeats: Number(formData.totalSeats),
+        availableSeats: Number(formData.availableSeats), 
       };
 
       let response;
       if (editingFlight) {
-        // Update - preserve availableSeats from existing flight
-        flightData.availableSeats = editingFlight.availableSeats;
+        // Update flight
         response = await flightsAPI.update(editingFlight._id, flightData);
 
         if (response.success) {
@@ -135,7 +146,7 @@ const Flights = () => {
           showAlert('error', 'Update Failed', response.message || 'Failed to update flight.');
         }
       } else {
-        // Create - backend will set availableSeats = totalSeats
+        // Create new flight
         response = await flightsAPI.create(flightData);
 
         if (response.success) {
@@ -166,6 +177,7 @@ const Flights = () => {
       arrivalTime: formatDateForInput(flight.arrivalTime),
       price: flight.price.toString(),
       totalSeats: flight.totalSeats.toString(),
+      availableSeats: flight.availableSeats.toString(), // Added availableSeats
     });
     setShowModal(true);
   };
@@ -197,56 +209,68 @@ const Flights = () => {
   };
 
   const clearAllData = () => {
-    showAlert(
-      'info',
-      'Clear All Data',
-      'This feature requires individual flight deletion. Would you like to delete all flights one by one?',
-      async () => {
-        if (flights.length === 0) {
-          showAlert('info', 'No Data', 'There are no flights to delete.');
-          return;
+  showAlert(
+    'warning',
+    'Clear All Flights?',
+    `This will permanently delete all ${flights.length} flights. This action cannot be undone.`,
+    async () => {
+      if (flights.length === 0) {
+        showAlert('info', 'No Data', 'There are no flights to delete.');
+        return;
+      }
+      
+      try {
+        setLoading(true);
+        let successCount = 0;
+        let errorCount = 0;
+        
+        // Create an array of delete promises
+        const deletePromises = flights.map(async (flight) => {
+          try {
+            await flightsAPI.delete(flight._id);
+            successCount++;
+          } catch (error) {
+            console.error(`Failed to delete flight ${flight.flightNumber}:`, error);
+            errorCount++;
+            throw error; // Re-throw to handle in Promise.allSettled
+          }
+        });
+
+        // Wait for all delete operations to complete
+        const results = await Promise.allSettled(deletePromises);
+        
+        // Refresh the flights list regardless of individual failures
+        try {
+          const response = await flightsAPI.getAll();
+          if (response.success) {
+            setFlights(response.data);
+          }
+        } catch (fetchError) {
+          console.error('Error fetching updated flights:', fetchError);
+          // Even if fetch fails, clear local state
+          setFlights([]);
         }
         
-        showAlert(
-          'warning',
-          'Confirm Clear All',
-          `This will delete all ${flights.length} flights. Are you absolutely sure?`,
-          async () => {
-            let successCount = 0;
-            let errorCount = 0;
-            
-            for (const flight of flights) {
-              try {
-                await flightsAPI.delete(flight._id);
-                successCount++;
-              } catch (error) {
-                console.error(`Failed to delete flight ${flight.flightNumber}:`, error);
-                errorCount++;
-              }
-            }
-            
-            // Refresh the flights list
-            try {
-              const response = await flightsAPI.getAll();
-              if (response.success) {
-                setFlights(response.data);
-              }
-            } catch (error) {
-              setFlights([]);
-            }
-            
-            if (errorCount === 0) {
-              showAlert('success', 'All Cleared!', `Successfully deleted all ${successCount} flights.`);
-            } else {
-              showAlert('warning', 'Partially Completed', `Deleted ${successCount} flights. ${errorCount} failed.`);
-            }
-          },
-          true
-        );
-      },
-      true
-    );
-  };
+        // Show appropriate message based on results
+        if (errorCount === 0) {
+          showAlert('success', 'All Cleared!', `Successfully deleted all ${successCount} flights.`);
+        } else {
+          showAlert(
+            'warning', 
+            'Partially Completed', 
+            `Deleted ${successCount} flights. ${errorCount} failed to delete. Some flights may still exist.`
+          );
+        }
+      } catch (error) {
+        console.error('Error during bulk deletion:', error);
+        showAlert('error', 'Clear Failed', 'Failed to clear all flights. Please try again.');
+      } finally {
+        setLoading(false);
+      }
+    },
+    true
+  );
+};
 
   const showFlightDetails = (flight) => {
     showAlert('info', `Flight ${flight.flightNumber}`,
@@ -263,6 +287,7 @@ const Flights = () => {
       arrivalTime: "",
       price: "",
       totalSeats: "",
+      availableSeats: "", 
     });
   };
 
@@ -537,6 +562,7 @@ const Flights = () => {
                     ["Departure Time", "departureTime", "datetime-local", ""],
                     ["Arrival Time", "arrivalTime", "datetime-local", ""],
                     ["Total Seats", "totalSeats", "number", "200"],
+                    ["Available Seats", "availableSeats", "number", "200"], 
                   ].map(([label, key, type, placeholder]) => (
                     <div key={key}>
                       <label className="block text-sm font-medium text-amber-300 mb-2">{label} *</label>

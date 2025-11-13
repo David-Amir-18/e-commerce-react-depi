@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import {BarChart3,Plane, Users, BookOpen, LogOut, Settings, Home, Menu, X} from "lucide-react";
 import { useAuth } from "../../contexts/AuthContext";
-
+import logo from "../assets/path0.svg"
 const Sidebar = () => {
   const location = useLocation();
   const { logout, user } = useAuth();
@@ -50,7 +50,7 @@ const Sidebar = () => {
       {/* Header */}
       <div className="p-6 border-b border-amber-400/20">
         <h1 className="text-2xl font-extrabold text-amber-400 ">
-          ELYSIUM Admin
+        ELYSIUM Admin
         </h1>
         <p className="text-gray-400 text-sm mt-1">Flight Management</p>
       </div>
