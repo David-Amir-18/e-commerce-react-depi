@@ -1,7 +1,7 @@
 import React from 'react'
 
 function FlightTypeSelector({ selected, onChange }) {
-  const types = ["One Way", "Round Trip", "Multi-City"]
+  const types = ["One Way", "Round Trip"]
 
   return (
     <div className="flex justify-center gap-3 mb-6">
