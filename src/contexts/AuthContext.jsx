@@ -116,8 +116,14 @@ export const AuthProvider = ({ children }) => {
         setUser(response.data);
         tokenService.setUser(response.data);
         return { success: true };
+      } else {
+        return {
+          success: false,
+          error: response.message || 'Update failed. Please try again.'
+        };
       }
     } catch (error) {
+      console.error('Update user error:', error);
       return {
         success: false,
         error: error.message || 'Update failed. Please try again.'
