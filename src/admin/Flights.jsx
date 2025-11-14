@@ -85,7 +85,7 @@ const Flights = () => {
     // Validation
     if (!formData.flightNumber || !formData.origin || !formData.destination || 
         !formData.departureTime || !formData.arrivalTime || !formData.price || 
-        !formData.totalSeats || !formData.availableSeats) { // Added availableSeats validation
+        !formData.totalSeats || !formData.availableSeats) { 
       showAlert('warning', 'Missing Fields!', 'Please fill in all required fields');
       return;
     }
@@ -120,7 +120,7 @@ const Flights = () => {
     }
 
     try {
-      // Prepare data matching backend schema
+     
       const flightData = {
         flightNumber: formData.flightNumber.trim(),
         origin: formData.origin.trim(),
@@ -177,7 +177,7 @@ const Flights = () => {
       arrivalTime: formatDateForInput(flight.arrivalTime),
       price: flight.price.toString(),
       totalSeats: flight.totalSeats.toString(),
-      availableSeats: flight.availableSeats.toString(), // Added availableSeats
+      availableSeats: flight.availableSeats.toString(), 
     });
     setShowModal(true);
   };
@@ -224,7 +224,7 @@ const Flights = () => {
         let successCount = 0;
         let errorCount = 0;
         
-        // Create an array of delete promises
+        //delete
         const deletePromises = flights.map(async (flight) => {
           try {
             await flightsAPI.delete(flight._id);
@@ -232,14 +232,14 @@ const Flights = () => {
           } catch (error) {
             console.error(`Failed to delete flight ${flight.flightNumber}:`, error);
             errorCount++;
-            throw error; // Re-throw to handle in Promise.allSettled
+            throw error; 
           }
         });
 
-        // Wait for all delete operations to complete
+       
         const results = await Promise.allSettled(deletePromises);
         
-        // Refresh the flights list regardless of individual failures
+        
         try {
           const response = await flightsAPI.getAll();
           if (response.success) {
@@ -247,11 +247,11 @@ const Flights = () => {
           }
         } catch (fetchError) {
           console.error('Error fetching updated flights:', fetchError);
-          // Even if fetch fails, clear local state
+          
           setFlights([]);
         }
         
-        // Show appropriate message based on results
+        
         if (errorCount === 0) {
           showAlert('success', 'All Cleared!', `Successfully deleted all ${successCount} flights.`);
         } else {
