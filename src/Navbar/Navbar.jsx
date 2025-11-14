@@ -94,7 +94,6 @@ function Navbar() {
                                     ) : (
                                         <>
                                             <AccDropDown />
-                                            <ManageMyBooking />
                                         </>
                                     )}
                                 </div>
