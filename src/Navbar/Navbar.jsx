@@ -62,13 +62,7 @@ function Navbar() {
                             {!isMobile && (
                                 <div className="flex items-center justify-between text-sm text-white">
                                     {/* Nav Links */}
-                                    <div className="flex sm:w-[300px] lg:w-[400px] justify-between items-center">
-                                        <Link
-                                            to="/deals"
-                                            className="hover:text-amber-400 transition-colors duration-200"
-                                        >
-                                            Deals
-                                        </Link>
+                                    <div className="flex sm:w-[300px] lg:w-[300px] justify-between items-center">
                                         <Link
                                             to="/contact"
                                             className="hover:text-amber-400 transition-colors duration-200"
