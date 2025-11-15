@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 function Footer() {
       return (
-            <footer className="relative z-10 bg-[#000000ff] text-white py-20 border-t border-white/20">
+            <footer className="absolute z-20 w-full  text-white py-20 border-t border-white/20">
                   <div className=" container mx-auto px-8 grid md:grid-cols-2 gap-10 items-start">
                         {/* Brand + Description */}
                         <div>

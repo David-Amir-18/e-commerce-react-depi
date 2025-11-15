@@ -242,12 +242,12 @@ export function PaymentPage() {
   }
 
   return (
-    <div className="min-h-screen bg-black text-white pt-24 pb-12">
-      <div className="container mx-auto px-6 max-w-7xl">
+    <div className="min-h-screen text-white pt-30 pb-12">
+      <div className="container mx-auto px-8">
         {/* Success Overlay */}
         {paymentSuccess && (
           <div className="fixed inset-0 bg-black/90 backdrop-blur-sm z-50 flex items-center justify-center animate-in fade-in duration-300">
-            <div className="bg-zinc-900 border border-emerald-400/30 rounded-xl p-8 max-w-lg mx-4 animate-in zoom-in duration-500">
+            <div className="bg-white/10 border border-emerald-400/30 rounded-xl p-8 max-w-lg mx-4 animate-in zoom-in duration-500">
               <div className="text-center">
                 <div className="w-20 h-20 bg-emerald-500 rounded-full flex items-center justify-center mx-auto mb-6 animate-in zoom-in duration-700">
                   <CheckCircle className="w-12 h-12 text-white" />
@@ -255,7 +255,7 @@ export function PaymentPage() {
                 <h2 className="text-3xl font-bold text-zinc-100 mb-3">Payment Successful!</h2>
                 <p className="text-zinc-400 mb-6">Your booking has been confirmed</p>
 
-                <div className="bg-zinc-800 border border-zinc-700 rounded-lg p-6 mb-6">
+                <div className="bg-zinc-800 border border-white/30 rounded-lg p-6 mb-6">
                   <p className="text-zinc-400 text-sm mb-2">Booking Reference</p>
                   <p className="text-yellow-400 text-3xl font-bold tracking-wider">{bookingReference}</p>
                 </div>
@@ -280,7 +280,7 @@ export function PaymentPage() {
         {/* Processing Overlay */}
         {isProcessing && (
           <div className="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 flex items-center justify-center">
-            <div className="bg-zinc-900 border border-zinc-800 rounded-xl p-8 text-center">
+            <div className="bg-white/10 border border-white/30 rounded-xl p-8 text-center">
               <div className="animate-spin rounded-full h-16 w-16 border-b-2 border-yellow-400 mx-auto mb-4"></div>
               <h3 className="text-xl font-bold text-zinc-100 mb-2">Processing Payment...</h3>
               <p className="text-zinc-400">Please wait, do not close this page</p>
@@ -307,7 +307,7 @@ export function PaymentPage() {
           {/* Payment Form - Left Column (2/3) */}
           <div className="lg:col-span-2 space-y-6">
             {/* Payment Method Selection */}
-            <div className="bg-zinc-900 border border-zinc-800 rounded-xl p-6">
+            <div className="bg-white/10 border border-white/30 rounded-xl p-6">
               <h2 className="text-xl font-bold text-zinc-100 mb-4">Select Payment Method</h2>
               <div className="grid md:grid-cols-3 gap-4">
                 {paymentMethods.map(method => {
@@ -321,7 +321,7 @@ export function PaymentPage() {
                       className={`rounded-xl border-2 transition-all overflow-hidden ${
                         isSelected
                           ? 'border-yellow-400 shadow-lg shadow-yellow-400/20'
-                          : 'border-zinc-700 hover:border-yellow-400/50'
+                          : 'border-white/30 hover:border-yellow-400/50'
                       }`}
                     >
                       {/* Image */}
@@ -340,7 +340,7 @@ export function PaymentPage() {
                       </div>
 
                       {/* Content */}
-                      <div className="p-4 bg-zinc-900">
+                      <div className="p-4 bg-white/10">
                         <div className="flex items-center gap-2 mb-2">
                           <Icon className={`w-5 h-5 ${isSelected ? 'text-yellow-400' : 'text-zinc-400'}`} />
                           <h3 className="font-semibold text-zinc-100 text-sm">{method.name}</h3>
@@ -355,7 +355,7 @@ export function PaymentPage() {
 
             {/* Card Details Form */}
             {paymentMethod === 'card' && (
-              <div className="bg-zinc-900 border border-zinc-800 rounded-xl p-6">
+              <div className="bg-white/10 border border-white/30 rounded-xl p-6">
                 <div className="flex items-center justify-between mb-4">
                   <h2 className="text-xl font-bold text-zinc-100">Card Details</h2>
                   <Lock className="w-5 h-5 text-emerald-400" />
@@ -376,7 +376,7 @@ export function PaymentPage() {
                         onChange={(e) => handleCardInputChange('cardNumber', e.target.value)}
                         placeholder="1234 5678 9012 3456"
                         className={`w-full bg-zinc-800 border ${
-                          errors.cardNumber ? 'border-red-400' : 'border-zinc-700'
+                          errors.cardNumber ? 'border-red-400' : 'border-white/30'
                         } rounded-md pl-11 pr-4 py-3 text-zinc-100 placeholder-zinc-500 focus:outline-none focus:ring-2 focus:ring-yellow-400 focus:border-transparent transition-all`}
                       />
                     </div>
@@ -399,7 +399,7 @@ export function PaymentPage() {
                         onChange={(e) => handleCardInputChange('cardName', e.target.value)}
                         placeholder="John Doe"
                         className={`w-full bg-zinc-800 border ${
-                          errors.cardName ? 'border-red-400' : 'border-zinc-700'
+                          errors.cardName ? 'border-red-400' : 'border-white/30'
                         } rounded-md pl-11 pr-4 py-3 text-zinc-100 placeholder-zinc-500 focus:outline-none focus:ring-2 focus:ring-yellow-400 focus:border-transparent transition-all`}
                       />
                     </div>
@@ -423,7 +423,7 @@ export function PaymentPage() {
                           onChange={(e) => handleCardInputChange('expiryDate', e.target.value)}
                           placeholder="MM/YY"
                           className={`w-full bg-zinc-800 border ${
-                            errors.expiryDate ? 'border-red-400' : 'border-zinc-700'
+                            errors.expiryDate ? 'border-red-400' : 'border-white/30'
                           } rounded-md pl-11 pr-4 py-3 text-zinc-100 placeholder-zinc-500 focus:outline-none focus:ring-2 focus:ring-yellow-400 focus:border-transparent transition-all`}
                         />
                       </div>
@@ -447,7 +447,7 @@ export function PaymentPage() {
                         onChange={(e) => handleCardInputChange('cvv', e.target.value)}
                         placeholder="123"
                         className={`w-full bg-zinc-800 border ${
-                          errors.cvv ? 'border-red-400' : 'border-zinc-700'
+                          errors.cvv ? 'border-red-400' : 'border-white/30'
                         } rounded-md px-4 py-3 text-zinc-100 placeholder-zinc-500 focus:outline-none focus:ring-2 focus:ring-yellow-400 focus:border-transparent transition-all`}
                       />
                       {errors.cvv && (
@@ -472,7 +472,7 @@ export function PaymentPage() {
 
             {/* PayPal Form */}
             {paymentMethod === 'paypal' && (
-              <div className="bg-zinc-900 border border-zinc-800 rounded-xl p-6">
+              <div className="bg-white/10 border border-white/30 rounded-xl p-6">
                 <div className="flex items-center justify-between mb-4">
                   <h2 className="text-xl font-bold text-zinc-100">PayPal Payment</h2>
                   <Wallet className="w-5 h-5 text-blue-400" />
@@ -498,7 +498,7 @@ export function PaymentPage() {
                         }}
                         placeholder="your.email@example.com"
                         className={`w-full bg-zinc-800 border ${
-                          errors.paypalEmail ? 'border-red-400' : 'border-zinc-700'
+                          errors.paypalEmail ? 'border-red-400' : 'border-white/30'
                         } rounded-md pl-11 pr-4 py-3 text-zinc-100 placeholder-zinc-500 focus:outline-none focus:ring-2 focus:ring-yellow-400 focus:border-transparent transition-all`}
                       />
                     </div>
@@ -526,7 +526,7 @@ export function PaymentPage() {
 
             {/* Bank Transfer Form */}
             {paymentMethod === 'bank' && (
-              <div className="bg-zinc-900 border border-zinc-800 rounded-xl p-6">
+              <div className="bg-white/10 border border-white/30 rounded-xl p-6">
                 <div className="flex items-center justify-between mb-4">
                   <h2 className="text-xl font-bold text-zinc-100">Bank Transfer Details</h2>
                   <Building2 className="w-5 h-5 text-purple-400" />
@@ -552,7 +552,7 @@ export function PaymentPage() {
                         }}
                         placeholder="John Doe"
                         className={`w-full bg-zinc-800 border ${
-                          errors.accountName ? 'border-red-400' : 'border-zinc-700'
+                          errors.accountName ? 'border-red-400' : 'border-white/30'
                         } rounded-md pl-11 pr-4 py-3 text-zinc-100 placeholder-zinc-500 focus:outline-none focus:ring-2 focus:ring-yellow-400 focus:border-transparent transition-all`}
                       />
                     </div>
@@ -580,7 +580,7 @@ export function PaymentPage() {
                         }}
                         placeholder="Bank of America"
                         className={`w-full bg-zinc-800 border ${
-                          errors.bankName ? 'border-red-400' : 'border-zinc-700'
+                          errors.bankName ? 'border-red-400' : 'border-white/30'
                         } rounded-md pl-11 pr-4 py-3 text-zinc-100 placeholder-zinc-500 focus:outline-none focus:ring-2 focus:ring-yellow-400 focus:border-transparent transition-all`}
                       />
                     </div>
@@ -608,7 +608,7 @@ export function PaymentPage() {
                         }}
                         placeholder="12345678"
                         className={`w-full bg-zinc-800 border ${
-                          errors.accountNumber ? 'border-red-400' : 'border-zinc-700'
+                          errors.accountNumber ? 'border-red-400' : 'border-white/30'
                         } rounded-md px-4 py-3 text-zinc-100 placeholder-zinc-500 focus:outline-none focus:ring-2 focus:ring-yellow-400 focus:border-transparent transition-all`}
                       />
                       {errors.accountNumber && (
@@ -633,7 +633,7 @@ export function PaymentPage() {
                         }}
                         placeholder="123456"
                         className={`w-full bg-zinc-800 border ${
-                          errors.routingNumber ? 'border-red-400' : 'border-zinc-700'
+                          errors.routingNumber ? 'border-red-400' : 'border-white/30'
                         } rounded-md px-4 py-3 text-zinc-100 placeholder-zinc-500 focus:outline-none focus:ring-2 focus:ring-yellow-400 focus:border-transparent transition-all`}
                       />
                       {errors.routingNumber && (
@@ -661,11 +661,11 @@ export function PaymentPage() {
           <div className="lg:col-span-1">
             <div className="sticky top-24 space-y-4">
               {/* Booking Summary */}
-              <div className="bg-zinc-900 border border-zinc-800 rounded-xl p-6">
+              <div className="bg-white/10 border border-white/30 rounded-xl p-6">
                 <h3 className="text-lg font-bold text-zinc-100 mb-4">Booking Summary</h3>
 
                 {/* Flight Details */}
-                <div className="mb-4 pb-4 border-b border-zinc-800">
+                <div className="mb-4 pb-4 border-b border-white/30">
                   <p className="text-zinc-400 text-sm mb-2">Flight</p>
                   <p className="text-zinc-100 font-semibold">
                     {flight.fromCode} → {flight.toCode}
@@ -674,7 +674,7 @@ export function PaymentPage() {
                 </div>
 
                 {/* Passengers */}
-                <div className="mb-4 pb-4 border-b border-zinc-800">
+                <div className="mb-4 pb-4 border-b border-white/30">
                   <p className="text-zinc-400 text-sm mb-2">Passengers</p>
                   <p className="text-zinc-100">{totalPassengers} passenger{totalPassengers > 1 ? 's' : ''}</p>
                 </div>
@@ -713,7 +713,7 @@ export function PaymentPage() {
                   </div>
                 </div>
 
-                <div className="mt-4 pt-4 border-t border-zinc-800">
+                <div className="mt-4 pt-4 border-t border-white/30">
                   <div className="flex justify-between items-center">
                     <span className="text-lg font-semibold text-zinc-100">Total</span>
                     <div className="text-right">
@@ -731,7 +731,7 @@ export function PaymentPage() {
                 <Button
                   onClick={() => navigate(-1)}
                   variant="outline"
-                  className="w-full bg-zinc-800 border-zinc-700 text-zinc-300 hover:bg-zinc-700 hover:border-yellow-400"
+                  className="w-full bg-white/10 border-white/30 text-zinc-300 hover:bg-zinc-700 hover:border-yellow-400 hover:text-white"
                 >
                   Back to Options
                 </Button>

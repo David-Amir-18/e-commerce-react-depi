@@ -25,7 +25,7 @@ export function FlightCard({
 }) {
   return (
     
-    <div className="bg-zinc-900 rounded-xl border border-zinc-800 hover:border-yellow-400/50 hover:shadow-xl hover:shadow-yellow-400/10 transition-all duration-300 p-6">
+    <div className="bg-white/10 rounded-xl border border-white/20 hover:border-yellow-400/50 shadow-xl hover:shadow-yellow-400/10 transition-all duration-300 p-6">
       <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-6">
         
         {/* Airline and Flight Info */}
@@ -54,8 +54,8 @@ export function FlightCard({
           <div className="flex flex-col items-center">
             <p className="text-zinc-400 text-sm mb-1">{duration}</p>
             <div className="relative w-full">
-              <div className="h-px bg-zinc-700 w-full"></div>
-              <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-zinc-900 px-2">
+              <div className="h-px bg-white/10 w-full"></div>
+              <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2  px-2">
                 <Plane className="w-4 h-4 text-yellow-400 rotate-90" />
               </div>
             </div>
@@ -90,7 +90,7 @@ export function FlightCard({
       </div>
 
       {/* Additional Info */}
-      <div className="flex flex-wrap items-center gap-3 mt-4 pt-4 border-t border-zinc-800">
+      <div className="flex flex-wrap items-center gap-3 mt-4 pt-4 border-t border-white/20">
         <Badge variant="secondary" className="bg-zinc-800 text-zinc-300 border-zinc-700">
           <Calendar className="w-3 h-3 mr-1.5" />
           {departDate}

@@ -82,8 +82,8 @@ export function BookingOptionsPage() {
   }
 
   return (
-    <div className="min-h-screen bg-black text-white pt-24 pb-12">
-      <div className="container mx-auto px-6 max-w-7xl">
+    <div className="min-h-screen text-white pt-30 pb-12">
+      <div className="container mx-auto px-8 ">
         {/* Back Button */}
         <button
           onClick={() => navigate(-1)}
@@ -100,7 +100,7 @@ export function BookingOptionsPage() {
         </div>
 
         {/* Flight Summary Badge */}
-        <div className="mb-8 bg-zinc-900 border border-zinc-800 rounded-xl p-4">
+        <div className="mb-8 bg-white/10 border border-white/20 rounded-xl p-4">
           <div className="flex flex-wrap items-center gap-4 justify-between">
             <div className="flex items-center gap-4">
               <div className="text-zinc-100">
@@ -122,7 +122,7 @@ export function BookingOptionsPage() {
           {/* Main Content - Options Cards */}
           <div className="lg:col-span-2 space-y-6">
             {/* Progress Indicator */}
-            <div className="bg-zinc-900 border border-zinc-800 rounded-xl p-6">
+            <div className="bg-white/10 border border-white/20 rounded-xl p-6">
               <h3 className="text-lg font-bold text-zinc-100 mb-4">Booking Progress</h3>
               <div className="flex items-center gap-4">
                 <div className="flex-1 h-2 bg-zinc-800 rounded-full overflow-hidden">
@@ -151,7 +151,7 @@ export function BookingOptionsPage() {
                     onClick={() => handleOptionClick(option)}
                     className="w-full group"
                   >
-                    <div className="bg-zinc-900 border border-zinc-800 rounded-xl overflow-hidden hover:border-yellow-400/50 transition-all duration-300 hover:shadow-lg hover:shadow-yellow-400/10">
+                    <div className="bg-white/10 border border-white/20 rounded-xl overflow-hidden hover:border-yellow-400/50 transition-all duration-300 hover:shadow-lg hover:shadow-yellow-400/10">
                       <div className="grid md:grid-cols-3 gap-4">
                         {/* Image */}
                         <div className="relative h-48 md:h-auto overflow-hidden">
@@ -212,7 +212,7 @@ export function BookingOptionsPage() {
           <div className="lg:col-span-1">
             <div className="sticky top-24 space-y-4">
               {/* Important Notice */}
-              <div className="bg-zinc-900 border border-zinc-800 rounded-xl p-6">
+              <div className="bg-white/10 border border-white/20 rounded-xl p-6">
                 <h3 className="text-lg font-bold text-zinc-100 mb-3">Important</h3>
                 <ul className="space-y-2 text-zinc-400 text-sm">
                   <li className="flex items-start gap-2">
@@ -235,7 +235,7 @@ export function BookingOptionsPage() {
                 <Button
                   onClick={() => navigate(-1)}
                   variant="outline"
-                  className="w-full bg-zinc-800 border-zinc-700 text-zinc-300 hover:bg-zinc-700 hover:border-yellow-400"
+                  className="w-full bg-zinc-800 border-zinc-700 text-zinc-300 hover:bg-zinc-700 hover:border-yellow-400 hover:text-white"
                 >
                   Back to Passenger Details
                 </Button>

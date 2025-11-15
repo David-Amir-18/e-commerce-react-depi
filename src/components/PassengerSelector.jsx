@@ -25,14 +25,14 @@ export function PassengerSelector({ passengers, onPassengersChange }) {
   };
 
   return (
-    <div className="bg-zinc-900 border border-zinc-800 rounded-xl p-6">
+    <div className="bg-white/10 border border-white/20 rounded-xl p-6">
       <div className="flex items-center gap-3 mb-6">
         <Users className="w-6 h-6 text-yellow-400" />
         <h2 className="text-xl font-bold text-zinc-100">Passengers</h2>
       </div>
 
       {/* Adults */}
-      <div className="flex items-center justify-between py-4 border-b border-zinc-800">
+      <div className="flex items-center justify-between py-4 border-b border-white/20">
         <div className="flex-1">
           <p className="text-zinc-100 font-semibold">Adults</p>
           <p className="text-zinc-400 text-sm">Ages 12+</p>
@@ -65,7 +65,7 @@ export function PassengerSelector({ passengers, onPassengersChange }) {
       </div>
 
       {/* Children */}
-      <div className="flex items-center justify-between py-4 border-b border-zinc-800">
+      <div className="flex items-center justify-between py-4 border-b border-white/20">
         <div className="flex-1">
           <p className="text-zinc-100 font-semibold">Child</p>
           <p className="text-zinc-400 text-sm">Ages 2-11</p>
@@ -131,7 +131,7 @@ export function PassengerSelector({ passengers, onPassengersChange }) {
       </div>
 
       {/* Note */}
-      <div className="mt-4 pt-4 border-t border-zinc-800">
+      <div className="mt-4 pt-4 border-t border-white/20">
         <p className="text-zinc-400 text-sm">
           Please note: You can book for a maximum of {maxPassengers} passengers.
         </p>

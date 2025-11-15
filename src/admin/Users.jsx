@@ -316,7 +316,7 @@ User ID: ${user._id}
 
   if (loading) {
     return (
-      <div className="p-6 flex items-center justify-center min-h-screen bg-black text-white">
+      <div className="p-6 flex items-center justify-center min-h-screen text-white">
         <div className="text-center">
           <User className="animate-bounce text-amber-400 mx-auto mb-4" size={40} />
           <p className="text-gray-400">Loading users...</p>

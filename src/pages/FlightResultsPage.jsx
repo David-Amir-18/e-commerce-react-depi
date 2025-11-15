@@ -190,7 +190,7 @@ const FlightResultsPage = () => {
   // --- Render Logic ---
   if (loading) {
     return (
-      <div className="min-h-screen bg-black text-white flex items-center justify-center pt-24 text-2xl">
+      <div className="min-h-screen text-white flex items-center justify-center pt-24 text-2xl">
         Loading flight results...
       </div>
     );
@@ -198,7 +198,7 @@ const FlightResultsPage = () => {
 
   if (error) {
     return (
-      <div className="min-h-screen bg-black text-white flex flex-col items-center justify-center pt-24">
+      <div className="min-h-screen text-white flex flex-col items-center justify-center pt-24">
         <p className="text-red-500 text-xl">Error: {error}</p>
         <button 
           onClick={() => navigate('/')} 
@@ -211,8 +211,8 @@ const FlightResultsPage = () => {
   }
 
   return (
-    <div className="min-h-screen bg-black text-white">
-      <div className="container mx-auto py-6 px-8">
+    <div className="min-h-screen text-white">
+      <div className="container mx-auto pt-30 pb-6 px-8">
         
         {/* "Back to Search" button */}
         <button
@@ -240,10 +240,10 @@ const FlightResultsPage = () => {
               value={sortCriteria} 
               onValueChange={setSortCriteria}
             >
-              <SelectTrigger className="w-[200px] bg-zinc-900 border-zinc-800 text-zinc-100 focus:ring-yellow-400">
+              <SelectTrigger className="w-[200px] bg-white/10 border-white/20 text-zinc-100 focus:ring-yellow-400">
                 <SelectValue placeholder="Sort by" />
               </SelectTrigger>
-              <SelectContent className="bg-zinc-900 border-zinc-800 text-zinc-100">
+              <SelectContent className="bg-white/10 border-white/20 text-zinc-100">
                 <SelectItem value="recommended">Recommended</SelectItem>
                 <SelectItem value="price-low-high">Price (Lower to Higher)</SelectItem>
                 <SelectItem value="price-high-low">Price (Higher to Lower)</SelectItem>
@@ -268,7 +268,7 @@ const FlightResultsPage = () => {
           <div className="w-full lg:w-3/4 space-y-4">
 
             {/* "X flights found" banner */}
-            <div className="bg-zinc-900 border border-zinc-800 p-4 rounded-xl text-yellow-400 flex items-center">
+            <div className="bg-white/10 border border-white/20 p-4 rounded-xl text-yellow-400 flex items-center">
               <Plane className="w-5 h-5 mr-3" />
               <span className="font-semibold">
                 {filteredBestFlights.length + filteredOtherFlights.length} flights found
@@ -336,7 +336,7 @@ const FlightResultsPage = () => {
 
             {/* No Flights Found */}
             {filteredBestFlights.length === 0 && filteredOtherFlights.length === 0 && (
-              <div className="bg-zinc-900 border border-zinc-800 p-6 rounded-lg text-zinc-400">
+              <div className="bg-white/10 border border-white/20 p-6 rounded-lg text-zinc-400">
                 <h3 className="text-lg font-semibold text-white mb-2">
                   0 flights found
                 </h3>

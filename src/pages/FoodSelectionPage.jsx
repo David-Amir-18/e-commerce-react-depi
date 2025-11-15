@@ -187,12 +187,12 @@ export function FoodSelectionPage() {
   }
 
   return (
-    <div className="min-h-screen bg-black text-white pt-24 pb-12">
-      <div className="container mx-auto px-6 max-w-7xl">
+    <div className="min-h-screen text-white pt-30 pb-12">
+      <div className="container mx-auto px-8">
         {/* Success Overlay */}
         {showSuccess && (
           <div className="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 flex items-center justify-center animate-in fade-in duration-300">
-            <div className="bg-zinc-900 border border-emerald-400/30 rounded-xl p-8 max-w-md mx-4 animate-in zoom-in duration-300">
+            <div className="bg-white/10 border border-emerald-400/30 rounded-xl p-8 max-w-md mx-4 animate-in zoom-in duration-300">
               <div className="text-center">
                 <div className="w-16 h-16 bg-emerald-500 rounded-full flex items-center justify-center mx-auto mb-4">
                   <CheckCircle className="w-10 h-10 text-white" />
@@ -255,7 +255,7 @@ export function FoodSelectionPage() {
                   return (
                     <div
                       key={meal.id}
-                      className="bg-zinc-900 border border-zinc-800 rounded-xl overflow-hidden hover:border-yellow-400/50 transition-all"
+                      className="bg-white/10 border border-white/20 rounded-xl overflow-hidden hover:border-yellow-400/50 transition-all"
                     >
                       {/* Meal Image */}
                       <div className="relative h-40 overflow-hidden">
@@ -332,7 +332,7 @@ export function FoodSelectionPage() {
                   return (
                     <div
                       key={beverage.id}
-                      className="bg-zinc-900 border border-zinc-800 rounded-xl overflow-hidden hover:border-yellow-400/50 transition-all"
+                      className="bg-white/10 border border-white/20 rounded-xl overflow-hidden hover:border-yellow-400/50 transition-all"
                     >
                       {/* Beverage Image */}
                       <div className="relative h-32 overflow-hidden">
@@ -387,7 +387,7 @@ export function FoodSelectionPage() {
           <div className="lg:col-span-1">
             <div className="sticky top-24 space-y-4">
               {/* Order Summary */}
-              <div className="bg-zinc-900 border border-zinc-800 rounded-xl p-6">
+              <div className="bg-white/10 border border-white/20 rounded-xl p-6">
                 <h3 className="text-lg font-bold text-zinc-100 mb-4">Order Summary</h3>
 
                 {Object.keys(selectedMeals).length === 0 ? (
@@ -411,7 +411,7 @@ export function FoodSelectionPage() {
                   </div>
                 )}
 
-                <div className="pt-4 border-t border-zinc-800">
+                <div className="pt-4 border-t border-white/20">
                   <div className="flex justify-between items-center">
                     <span className="text-zinc-100 font-semibold">Total</span>
                     <span className="text-yellow-400 text-xl font-bold">${getTotalCost()}</span>
@@ -420,7 +420,7 @@ export function FoodSelectionPage() {
               </div>
 
               {/* Info */}
-              <div className="bg-zinc-900 border border-zinc-800 rounded-xl p-6">
+              <div className="bg-white/10 border border-white/20 rounded-xl p-6">
                 <h3 className="text-lg font-bold text-zinc-100 mb-3">Information</h3>
                 <ul className="space-y-2 text-zinc-400 text-sm">
                   <li className="flex items-start gap-2">
@@ -447,7 +447,7 @@ export function FoodSelectionPage() {
                 <Button
                   onClick={() => navigate(returnRoute || '/booking/options', { state: location.state })}
                   variant="outline"
-                  className="w-full bg-zinc-800 border-zinc-700 text-zinc-300 hover:bg-zinc-700 hover:border-yellow-400"
+                  className="w-full bg-zinc-800 border-zinc-700 text-zinc-300 hover:bg-zinc-700 hover:border-yellow-400 hover:text-white"
                 >
                   Back to Options
                 </Button>

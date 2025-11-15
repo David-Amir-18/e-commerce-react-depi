@@ -18,7 +18,7 @@ function FlightTypeSelector({ selected, onChange }) {
               ? "bg-black text-amber-400 font-bold shadow-lg border border-amber-400"
               
               // INACTIVE STATE: (Dark background, Gray text, with hover)
-              : "bg-white/10 text-zinc-300 border border-zinc-700 hover:bg-zinc-700 hover:text-zinc-100"
+              : "bg-white/10 text-zinc-300 border border-white/30 hover:bg-zinc-700 hover:text-zinc-100"
             }`}
         >
           {type}

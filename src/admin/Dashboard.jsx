@@ -67,7 +67,7 @@ const Dashboard = () => {
   };
 
   return (
-    <div className="relative min-h-screen overflow-hidden bg-black">
+    <div className="relative min-h-screen overflow-hidden bg-">
       {/* Background gradient effect */}
       <div className="absolute inset-0 bg-gradient-radial from-amber-900/20 via-black to-black pointer-events-none"></div>
       <video
