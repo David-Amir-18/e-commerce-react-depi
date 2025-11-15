@@ -25,10 +25,10 @@ function Navbar() {
     }, []);
 
     useEffect(() => {
-        let exclusionList = ['/signin', "/profile", '/register', '/forgetpass', '/verify-otp', '/reset-password']
-        setConfigStyle(exclusionList.indexOf(location.pathname) == -1
-            ? "relative bg-black"
-            : "absolute bg-black/0");
+        let exclusionList = ['/flights', "/profile", '', '', '', '']
+        setConfigStyle(exclusionList.indexOf(location.pathname) != -1
+            ? "absolute "
+            : "fixed bg-black/0");
     }, [location.pathname]);
 
     useEffect(() => {
@@ -38,7 +38,7 @@ function Navbar() {
 
     return (
         <>
-            <nav className={`w-full py-5 ${configStyle}`}>
+            <nav className={`w-full py-3 ${configStyle} z-20`}>
                 <div className="relative h-full top-0 z-20 container mx-auto px-8">
                     {isMobile && (
                         <>
@@ -46,59 +46,54 @@ function Navbar() {
                             <Overlay isMenuOpen={isMenuOpen} />
                         </>
                     )}
-                    <div className="px-6 py-4 flex items-center justify-between backdrop-blur-md bg-white/5 rounded-2xl border border-white/10">
+                    <div className="px-6 py-4 flex items-center justify-between backdrop-blur-lg bg-white/10 rounded-2xl border border-white/10">
                         {/* Brand */}
                         <Link
                             to="/"
-                            className="flex flex-col items-center justify-center text-2xl font-semibold tracking-wide text-amber-400 hover:text-amber-300 transition-colors"
+                            className="flex  items-center justify-center text-2xl font-semibold tracking-wide text-amber-400 hover:text-amber-300 transition-colors"
                         >
-                            <img src={logo} width={50} className="mr-5"/>
+                            <img src={logo} width={50} className="mr-5" />
+                            <h1 className="text-amber-300">Elysium</h1>
                         </Link>
                         {/* <SearchBar/> */}
                         {/* Desktop Menu */}
-                        {!isMobile && (
-                            <div className="flex items-center justify-between w-[70%] text-sm text-white">
-                                {/* Nav Links */}
-                                <div className="flex sm:w-[220px] lg:w-[300px] justify-between">
-                                    <Link
-                                        to="/deals"
-                                        className="hover:text-amber-400 transition-colors duration-200"
-                                    >
-                                        Deals
-                                    </Link>
-                                    <Link
-                                        to="/contact"
-                                        className="hover:text-amber-400 transition-colors duration-200"
-                                    >
-                                        Contact
-                                    </Link>
-                                    <Link
-                                        to="/about"
-                                        className="hover:text-amber-400 transition-colors duration-200"
-                                    >
-                                        About
-                                    </Link>
-                                    {isAuthenticated && user?.role === 'admin' && (
+                        {/* Right Side */}
+                        <div className="flex items-center gap-4">
+                            {!isMobile && (
+                                <div className="flex items-center justify-between text-sm text-white">
+                                    {/* Nav Links */}
+                                    <div className="flex sm:w-[300px] lg:w-[300px] justify-between items-center">
                                         <Link
-                                            to="/admin/dashboard"
-                                            className="hover:text-amber-400 transition-colors duration-200 font-semibold"
+                                            to="/contact"
+                                            className="hover:text-amber-400 transition-colors duration-200"
                                         >
-                                            Admin
+                                            Contact
                                         </Link>
-                                    )}
+                                        <Link
+                                            to="/about"
+                                            className="hover:text-amber-400 transition-colors duration-200"
+                                        >
+                                            About
+                                        </Link>
+                                        {isAuthenticated && user?.role === 'admin' && (
+                                            <Link
+                                                to="/admin/dashboard"
+                                                className="hover:text-amber-400 transition-colors duration-200 font-semibold"
+                                            >
+                                                Admin
+                                            </Link>
+                                        )}
+                                        {!isAuthenticated ? (
+                                            <SignInBtn />
+                                        ) : (
+                                            <>
+                                                <AccDropDown />
+                                            </>
+                                        )}
+                                    </div>
                                 </div>
-                                {/* Right Side */}
-                                <div className="flex items-center gap-4">
-                                    {!isAuthenticated ? (
-                                        <SignInBtn />
-                                    ) : (
-                                        <>
-                                            <AccDropDown />
-                                        </>
-                                    )}
-                                </div>
-                            </div>
-                        )}
+                            )}
+                        </div>
                     </div>
                 </div>
             </nav>

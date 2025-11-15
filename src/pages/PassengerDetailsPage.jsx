@@ -98,8 +98,8 @@ export function PassengerDetailsPage() {
   }
 
   return (
-    <div className="min-h-screen bg-black text-white pt-10 pb-12">
-      <div className="container mx-auto px-6 max-w-7xl">
+    <div className="min-h-screen text-white pt-30 pb-12">
+      <div className="container mx-auto px-8 ">
         {/* Back Button */}
         <button
           onClick={() => navigate(-1)}
@@ -120,7 +120,7 @@ export function PassengerDetailsPage() {
             <div>
               {/* "Review Your Flight" used to be here */}
               {/* Flight Card */}
-              <div className="bg-zinc-900 rounded-xl border border-zinc-800 p-6">
+              <div className="bg-white/10 rounded-xl border border-white/20 p-6">
                 <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-6">
                   {/* Airline Info */}
                   <div className="flex items-center gap-4">
@@ -149,7 +149,7 @@ export function PassengerDetailsPage() {
                       <p className="text-zinc-400 text-sm mb-1">{flight.duration}</p>
                       <div className="relative w-full">
                         <div className="h-px bg-zinc-700 w-full"></div>
-                        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-zinc-900 px-2">
+                        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-white/10 px-2">
                           <Plane className="w-4 h-4 text-yellow-400 rotate-90" />
                         </div>
                       </div>
@@ -167,7 +167,7 @@ export function PassengerDetailsPage() {
                 </div>
 
                 {/* Additional Info */}
-                <div className="flex flex-wrap items-center gap-3 mt-4 pt-4 border-t border-zinc-800">
+                <div className="flex flex-wrap items-center gap-3 mt-4 pt-4 border-t border-white/20">
                   <Badge variant="secondary" className="bg-zinc-800 text-zinc-300 border-zinc-700">
                     <Calendar className="w-3 h-3 mr-1.5" />
                     {flight.departDate}
@@ -245,12 +245,12 @@ export function PassengerDetailsPage() {
 
           {/* Sidebar - Right Column (1/3) */}
           <div className="lg:col-span-1">
-            <div className="sticky top-10 space-y-4">
+            <div className="sticky top-25 space-y-4">
               {/* Price Summary */}
-              <div className="bg-zinc-900 border border-zinc-800 rounded-xl p-6">
+              <div className="bg-white/10 border border-white/20 rounded-xl p-6">
                 <h3 className="text-xl font-bold text-zinc-100 mb-4">Price Summary</h3>
 
-                <div className="space-y-3 mb-4 pb-4 border-b border-zinc-800">
+                <div className="space-y-3 mb-4 pb-4 border-b border-white/20">
                   <div className="flex justify-between text-zinc-300">
                     <span>Base Fare ({passengers.adults + passengers.children + passengers.infants} passenger{(passengers.adults + passengers.children + passengers.infants) > 1 ? 's' : ''})</span>
                     <span>${(flight.price * (passengers.adults + passengers.children + passengers.infants)).toLocaleString()}</span>
@@ -277,7 +277,7 @@ export function PassengerDetailsPage() {
                 <Button
                   onClick={() => navigate(-1)}
                   variant="outline"
-                  className="w-full bg-zinc-800 border-zinc-700 text-zinc-300 hover:bg-zinc-700 hover:border-yellow-400"
+                  className="w-full bg-zinc-800 border-zinc-700 text-zinc-300 hover:bg-zinc-700 hover:border-yellow-400 hover:text-white"
                 >
                   Return to Flights
                 </Button>

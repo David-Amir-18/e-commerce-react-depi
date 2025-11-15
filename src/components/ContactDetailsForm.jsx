@@ -81,11 +81,11 @@ export function ContactDetailsForm({ data, onSave }) {
     'Yemen', 'Zambia', 'Zimbabwe'
   ];
   return (
-    <div className="bg-zinc-900 border border-zinc-800 rounded-xl p-6">
+    <div className="bg-white/10 border border-white/20 rounded-xl p-6">
       {/* Header */}
-      <div className="flex items-center gap-3 mb-4 pb-4 border-b border-zinc-800">
+      <div className="flex items-center gap-3 mb-4 pb-4 border-b border-white/20">
         <Mail className="w-5 h-5 text-yellow-400" />
-        <h3 className="text-lg font-bold text-zinc-100">
+        <h3 className="text-lg font-bold text-zinc-300">
           Contact Details
         </h3>
       </div>
@@ -112,9 +112,9 @@ export function ContactDetailsForm({ data, onSave }) {
               value={formData.contactPerson}
               onChange={(e) => handleChange('contactPerson', e.target.value)}
               placeholder="Enter contact person name"
-              className={`w-full bg-zinc-800 border ${
-                errors.contactPerson ? 'border-red-400' : 'border-zinc-700'
-              } rounded-md pl-10 pr-4 py-2.5 text-zinc-100 placeholder-zinc-500 focus:outline-none focus:ring-2 focus:ring-yellow-400 focus:border-transparent transition-all`}
+              className={`w-full bg-white/10 border ${
+                errors.contactPerson ? 'border-red-400' : 'border-white/20'
+              } rounded-md pl-10 pr-4 py-2.5 text-zinc-200 placeholder-zinc-400 focus:outline-none focus:ring-2 focus:ring-yellow-400 focus:border-transparent transition-all`}
             />
           </div>
           {errors.contactPerson && (
@@ -130,16 +130,16 @@ export function ContactDetailsForm({ data, onSave }) {
           <Select value={formData.country} onValueChange={(value) => handleChange('country', value)}>
             <SelectTrigger
               id="country"
-              className={`bg-zinc-800 border-zinc-700 text-zinc-100 focus:ring-yellow-400 ${
+              className={`bg-white/10 border-white/20 text-zinc-300 focus:ring-yellow-400 ${
                 errors.country ? 'border-red-400' : ''
               }`}
             >
               <div className="flex items-center gap-2">
-                <Globe className="w-4 h-4 text-zinc-500" />
+                <Globe className="w-4 h-4 text-zinc-00" />
                 <SelectValue placeholder="Select country" />
               </div>
             </SelectTrigger>
-            <SelectContent className="bg-zinc-800 border-zinc-700 text-zinc-100 max-h-60">
+            <SelectContent className="bg-white/10 backdrop-blur-lg border-white/20 text-zinc-300 max-h-60">
               {countries.map((country) => (
                 <SelectItem key={country} value={country}>
                   {country}
@@ -165,9 +165,9 @@ export function ContactDetailsForm({ data, onSave }) {
               value={formData.phoneNumber}
               onChange={(e) => handleChange('phoneNumber', e.target.value)}
               placeholder="+1 (555) 123-4567"
-              className={`w-full bg-zinc-800 border ${
-                errors.phoneNumber ? 'border-red-400' : 'border-zinc-700'
-              } rounded-md pl-10 pr-4 py-2.5 text-zinc-100 placeholder-zinc-500 focus:outline-none focus:ring-2 focus:ring-yellow-400 focus:border-transparent transition-all`}
+              className={`w-full bg-white/10 border ${
+                errors.phoneNumber ? 'border-red-400' : 'border-white/20'
+              } rounded-md pl-10 pr-4 py-2.5 text-zinc-300 placeholder-zinc-200 focus:outline-none focus:ring-2 focus:ring-yellow-400 focus:border-transparent transition-all`}
             />
           </div>
           {errors.phoneNumber && (
@@ -189,9 +189,9 @@ export function ContactDetailsForm({ data, onSave }) {
               value={formData.email}
               onChange={(e) => handleChange('email', e.target.value)}
               placeholder="your.email@example.com"
-              className={`w-full bg-zinc-800 border ${
-                errors.email ? 'border-red-400' : 'border-zinc-700'
-              } rounded-md pl-10 pr-4 py-2.5 text-zinc-100 placeholder-zinc-500 focus:outline-none focus:ring-2 focus:ring-yellow-400 focus:border-transparent transition-all`}
+              className={`w-full bg-white/10 border ${
+                errors.email ? 'border-red-400' : 'border-white/20'
+              } rounded-md pl-10 pr-4 py-2.5 text-zinc-300 placeholder-zinc-200 focus:outline-none focus:ring-2 focus:ring-yellow-400 focus:border-transparent transition-all`}
             />
           </div>
           {errors.email && (

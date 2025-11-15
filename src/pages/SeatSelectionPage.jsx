@@ -76,7 +76,7 @@ export function SeatSelectionPage() {
       case 'premium':
         return 'bg-blue-400/20 text-blue-300 border-blue-400/40 hover:bg-blue-400/30 cursor-pointer';
       default:
-        return 'bg-zinc-900 text-zinc-300 border-zinc-700 hover:border-yellow-400/50 cursor-pointer hover:bg-zinc-800';
+        return 'bg-white/10 text-zinc-300 border-zinc-700 hover:border-yellow-400/50 cursor-pointer hover:bg-zinc-800';
     }
   };
 
@@ -105,12 +105,12 @@ export function SeatSelectionPage() {
   }
 
   return (
-    <div className="min-h-screen bg-black text-white pt-24 pb-12">
-      <div className="container mx-auto px-6 max-w-7xl">
+    <div className="min-h-screen text-white pt-30 pb-12">
+      <div className="container mx-auto px-8">
         {/* Success Overlay */}
         {showSuccess && (
           <div className="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 flex items-center justify-center animate-in fade-in duration-300">
-            <div className="bg-zinc-900 border border-emerald-400/30 rounded-xl p-8 max-w-md mx-4 animate-in zoom-in duration-300">
+            <div className="bg-white/10 border border-emerald-400/30 rounded-xl p-8 max-w-md mx-4 animate-in zoom-in duration-300">
               <div className="text-center">
                 <div className="w-16 h-16 bg-emerald-500 rounded-full flex items-center justify-center mx-auto mb-4">
                   <CheckCircle className="w-10 h-10 text-white" />
@@ -140,7 +140,7 @@ export function SeatSelectionPage() {
         <div className="grid lg:grid-cols-3 gap-6">
           {/* Seat Map - Left Column (2/3) */}
           <div className="lg:col-span-2">
-            <div className="bg-zinc-900 border border-zinc-800 rounded-xl p-6">
+            <div className="bg-black/70 border border-white/20 rounded-xl p-6">
               {/* Aircraft Front */}
               <div className="mb-6 text-center">
                 <div className="inline-block bg-zinc-800 rounded-full px-6 py-2 border border-zinc-700">
@@ -192,7 +192,7 @@ export function SeatSelectionPage() {
                     })}
 
                     {/* Aisle */}
-                    <div className="w-8 border-l border-r border-zinc-800 h-10 flex items-center justify-center">
+                    <div className="w-8 border-l border-r border-white/20 h-10 flex items-center justify-center">
                       <div className="text-zinc-700 text-xs">||</div>
                     </div>
 
@@ -227,7 +227,7 @@ export function SeatSelectionPage() {
           <div className="lg:col-span-1">
             <div className="sticky top-24 space-y-4">
               {/* Selection Summary */}
-              <div className="bg-zinc-900 border border-zinc-800 rounded-xl p-6">
+              <div className="bg-white/10 border border-white/20 rounded-xl p-6">
                 <h3 className="text-lg font-bold text-zinc-100 mb-4">Your Selection</h3>
                 <div className="space-y-3">
                   <div className="flex justify-between text-sm">
@@ -242,7 +242,7 @@ export function SeatSelectionPage() {
                   </div>
 
                   {selectedSeats.length > 0 && (
-                    <div className="pt-3 border-t border-zinc-800">
+                    <div className="pt-3 border-t border-white/20">
                       <p className="text-zinc-400 text-xs mb-2">Selected Seats:</p>
                       <div className="flex flex-wrap gap-2">
                         {selectedSeats.map(seat => (
@@ -263,11 +263,11 @@ export function SeatSelectionPage() {
               </div>
 
               {/* Legend */}
-              <div className="bg-zinc-900 border border-zinc-800 rounded-xl p-6">
+              <div className="bg-white/10 border border-white/20 rounded-xl p-6">
                 <h3 className="text-lg font-bold text-zinc-100 mb-4">Legend</h3>
                 <div className="space-y-3">
                   <div className="flex items-center gap-3">
-                    <div className="w-8 h-8 bg-zinc-900 border-2 border-zinc-700 rounded-lg flex items-center justify-center">
+                    <div className="w-8 h-8 bg-white/10 border-2 border-zinc-700 rounded-lg flex items-center justify-center">
                       <ArmchairIcon className="w-4 h-4 text-zinc-300" />
                     </div>
                     <span className="text-zinc-400 text-sm">Available</span>
@@ -298,7 +298,7 @@ export function SeatSelectionPage() {
                 <Button
                   onClick={() => navigate(returnRoute || '/booking/options', { state: location.state })}
                   variant="outline"
-                  className="w-full bg-zinc-800 border-zinc-700 text-zinc-300 hover:bg-zinc-700 hover:border-yellow-400"
+                  className="w-full bg-zinc-800 border-zinc-700 text-zinc-300 hover:bg-zinc-700 hover:border-yellow-400 hover:text-white"
                 >
                   Back to Options
                 </Button>

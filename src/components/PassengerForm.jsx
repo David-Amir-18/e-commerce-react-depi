@@ -92,9 +92,9 @@ export function PassengerForm({
   };
 
   return (
-    <div className="bg-zinc-900 border border-zinc-800 rounded-xl p-6 mb-4">
+    <div className="bg-white/10 border border-white/20 rounded-xl p-6 mb-4">
       {/* Header */}
-      <div className="flex items-center gap-3 mb-4 pb-4 border-b border-zinc-800">
+      <div className="flex items-center gap-3 mb-4 pb-4 border-b border-white/20">
         <User className="w-5 h-5 text-yellow-400" />
         <h3 className="text-lg font-bold text-zinc-100">
           Passenger {passengerNumber} ({passengerType})
@@ -127,13 +127,13 @@ export function PassengerForm({
           <Select value={formData.title} onValueChange={(value) => handleChange('title', value)}>
             <SelectTrigger
               id={`title-${passengerNumber}`}
-              className={`bg-zinc-800 border-zinc-700 text-zinc-100 focus:ring-yellow-400 ${
+              className={`bg-white/10 border-zinc-700 text-zinc-100 focus:ring-yellow-400 ${
                 errors.title ? 'border-red-400' : ''
               }`}
             >
               <SelectValue placeholder="Select title" />
             </SelectTrigger>
-            <SelectContent className="bg-zinc-800 border-zinc-700 text-zinc-100">
+            <SelectContent className="bg-white/5 backdrop-blur-lg border-zinc-700 text-zinc-100">
               <SelectItem value="Mr">Mr</SelectItem>
               <SelectItem value="Mrs">Mrs</SelectItem>
               <SelectItem value="Ms">Ms</SelectItem>
@@ -157,9 +157,9 @@ export function PassengerForm({
             value={formData.firstName}
             onChange={(e) => handleChange('firstName', e.target.value)}
             placeholder="Enter first name"
-            className={`w-full bg-zinc-800 border ${
+            className={`w-full bg-white/10 border ${
               errors.firstName ? 'border-red-400' : 'border-zinc-700'
-            } rounded-md px-4 py-2.5 text-zinc-100 placeholder-zinc-500 focus:outline-none focus:ring-2 focus:ring-yellow-400 focus:border-transparent transition-all`}
+            } rounded-md px-4 py-2.5 text-zinc-100 placeholder-zinc-400 focus:outline-none focus:ring-2 focus:ring-yellow-400 focus:border-transparent transition-all`}
           />
           {errors.firstName && (
             <p className="text-red-400 text-xs mt-1">{errors.firstName}</p>
@@ -177,9 +177,9 @@ export function PassengerForm({
             value={formData.lastName}
             onChange={(e) => handleChange('lastName', e.target.value)}
             placeholder="Enter last name"
-            className={`w-full bg-zinc-800 border ${
+            className={`w-full bg-white/10 border ${
               errors.lastName ? 'border-red-400' : 'border-zinc-700'
-            } rounded-md px-4 py-2.5 text-zinc-100 placeholder-zinc-500 focus:outline-none focus:ring-2 focus:ring-yellow-400 focus:border-transparent transition-all`}
+            } rounded-md px-4 py-2.5 text-zinc-100 placeholder-zinc-400 focus:outline-none focus:ring-2 focus:ring-yellow-400 focus:border-transparent transition-all`}
           />
           {errors.lastName && (
             <p className="text-red-400 text-xs mt-1">{errors.lastName}</p>

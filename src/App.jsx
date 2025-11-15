@@ -24,6 +24,8 @@ import SeatSelectionPage from "./pages/SeatSelectionPage";
 import FoodSelectionPage from "./pages/FoodSelectionPage";
 import BaggageSelectionPage from "./pages/BaggageSelectionPage";
 import PaymentPage from "./pages/PaymentPage";
+import About from "./pages/About";
+import Contact from "./pages/Contact";
 
 function App() {
   const googleClientId = import.meta.env.VITE_GOOGLE_CLIENT_ID;
@@ -37,6 +39,8 @@ function App() {
         <Routes>
           <Route index element={<Landing />}></Route>
           <Route path="/" element={<Landing />}></Route>
+          <Route path="/about" element={<About />}></Route>
+          <Route path="/contact" element={<Contact />}></Route>
           <Route path="/signin" element={<SignIn />}></Route>
           <Route path="/register" element={<Register />}></Route>
           <Route path="/forgetpass" element={<ForgetPass />}></Route>

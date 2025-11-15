@@ -126,12 +126,12 @@ export function BaggageSelectionPage() {
   }
 
   return (
-    <div className="min-h-screen bg-black text-white pt-24 pb-12">
-      <div className="container mx-auto px-6 max-w-7xl">
+    <div className="min-h-screen text-white pt-30 pb-12">
+      <div className="container mx-auto px-8">
         {/* Success Overlay */}
         {showSuccess && (
           <div className="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 flex items-center justify-center animate-in fade-in duration-300">
-            <div className="bg-zinc-900 border border-emerald-400/30 rounded-xl p-8 max-w-md mx-4 animate-in zoom-in duration-300">
+            <div className="bg-white/10 border border-emerald-400/30 rounded-xl p-8 max-w-md mx-4 animate-in zoom-in duration-300">
               <div className="text-center">
                 <div className="w-16 h-16 bg-emerald-500 rounded-full flex items-center justify-center mx-auto mb-4">
                   <CheckCircle className="w-10 h-10 text-white" />
@@ -171,10 +171,10 @@ export function BaggageSelectionPage() {
                 return (
                   <div
                     key={option.id}
-                    className={`bg-zinc-900 border-2 rounded-xl overflow-hidden transition-all hover:shadow-lg ${
+                    className={`bg-white/10 border-2 rounded-xl overflow-hidden transition-all hover:shadow-lg ${
                       count > 0
                         ? 'border-yellow-400 shadow-yellow-400/20'
-                        : 'border-zinc-800 hover:border-zinc-700'
+                        : 'border-white/20 hover:border-zinc-700'
                     } ${isPopular ? 'relative' : ''}`}
                   >
                     {/* Recommended Badge */}
@@ -208,10 +208,10 @@ export function BaggageSelectionPage() {
 
                       <div className="mb-3">
                         <div className="flex items-center gap-2 mb-1">
-                          <Badge className="bg-zinc-800 text-zinc-300 border-zinc-700 text-xs">
+                          <Badge className="bg-white/20 text-zinc-300 border-zinc-700 text-xs">
                             {option.weight}
                           </Badge>
-                          <Badge className="bg-zinc-800 text-zinc-300 border-zinc-700 text-xs">
+                          <Badge className="bg-white/20 text-zinc-300 border-zinc-700 text-xs">
                             {option.pieces}
                           </Badge>
                         </div>
@@ -230,7 +230,7 @@ export function BaggageSelectionPage() {
                       </ul>
 
                       {/* Price */}
-                      <div className="text-center mb-3 py-2 border-t border-zinc-800">
+                      <div className="text-center mb-3 py-2 border-t border-white/20">
                         <span className="text-yellow-400 text-2xl font-bold">
                           {option.price === 0 ? 'Included' : `$${option.price}`}
                         </span>
@@ -254,7 +254,7 @@ export function BaggageSelectionPage() {
             </div>
 
             {/* Passenger-wise Selection */}
-            <div className="bg-zinc-900 border border-zinc-800 rounded-xl p-6">
+            <div className="bg-white/10 border border-white/20 rounded-xl p-6">
               <h3 className="text-lg font-bold text-zinc-100 mb-4">Assign Baggage to Each Passenger</h3>
               <div className="space-y-3">
                 {Array.from({ length: totalPassengers }, (_, i) => i).map(index => {
@@ -264,7 +264,7 @@ export function BaggageSelectionPage() {
                     : `Passenger ${index + 1}`;
 
                   return (
-                    <div key={index} className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 p-4 bg-zinc-800/50 rounded-lg">
+                    <div key={index} className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 p-4 bg-white/20/50 rounded-lg">
                       <div>
                         <p className="font-semibold text-zinc-100">{passengerName}</p>
                         <p className="text-zinc-500 text-sm">
@@ -301,7 +301,7 @@ export function BaggageSelectionPage() {
           <div className="lg:col-span-1">
             <div className="sticky top-24 space-y-4">
               {/* Cost Summary */}
-              <div className="bg-zinc-900 border border-zinc-800 rounded-xl p-6">
+              <div className="bg-white/10 border border-white/20 rounded-xl p-6">
                 <h3 className="text-lg font-bold text-zinc-100 mb-4">Cost Summary</h3>
 
                 <div className="space-y-2 mb-4">
@@ -322,7 +322,7 @@ export function BaggageSelectionPage() {
                   })}
                 </div>
 
-                <div className="pt-4 border-t border-zinc-800">
+                <div className="pt-4 border-t border-white/20">
                   <div className="flex justify-between items-center">
                     <span className="text-zinc-100 font-semibold">Total</span>
                     <span className="text-yellow-400 text-xl font-bold">${getTotalCost()}</span>
@@ -331,7 +331,7 @@ export function BaggageSelectionPage() {
               </div>
 
               {/* Info */}
-              <div className="bg-zinc-900 border border-zinc-800 rounded-xl p-6">
+              <div className="bg-white/10 border border-white/20 rounded-xl p-6">
                 <h3 className="text-lg font-bold text-zinc-100 mb-3">Baggage Policy</h3>
                 <ul className="space-y-2 text-zinc-400 text-sm">
                   <li className="flex items-start gap-2">
@@ -354,7 +354,7 @@ export function BaggageSelectionPage() {
                 <Button
                   onClick={() => navigate(returnRoute || '/booking/options', { state: location.state })}
                   variant="outline"
-                  className="w-full bg-zinc-800 border-zinc-700 text-zinc-300 hover:bg-zinc-700 hover:border-yellow-400"
+                  className="w-full bg-white/20 border-zinc-700 text-zinc-300 hover:bg-zinc-700 hover:border-yellow-400 hover:text-white"
                 >
                   Back to Options
                 </Button>

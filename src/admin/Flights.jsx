@@ -322,7 +322,7 @@ const Flights = () => {
 
   if (loading) {
     return (
-      <div className="p-6 flex items-center justify-center min-h-screen bg-black text-white">
+      <div className="p-6 flex items-center justify-center min-h-screen bg- text-white">
         <div className="text-center">
           <Plane className="animate-bounce text-amber-400 mx-auto mb-4" size={40} />
           <p className="text-gray-400">Loading flights...</p>
@@ -332,7 +332,7 @@ const Flights = () => {
   }
 
   return (
-    <div className="relative min-h-screen overflow-hidden bg-black">
+    <div className="relative min-h-screen overflow-hidden bg-">
       <div className="absolute inset-0 bg-gradient-radial from-amber-900/20 via-black to-black pointer-events-none"></div>
       <video className="fixed top-0 w-full h-full object-cover blur-[50px]" autoPlay muted loop playsInline>
         <source src={goldParticles} />
@@ -541,8 +541,8 @@ const Flights = () => {
 
         {/* Modal - Responsive */}
         {showModal && (
-          <div className="fixed inset-0 bg-black/50 backdrop-blur-sm flex items-center justify-center z-50 p-4">
-            <div className="bg-black/80 backdrop-blur-md border border-amber-500/20 rounded-2xl p-4 sm:p-6 max-w-2xl w-full shadow-lg max-h-[90vh] overflow-y-auto">
+          <div className="fixed inset-0 bg-/50 backdrop-blur-sm flex items-center justify-center z-50 p-4">
+            <div className="bg-/80 backdrop-blur-md border border-amber-500/20 rounded-2xl p-4 sm:p-6 max-w-2xl w-full shadow-lg max-h-[90vh] overflow-y-auto">
               <div className="flex items-center justify-between mb-4 sm:mb-6">
                 <h2 className="text-xl sm:text-2xl font-semibold text-amber-400">
                   {editingFlight ? "Edit Flight" : "Add New Flight"}
@@ -589,8 +589,8 @@ const Flights = () => {
 
         {/* Alert Modal - Responsive */}
         {alert && (
-          <div className="fixed inset-0 bg-black/50 backdrop-blur-sm flex items-center justify-center z-50 p-4">
-            <div className="bg-black/80 backdrop-blur-md border border-amber-500/20 rounded-2xl p-6 sm:p-8 max-w-md w-full shadow-lg">
+          <div className="fixed inset-0 bg-/50 backdrop-blur-sm flex items-center justify-center z-50 p-4">
+            <div className="bg-/80 backdrop-blur-md border border-amber-500/20 rounded-2xl p-6 sm:p-8 max-w-md w-full shadow-lg">
               <div className="flex flex-col items-center text-center">
                 <div className="mb-4">{getAlertIcon(alert.type)}</div>
                 <h2 className="text-xl sm:text-2xl font-semibold text-amber-400 mb-3">{alert.title}</h2>

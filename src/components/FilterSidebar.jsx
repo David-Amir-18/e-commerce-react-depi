@@ -66,7 +66,7 @@ const FilterSidebar = ({ filters, setFilters, onApplyFilters }) => {
 
 
   return (
-    <aside className="bg-zinc-900 rounded-xl border border-zinc-800 p-6 w-full lg:sticky top-[5vh]">
+    <aside className="bg-white/10 rounded-xl shadow-2xl border border-white/20 p-6 w-full lg:sticky top-[50px]">
       <div className="space-y-6">
         {/* Filter Results Header */}
         <div>
@@ -80,7 +80,7 @@ const FilterSidebar = ({ filters, setFilters, onApplyFilters }) => {
           </Button>
         </div>
 
-        <Separator className="bg-zinc-800" />
+        <Separator className="bg-white/40" />
 
         {/* STOPS FILTER (Filled In) */}
         <div className="space-y-3">
@@ -92,7 +92,7 @@ const FilterSidebar = ({ filters, setFilters, onApplyFilters }) => {
                   id={`stop-${stopOption}`}
                   checked={filters.stops.includes(stopOption)}
                   onCheckedChange={() => handleCheckboxChange('stops', stopOption)}
-                  className="border-zinc-700 data-[state=checked]:bg-yellow-400 data-[state=checked]:border-yellow-400 data-[state=checked]:text-zinc-950" 
+                  className="border-amber-300 data-[state=checked]:bg-yellow-400 data-[state=checked]:border-yellow-400 data-[state=checked]:text-zinc-950" 
                 />
                 <Label htmlFor={`stop-${stopOption}`} className="cursor-pointer text-zinc-300 hover:text-zinc-100">
                   {stopOption}
@@ -102,7 +102,7 @@ const FilterSidebar = ({ filters, setFilters, onApplyFilters }) => {
           </div>
         </div>
 
-        <Separator className="bg-zinc-800" />
+        <Separator className="bg-white/40" />
 
         {/* PRICE RANGE FILTER (Filled In) */}
         <div className="space-y-3">
@@ -115,7 +115,7 @@ const FilterSidebar = ({ filters, setFilters, onApplyFilters }) => {
               step="50"
               value={filters.priceRange[1]} // Control the slider by the max price
               onChange={handlePriceChange}   // Use our new handler
-              className="w-full h-2 bg-zinc-800 rounded-lg appearance-none cursor-pointer accent-yellow-400"
+              className="w-full h-2 bg-white/20 rounded-lg appearance-none cursor-pointer accent-yellow-400"
             />
           </div>
           <div className="flex justify-between text-sm">
@@ -124,7 +124,7 @@ const FilterSidebar = ({ filters, setFilters, onApplyFilters }) => {
           </div>
         </div>
 
-        <Separator className="bg-zinc-800" />
+        <Separator className="bg-white/40" />
 
         {/* AIRLINES FILTER (Filled In) */}
         <div className="space-y-3">
@@ -136,7 +136,7 @@ const FilterSidebar = ({ filters, setFilters, onApplyFilters }) => {
                   id={`airline-${airline}`}
                   checked={filters.airlines.includes(airline)}
                   onCheckedChange={() => handleCheckboxChange('airlines', airline)}
-                  className="border-zinc-700 data-[state=checked]:bg-yellow-400 data-[state=checked]:border-yellow-400 data-[state=checked]:text-zinc-950"
+                  className="border-amber-300 data-[state=checked]:bg-yellow-400 data-[state=checked]:border-yellow-400 data-[state=checked]:text-zinc-950"
                 />
                 <Label htmlFor={`airline-${airline}`} className="cursor-pointer text-zinc-300 hover:text-zinc-100">
                   {airline}
@@ -146,7 +146,7 @@ const FilterSidebar = ({ filters, setFilters, onApplyFilters }) => {
           </div>
         </div>
 
-        <Separator className="bg-zinc-800" />
+        <Separator className="bg-white/40" />
 
         {/* DEPARTURE TIME FILTER (Filled In) */}
         <div className="space-y-3">
@@ -158,7 +158,7 @@ const FilterSidebar = ({ filters, setFilters, onApplyFilters }) => {
                   id={`time-${timeOption.value}`}
                   checked={filters.departureTime.includes(timeOption.value)}
                   onCheckedChange={() => handleCheckboxChange('departureTime', timeOption.value)}
-                  className="border-zinc-700 data-[state=checked]:bg-yellow-400 data-[state=checked]:border-yellow-400 data-[state=checked]:text-zinc-950"
+                  className="border-amber-300 data-[state=checked]:bg-yellow-400 data-[state=checked]:border-yellow-400 data-[state=checked]:text-zinc-950"
                 />
                 <Label htmlFor={`time-${timeOption.value}`} className="cursor-pointer text-zinc-300 hover:text-zinc-100">
                   {timeOption.label}
@@ -168,7 +168,7 @@ const FilterSidebar = ({ filters, setFilters, onApplyFilters }) => {
           </div>
         </div>
 
-        <Separator className="bg-zinc-800" />
+        <Separator className="bg-white/40" />
 
         {/* CABIN CLASS FILTER (Filled In) */}
         <div className="space-y-3">
@@ -180,7 +180,7 @@ const FilterSidebar = ({ filters, setFilters, onApplyFilters }) => {
                   id={`cabin-${cabinClass}`}
                   checked={filters.cabinClass.includes(cabinClass)}
                   onCheckedChange={() => handleCheckboxChange('cabinClass', cabinClass)}
-                  className="border-zinc-700 data-[state=checked]:bg-yellow-400 data-[state=checked]:border-yellow-400 data-[state=checked]:text-zinc-950"
+                  className="border-amber-300 data-[state=checked]:bg-yellow-400 data-[state=checked]:border-yellow-400 data-[state=checked]:text-zinc-950"
                 />
                 <Label htmlFor={`cabin-${cabinClass}`} className="cursor-pointer text-zinc-300 hover:text-zinc-100">
                   {cabinClass}
