@@ -212,41 +212,39 @@ const Users = () => {
     );
   };
 
-  const clearAllData = () => {
-    showAlert(
-      'warning',
-      'Clear All User Data',
-      `This will delete all ${users.length} users. Are you absolutely sure?`,
-      async () => {
-        if (users.length === 0) {
-          showAlert('info', 'No Data', 'There are no users to delete.');
-          return;
-        }
+  // const clearAllData = () => {
+  //   showAlert(
+  //     'warning',
+  //     'Clear All User Data',
+  //     `This will delete all ${users.length} users. Are you absolutely sure?`,
+  //     async () => {
+  //       if (users.length === 0) {
+  //         showAlert('info', 'No Data', 'There are no users to delete.');
+  //         return;
+  //       }
+  //       let successCount = 0;
+  //       let errorCount = 0; 
+  //       for (const user of users) {
+  //         try {
+  //           await usersAPI.delete(user._id);
+  //           successCount++;
+  //         } catch (error) {
+  //           console.error(`Failed to delete user ${user.name}:`, error);
+  //           errorCount++;
+  //         }
+  //       }
         
-        let successCount = 0;
-        let errorCount = 0;
+  //       await fetchUsers();
         
-        for (const user of users) {
-          try {
-            await usersAPI.delete(user._id);
-            successCount++;
-          } catch (error) {
-            console.error(`Failed to delete user ${user.name}:`, error);
-            errorCount++;
-          }
-        }
-        
-        await fetchUsers();
-        
-        if (errorCount === 0) {
-          showAlert('success', 'All Cleared', `Successfully deleted all ${successCount} users.`);
-        } else {
-          showAlert('warning', 'Partially Completed', `Deleted ${successCount} users. ${errorCount} failed.`);
-        }
-      },
-      true
-    );
-  };
+  //       if (errorCount === 0) {
+  //         showAlert('success', 'All Cleared', `Successfully deleted all ${successCount} users.`);
+  //       } else {
+  //         showAlert('warning', 'Partially Completed', `Deleted ${successCount} users. ${errorCount} failed.`);
+  //       }
+  //     },
+  //     true
+  //   );
+  // };
 
   const showUserDetails = (user) => {
     const formatDate = (dateString) => {
@@ -341,9 +339,9 @@ User ID: ${user._id}
             <p className="text-sm sm:text-base text-gray-300">Manage registered users and their accounts</p>
           </div>
           <div className="flex flex-col sm:flex-row gap-2">
-            <button onClick={clearAllData} className="border border-red-400 text-red-400 hover:bg-red-500/10 px-4 py-2 rounded-lg transition-all text-sm sm:text-base">
+            {/* <button onClick={clearAllData} className="border border-red-400 text-red-400 hover:bg-red-500/10 px-4 py-2 rounded-lg transition-all text-sm sm:text-base">
               Clear All Data
-            </button>
+            </button> */}
             <button onClick={() => { setShowModal(true); resetForm(); setEditingUser(null); }} className="bg-amber-500 hover:bg-amber-400 text-black font-semibold px-4 py-2 rounded-lg flex items-center justify-center gap-2 transition-all text-sm sm:text-base">
               <UserPlus size={20} /> Add User
             </button>

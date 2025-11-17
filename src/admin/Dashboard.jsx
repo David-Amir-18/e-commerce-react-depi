@@ -1,7 +1,9 @@
 import React from "react";
 import { Plane, Users, BookOpen, DollarSign, TrendingUp } from "lucide-react";
 import goldParticles from "./assets/gold-particle.1920x1080.mp4";
+import { useAuth } from "@/contexts/AuthContext";
 const Dashboard = () => {
+  const { logout, user } = useAuth();
   const stats = [
     {
       title: "Total Flights",
@@ -85,7 +87,7 @@ const Dashboard = () => {
         {/* Header */}
         <div>
           <h1 className="text-3xl font-bold text-white mb-2">
-            Welcome back, <span className="text-amber-400">Admin</span>
+            Welcome back, <span className="text-amber-400"> {user?.name || "Admin"}</span>
           </h1>
           <p className="text-gray-300">
             Here's what's happening with your flights today.
