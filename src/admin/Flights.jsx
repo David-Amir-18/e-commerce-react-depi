@@ -540,57 +540,60 @@ const Flights = () => {
         )}
 
         {/* Modal - Responsive */}
-        {showModal && (
-          <div className="fixed inset-0 bg-/50 backdrop-blur-sm flex items-center justify-center z-50 p-4">
-            <div className="bg-/80 backdrop-blur-md border border-amber-500/20 rounded-2xl p-4 sm:p-6 max-w-2xl w-full shadow-lg max-h-[90vh] overflow-y-auto">
-              <div className="flex items-center justify-between mb-4 sm:mb-6">
-                <h2 className="text-xl sm:text-2xl font-semibold text-amber-400">
-                  {editingFlight ? "Edit Flight" : "Add New Flight"}
-                </h2>
-                <button onClick={() => { setShowModal(false); setEditingFlight(null); resetForm(); }}
-                  className="text-gray-400 hover:text-amber-400 transition-colors">
-                  <X size={24} />
-                </button>
-              </div>
-              <div className="space-y-4 sm:space-y-6">
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6">
-                  {[
-                    ["Flight Number", "flightNumber", "text", "EG123"],
-                    ["Origin", "origin", "text", "Cairo"],
-                    ["Destination", "destination", "text", "Paris"],
-                    ["Price ($)", "price", "number", "350"],
-                    ["Departure Time", "departureTime", "datetime-local", ""],
-                    ["Arrival Time", "arrivalTime", "datetime-local", ""],
-                    ["Total Seats", "totalSeats", "number", "200"],
-                    ["Available Seats", "availableSeats", "number", "200"], 
-                  ].map(([label, key, type, placeholder]) => (
-                    <div key={key}>
-                      <label className="block text-sm font-medium text-amber-300 mb-2">{label} *</label>
-                      <input type={type} value={formData[key]} placeholder={placeholder}
-                        onChange={(e) => setFormData({ ...formData, [key]: e.target.value })}
-                        className="w-full bg-white/10 border border-white/20 text-white placeholder-gray-500 rounded-lg px-3 py-2 focus:ring-2 focus:ring-amber-400 outline-none text-sm sm:text-base"
-                      />
-                    </div>
-                  ))}
-                </div>
-                <div className="flex flex-col sm:flex-row gap-3 pt-4">
-                  <button onClick={handleSubmit} className="bg-amber-500 hover:bg-amber-400 text-black font-semibold px-4 py-2 sm:py-3 rounded-lg flex-1 transition-all text-sm sm:text-base">
-                    {editingFlight ? "Update Flight" : "Add Flight"}
-                  </button>
-                  <button onClick={() => { setShowModal(false); setEditingFlight(null); resetForm(); }}
-                    className="border border-white/20 hover:bg-white/10 text-white rounded-lg px-4 py-2 sm:py-3 flex-1 transition-all text-sm sm:text-base">
-                    Cancel
-                  </button>
-                </div>
-              </div>
+       {showModal && (
+  <div className="fixed inset-0 bg-black/50 backdrop-blur-sm flex items-center justify-center z-50 p-4">
+    <div className="bg-slate-800/80 backdrop-blur-md border border-amber-500/20 rounded-2xl p-4 sm:p-6 max-w-2xl w-full shadow-lg max-h-[90vh] overflow-y-auto">
+      <div className="flex items-center justify-between mb-4 sm:mb-6">
+        <h2 className="text-xl sm:text-2xl font-semibold text-amber-400">
+          {editingFlight ? "Edit Flight" : "Add New Flight"}
+        </h2>
+        <button onClick={() => { setShowModal(false); setEditingFlight(null); resetForm(); }}
+          className="text-gray-400 hover:text-amber-400 transition-colors">
+          <X size={24} />
+        </button>
+      </div>
+      <div className="space-y-4 sm:space-y-6">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6">
+          {[
+            ["Flight Number", "flightNumber", "text", "EG123"],
+            ["Origin", "origin", "text", "Cairo"],
+            ["Destination", "destination", "text", "Paris"],
+            ["Price ($)", "price", "number", "350"],
+            ["Departure Time", "departureTime", "datetime-local", ""],
+            ["Arrival Time", "arrivalTime", "datetime-local", ""],
+            ["Total Seats", "totalSeats", "number", "200"],
+            ["Available Seats", "availableSeats", "number", "200"], 
+          ].map(([label, key, type, placeholder]) => (
+            <div key={key}>
+              <label className="block text-sm font-medium text-amber-300 mb-2">{label} *</label>
+              <input 
+                type={type} 
+                value={formData[key]} 
+                placeholder={placeholder}
+                onChange={(e) => setFormData({ ...formData, [key]: e.target.value })}
+                className="w-full bg-white/10 border border-white/20 text-white placeholder-gray-400 rounded-lg px-3 py-2 focus:ring-2 focus:ring-amber-400 outline-none text-sm sm:text-base"
+              />
             </div>
-          </div>
-        )}
+          ))}
+        </div>
+        <div className="flex flex-col sm:flex-row gap-3 pt-4">
+          <button onClick={handleSubmit} className="bg-amber-500 hover:bg-amber-400 text-black font-semibold px-4 py-2 sm:py-3 rounded-lg flex-1 transition-all text-sm sm:text-base">
+            {editingFlight ? "Update Flight" : "Add Flight"}
+          </button>
+          <button onClick={() => { setShowModal(false); setEditingFlight(null); resetForm(); }}
+            className="border border-white/20 hover:bg-white/10 text-white rounded-lg px-4 py-2 sm:py-3 flex-1 transition-all text-sm sm:text-base">
+            Cancel
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+)}
 
         {/* Alert Modal - Responsive */}
-        {alert && (
-          <div className="fixed inset-0 bg-/50 backdrop-blur-sm flex items-center justify-center z-50 p-4">
-            <div className="bg-/80 backdrop-blur-md border border-amber-500/20 rounded-2xl p-6 sm:p-8 max-w-md w-full shadow-lg">
+         {alert && (
+          <div className="fixed inset-0 bg-black/50 backdrop-blur-sm flex items-center justify-center z-50 p-4">
+            <div className="bg-slate-800/80 backdrop-blur-md border border-amber-500/20 rounded-2xl p-6 sm:p-8 max-w-md w-full shadow-lg">
               <div className="flex flex-col items-center text-center">
                 <div className="mb-4">{getAlertIcon(alert.type)}</div>
                 <h2 className="text-xl sm:text-2xl font-semibold text-amber-400 mb-3">{alert.title}</h2>

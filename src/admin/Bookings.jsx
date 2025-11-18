@@ -379,8 +379,8 @@ const Bookings = () => {
 
         {/* Alert Modal */}
         {alert && (
-          <div className="fixed inset-0 bg-/50 backdrop-blur-sm flex items-center justify-center z-50 p-4">
-            <div className="bg-/80 backdrop-blur-md border border-amber-500/20 rounded-2xl p-6 sm:p-8 max-w-md w-full shadow-lg">
+          <div className="fixed inset-0 bg-black/50 backdrop-blur-sm flex items-center justify-center z-50 p-4">
+            <div className="bg-slate-800/80 backdrop-blur-md border border-amber-500/20 rounded-2xl p-6 sm:p-8 max-w-md w-full shadow-lg">
               <div className="flex flex-col items-center text-center">
                 <div className="mb-4">{getAlertIcon(alert.type)}</div>
                 <h2 className="text-xl sm:text-2xl font-semibold text-amber-400 mb-3">{alert.title}</h2>

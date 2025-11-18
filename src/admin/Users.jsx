@@ -185,66 +185,6 @@ const Users = () => {
     );
   };
 
-  const toggleUserStatus = async (user) => {
-    showAlert(
-      'warning',
-      `${user.isActive ? 'Deactivate' : 'Activate'} User?`,
-      `Are you sure you want to ${user.isActive ? 'deactivate' : 'activate'} ${user.name}?`,
-      async () => {
-        try {
-          const response = await usersAPI.update(user._id, { isActive: !user.isActive });
-
-          if (response.success) {
-            setUsers(users.map(u =>
-              u._id === user._id ? response.data : u
-            ));
-            showAlert('success', 'User Updated', `User has been ${user.isActive ? 'deactivated' : 'activated'} successfully.`);
-          } else {
-            showAlert('error', 'Update Failed', response.message || 'Failed to update user.');
-          }
-        } catch (error) {
-          console.error('Error updating user:', error);
-          const errorMsg = error.message || 'Failed to update user.';
-          showAlert('error', 'Error', errorMsg);
-        }
-      },
-      true
-    );
-  };
-
-  // const clearAllData = () => {
-  //   showAlert(
-  //     'warning',
-  //     'Clear All User Data',
-  //     `This will delete all ${users.length} users. Are you absolutely sure?`,
-  //     async () => {
-  //       if (users.length === 0) {
-  //         showAlert('info', 'No Data', 'There are no users to delete.');
-  //         return;
-  //       }
-  //       let successCount = 0;
-  //       let errorCount = 0; 
-  //       for (const user of users) {
-  //         try {
-  //           await usersAPI.delete(user._id);
-  //           successCount++;
-  //         } catch (error) {
-  //           console.error(`Failed to delete user ${user.name}:`, error);
-  //           errorCount++;
-  //         }
-  //       }
-        
-  //       await fetchUsers();
-        
-  //       if (errorCount === 0) {
-  //         showAlert('success', 'All Cleared', `Successfully deleted all ${successCount} users.`);
-  //       } else {
-  //         showAlert('warning', 'Partially Completed', `Deleted ${successCount} users. ${errorCount} failed.`);
-  //       }
-  //     },
-  //     true
-  //   );
-  // };
 
   const showUserDetails = (user) => {
     const formatDate = (dateString) => {
@@ -339,9 +279,6 @@ User ID: ${user._id}
             <p className="text-sm sm:text-base text-gray-300">Manage registered users and their accounts</p>
           </div>
           <div className="flex flex-col sm:flex-row gap-2">
-            {/* <button onClick={clearAllData} className="border border-red-400 text-red-400 hover:bg-red-500/10 px-4 py-2 rounded-lg transition-all text-sm sm:text-base">
-              Clear All Data
-            </button> */}
             <button onClick={() => { setShowModal(true); resetForm(); setEditingUser(null); }} className="bg-amber-500 hover:bg-amber-400 text-black font-semibold px-4 py-2 rounded-lg flex items-center justify-center gap-2 transition-all text-sm sm:text-base">
               <UserPlus size={20} /> Add User
             </button>
@@ -396,9 +333,6 @@ User ID: ${user._id}
                   </button>
                   <button onClick={() => handleEdit(user)} className="p-1.5 sm:p-2 text-blue-400 hover:bg-white/10 rounded-lg transition-colors" title="Edit User">
                     <Edit size={14} className="sm:w-4 sm:h-4" />
-                  </button>
-                  <button onClick={() => toggleUserStatus(user)} className="p-1.5 sm:p-2 text-amber-400 hover:bg-white/10 rounded-lg transition-colors" title={user.isActive ? 'Deactivate' : 'Activate'}>
-                    {user.isActive ? 'X' : '✅'}
                   </button>
                   <button onClick={() => handleDelete(user._id)} className="p-1.5 sm:p-2 text-red-400 hover:bg-white/10 rounded-lg transition-colors" title="Delete User">
                     <Trash2 size={14} className="sm:w-4 sm:h-4" />
@@ -475,7 +409,7 @@ User ID: ${user._id}
         {/* Add/Edit User Modal */}
         {showModal && (
           <div className="fixed inset-0 bg-black/50 backdrop-blur-sm flex items-center justify-center z-50 p-4">
-            <div className="bg-black/80 backdrop-blur-md border border-amber-500/20 rounded-2xl p-4 sm:p-6 max-w-md w-full shadow-lg max-h-[90vh] overflow-y-auto">
+            <div className="bg-slate-800/80 backdrop-blur-md border border-amber-500/20 rounded-2xl p-4 sm:p-6 max-w-md w-full shadow-lg max-h-[90vh] overflow-y-auto">
               <div className="flex items-center justify-between mb-4 sm:mb-6">
                 <h2 className="text-xl sm:text-2xl font-semibold text-amber-400">
                   {editingUser ? 'Edit User' : 'Add New User'}
@@ -595,7 +529,7 @@ User ID: ${user._id}
         {/* Alert Modal */}
         {alert && (
           <div className="fixed inset-0 bg-black/50 backdrop-blur-sm flex items-center justify-center z-50 p-4">
-            <div className="bg-black/80 backdrop-blur-md border border-amber-500/20 rounded-2xl p-6 sm:p-8 max-w-md w-full shadow-lg">
+            <div className="bg-slate-800/80 backdrop-blur-md border border-amber-500/20 rounded-2xl p-6 sm:p-8 max-w-md w-full shadow-lg">
               <div className="flex flex-col items-center text-center">
                 <div className="mb-4">{getAlertIcon(alert.type)}</div>
                 <h2 className="text-xl sm:text-2xl font-semibold text-amber-400 mb-3">{alert.title}</h2>
