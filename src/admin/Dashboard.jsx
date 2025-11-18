@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Plane, Users, BookOpen, DollarSign, RefreshCw } from "lucide-react";
+import { Plane, Users, BookOpen, DollarSign, RefreshCw ,BarChart3} from "lucide-react";
 import goldParticles from "./assets/gold-particle.1920x1080.mp4";
 import { useAuth } from "@/contexts/AuthContext";
 import { flightsAPI, bookingsAPI, usersAPI } from "@/services/api";
@@ -92,21 +92,15 @@ const Dashboard = () => {
   };
 
   if (loading) {
-    return (
-      <div className="relative min-h-screen overflow-hidden bg-black">
-        <div className="absolute inset-0 bg-gradient-radial from-amber-900/20 via-black to-black pointer-events-none"></div>
-        <video className="fixed top-0 w-full h-full object-cover blur-[50px]" autoPlay muted loop playsInline>
-          <source src={goldParticles} />
-        </video>
-        <div className="relative z-10 p-6 flex items-center justify-center min-h-screen">
+      return (
+        <div className="p-6 flex items-center justify-center min-h-screen bg- text-white">
           <div className="text-center">
-            <RefreshCw className="animate-spin text-amber-400 mx-auto mb-4" size={40} />
-            <p className="text-gray-400">Loading dashboard data...</p>
+            <BarChart3 className="animate-bounce text-amber-400 mx-auto mb-4" size={40} />
+            <p className="text-gray-400">Loading Dashboard...</p>
           </div>
         </div>
-      </div>
-    );
-  }
+      );
+    }
 
   return (
     <div className="relative min-h-screen overflow-hidden bg-black">
