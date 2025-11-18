@@ -3,6 +3,7 @@ import { flightsAPI } from "../services/api";
 import goldParticles from "./assets/gold-particle.1920x1080.mp4";
 import { Plus, Search, Edit, Trash2, Eye, Plane, Calendar, Clock, X, AlertCircle, CheckCircle, Info } from "lucide-react";
 import Pagination from "./components/Pagination";
+import AlertModal from "./components/AlertModal";
 
 const Flights = () => {
   const [flights, setFlights] = useState([]);
@@ -591,33 +592,15 @@ const Flights = () => {
 )}
 
         {/* Alert Modal - Responsive */}
-         {alert && (
-          <div className="fixed inset-0 bg-black/50 backdrop-blur-sm flex items-center justify-center z-50 p-4">
-            <div className="bg-slate-800/80 backdrop-blur-md border border-amber-500/20 rounded-2xl p-6 sm:p-8 max-w-md w-full shadow-lg">
-              <div className="flex flex-col items-center text-center">
-                <div className="mb-4">{getAlertIcon(alert.type)}</div>
-                <h2 className="text-xl sm:text-2xl font-semibold text-amber-400 mb-3">{alert.title}</h2>
-                <p className="text-sm sm:text-base text-gray-300 mb-6 whitespace-pre-line">{alert.message}</p>
-                <div className="flex flex-col sm:flex-row gap-3 w-full">
-                  {alert.showCancel ? (
-                    <>
-                      <button onClick={handleAlertConfirm} className="bg-amber-500 hover:bg-amber-400 text-black font-semibold px-4 py-2 sm:py-3 rounded-lg flex-1 transition-all text-sm sm:text-base">
-                        Confirm
-                      </button>
-                      <button onClick={closeAlert} className="border border-white/20 hover:bg-white/10 text-white font-semibold px-4 py-2 sm:py-3 rounded-lg flex-1 transition-all text-sm sm:text-base">
-                        Cancel
-                      </button>
-                    </>
-                  ) : (
-                    <button onClick={handleAlertConfirm} className="bg-amber-500 hover:bg-amber-400 text-black font-semibold px-4 py-2 sm:py-3 rounded-lg w-full transition-all text-sm sm:text-base">
-                      Close
-                    </button>
-                  )}
-                </div>
-              </div>
-            </div>
-          </div>
-        )}
+          <AlertModal
+          isOpen={!!alert}
+          type={alert?.type}
+          title={alert?.title}
+          message={alert?.message}
+          showCancel={alert?.showCancel}
+          onConfirm={handleAlertConfirm}
+          onCancel={closeAlert}
+        />
       </div>
     </div>
   );
