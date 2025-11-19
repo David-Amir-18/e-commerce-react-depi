@@ -40,16 +40,6 @@ const Flights = () => {
     closeAlert();
   };
 
-  const getAlertIcon = (type) => {
-    switch (type) {
-      case 'success': return <CheckCircle className="text-green-400" size={48} />;
-      case 'error': return <AlertCircle className="text-red-400" size={48} />;
-      case 'warning': return <AlertCircle className="text-amber-400" size={48} />;
-      case 'info': return <Info className="text-blue-400" size={48} />;
-      default: return <Info className="text-gray-400" size={48} />;
-    }
-  };
-
   const formatDateForInput = (isoString) => {
     if (!isoString) return '';
     const date = new Date(isoString);
