@@ -18,7 +18,7 @@ function SearchBar() {
   const [adults, setAdults] = useState(1);
   const [infants, setInfants] = useState(0);
 
-  const navigate = useNavigate(); // --- 2. INITIALIZE useNavigate ---
+  const navigate = useNavigate(); //   INITIALIZE useNavigate 
 
   // Swap function
   const swapLocations = () => {
@@ -114,7 +114,7 @@ function SearchBar() {
     setSuggestions([]);
   };
 
-  // --- 3. ADD THE SUBMIT HANDLER ---
+  //  ADD THE SUBMIT HANDLER ---
   const handleSubmit = (e) => {
     e.preventDefault();
     if (!from || !to || !departDate) {
@@ -157,7 +157,6 @@ function SearchBar() {
           <FlightTypeSelector selected={flightType} onChange={setFlightType} />
         </div>
 
-        {/* --- 5. REMOVED RESPONSIVE CLASSES --- */}
         {/* This div no longer has 'block md:hidden' so it's always visible */}
         <div className="space-y-4">
           {/* From Input */}
@@ -457,7 +456,6 @@ function SearchBar() {
             )}
           </div>
 
-          {/* --- 6. UNCOMMENT THE SEARCH BUTTON and make it type="submit" --- */}
           <button
             type="submit"
             className="bg-amber-400 text-gray-900 rounded-xl py-4 w-full hover:bg-amber-500 transition-all font-semibold shadow-lg text-lg"
@@ -466,7 +464,7 @@ function SearchBar() {
           </button>
         </div>
       </form>{" "}
-      {/* --- 8. CLOSE THE <form> TAG --- */}
+      {/* CLOSE THE <form> TAG */}
     </div>
   );
 }
