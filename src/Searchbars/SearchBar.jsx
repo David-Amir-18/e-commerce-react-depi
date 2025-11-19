@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { Globe, Building2, Plane } from "lucide-react";
 
 function SearchBar() {
-  const [flightType, setFlightType] = useState("Round Trip");
+  const [flightType, setFlightType] = useState("One Way");
   const [from, setFrom] = useState("");
   const [fromCode, setFromCode] = useState(""); // Store airport code
   const [to, setTo] = useState("");
