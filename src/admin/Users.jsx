@@ -40,16 +40,6 @@ const Users = () => {
     closeAlert();
   };
 
-  // swithing alert icons
-  const getAlertIcon = (type) => {
-    switch(type) {
-      case 'success': return <CheckCircle className="text-green-400" size={48} />;
-      case 'error': return <AlertCircle className="text-red-400" size={48} />;
-      case 'warning': return <AlertCircle className="text-amber-400" size={48} />;
-      case 'info': return <Info className="text-blue-400" size={48} />;
-      default: return <Info className="text-gray-400" size={48} />;
-    }
-  };
 
   useEffect(() => {
     fetchUsers();
@@ -68,7 +58,7 @@ const Users = () => {
       const errorMsg = error.message || 'Unable to connect to server.';
       showAlert('error', 'Network Error', errorMsg);
     } finally {
-      setLoading(false); //end loading
+      setLoading(false); 
     }
   };
 
@@ -222,7 +212,7 @@ User ID: ${user._id}
       isActive: true
     });
   };
-
+   //search
   const filteredUsers = users.filter(user =>
     user.name?.toLowerCase().includes(searchTerm.toLowerCase()) ||
     user.email?.toLowerCase().includes(searchTerm.toLowerCase()) ||
