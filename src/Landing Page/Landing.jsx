@@ -14,6 +14,8 @@ import { faGlobe } from "@fortawesome/free-solid-svg-icons"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import "./landing.css";
 import SearchBar from '@/Searchbars/SearchBar';
+import DealsSection from '@/Deals/DealsSection';
+
 
 // function getWeekDay(n = new Date().getDay()) {
 //     switch (n) {
@@ -133,6 +135,7 @@ function Landing() {
                     {/* </div> */}
                 </div>
             </section>
+            <DealsSection/>
         </div>
     );
 }
