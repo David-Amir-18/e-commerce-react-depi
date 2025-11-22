@@ -149,7 +149,7 @@ const Bookings = () => {
 
   const showBookingDetails = (booking) => {
     const details = [
-      `Booking ID: ${booking._id}`,
+      `Booking Reference: ${booking.bookingReference || booking._id}`,
       `Status: ${booking.status}`,
       '',
       `User: ${booking.user?.name || 'N/A'}`,
@@ -157,13 +157,13 @@ const Bookings = () => {
       `Phone: ${booking.user?.phoneNumber || 'N/A'}`,
       '',
       `Flight: ${booking.flight?.flightNumber || 'N/A'}`,
-      `Route: ${booking.flight?.origin || 'N/A'} → ${booking.flight?.destination || 'N/A'}`,
-      `Departure: ${booking.flight?.departureTime ? formatDate(booking.flight.departureTime) : 'N/A'}`,
+      `Route: ${booking.flight?.origin || booking.flight?.from || 'N/A'} → ${booking.flight?.destination || booking.flight?.to || 'N/A'}`,
+      `Departure: ${booking.flight?.departureTime ? formatDate(booking.flight.departureTime) : (booking.flight?.departDate || 'N/A')}`,
       `Arrival: ${booking.flight?.arrivalTime ? formatDate(booking.flight.arrivalTime) : 'N/A'}`,
       '',
       `Seats Booked: ${booking.seats}`,
       `Flight Price: $${booking.flight?.price || 'N/A'}`,
-      `Total: $${(booking.seats * (booking.flight?.price || 0)).toFixed(2)}`,
+      `Total: $${booking.pricing?.totalCost || (booking.seats * (booking.flight?.price || 0)).toFixed(2)}`,
       '',
       `Booking Date: ${formatDate(booking.createdAt)}`
     ].join('\n');
@@ -275,7 +275,7 @@ const Bookings = () => {
                 {/* Header */}
                 <div className="flex items-start justify-between mb-4">
                   <div className="min-w-0 flex-1">
-                    <h3 className="font-mono font-semibold text-white text-xs sm:text-sm truncate">#{booking._id.slice(-8)}</h3>
+                    <h3 className="font-mono font-semibold text-white text-xs sm:text-sm truncate">{booking.bookingReference || `#${booking._id.slice(-8)}`}</h3>
                     <p className="text-xs sm:text-sm text-gray-400">{formatDate(booking.createdAt)}</p>
                   </div>
                   <span className={`inline-flex items-center px-2 sm:px-3 py-1 rounded-full text-xs sm:text-sm font-medium ${getStatusColor(booking.status)} whitespace-nowrap flex-shrink-0 ml-2`}>

@@ -14,19 +14,25 @@ function ResetPassword() {
   const [error, setError] = useState("");
   const [success, setSuccess] = useState(false);
 
+  // Validate password strength
+  const validatePassword = (password) => {
+    const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
+    return passwordRegex.test(password);
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError("");
 
-    // Validate passwords match
-    if (newPassword !== confirmPassword) {
-      setError("Passwords do not match");
+    // Validate password strength
+    if (!validatePassword(newPassword)) {
+      setError("Password must be at least 8 characters and contain uppercase, lowercase, number, and special character (@$!%*?&)");
       return;
     }
 
-    // Validate password length
-    if (newPassword.length < 6) {
-      setError("Password must be at least 6 characters");
+    // Validate passwords match
+    if (newPassword !== confirmPassword) {
+      setError("Passwords do not match");
       return;
     }
 

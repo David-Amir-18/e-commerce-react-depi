@@ -39,19 +39,37 @@ function Register() {
   const listClasses = "list-disc pl-6 space-y-1 text-gray-200";
   // --- END STYLING CONSTANTS ---
 
+  // Validation functions
+  const validateEmail = (email) => {
+    const emailRegex = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+    return emailRegex.test(email);
+  };
+
+  const validatePassword = (password) => {
+    // At least 8 chars, uppercase, lowercase, number, special char
+    const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
+    return passwordRegex.test(password);
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError("");
 
-    // Validate passwords match
-    if (password !== confirmPassword) {
-      setError("Passwords don't match");
+    // Validate email format
+    if (!validateEmail(email)) {
+      setError("Please enter a valid email address");
       return;
     }
 
-    // Validate password length
-    if (password.length < 6) {
-      setError("Password must be at least 6 characters");
+    // Validate password strength
+    if (!validatePassword(password)) {
+      setError("Password must be at least 8 characters and contain uppercase, lowercase, number, and special character (@$!%*?&)");
+      return;
+    }
+
+    // Validate passwords match
+    if (password !== confirmPassword) {
+      setError("Passwords don't match");
       return;
     }
 

@@ -62,9 +62,36 @@ const Users = () => {
     }
   };
 
+  // Validation functions
+  const validateEmail = (email) => {
+    return /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(email);
+  };
+
+  const validatePassword = (password) => {
+    return /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/.test(password);
+  };
+
+  const validatePhone = (phone) => {
+    if (!phone) return true; // Optional field
+    const digitsOnly = phone.replace(/\D/g, '');
+    return digitsOnly.length >= 9 && digitsOnly.length <= 15;
+  };
+
   const handleSave = async () => {
     if (!formData.name?.trim() || !formData.email?.trim()) {
       showAlert('warning', 'Missing Fields', 'Please fill in name and email');
+      return;
+    }
+
+    // Validate email format
+    if (!validateEmail(formData.email)) {
+      showAlert('warning', 'Invalid Email', 'Please enter a valid email address');
+      return;
+    }
+
+    // Validate phone number if provided
+    if (formData.phoneNumber && !validatePhone(formData.phoneNumber)) {
+      showAlert('warning', 'Invalid Phone', 'Phone number must be between 9 and 15 digits');
       return;
     }
 
@@ -72,6 +99,24 @@ const Users = () => {
       showAlert('warning', 'Missing Password', 'Password is required for new users');
       return;
     }
+
+    // Validate password strength for new users or when password is being changed
+    if (formData.password?.trim() && !validatePassword(formData.password)) {
+      showAlert('warning', 'Weak Password', 'Password must be at least 8 characters and contain uppercase, lowercase, number, and special character (@$!%*?&)');
+      return;
+    }
+
+    // Check for duplicate email
+    const emailExists = users.some(user =>
+      user.email.toLowerCase() === formData.email.toLowerCase().trim() &&
+      (!editingUser || user._id !== editingUser._id)
+    );
+
+    if (emailExists) {
+      showAlert('warning', 'Email Already Exists', 'This email is already registered. Please use a different email address.');
+      return;
+    }
+
     try {
       let response;
       // Update user
@@ -262,7 +307,8 @@ User ID: ${user._id}
         <source src={goldParticles} />
       </video>
       
-      <div className="relative z-10 p-4 sm:p-6 space-y-6 text-white pt-10 lg:pt-6">
+      <div className="relative z-10 p-4 sm:p-6 text-white pt-10 lg:pt-6 min-h-screen flex flex-col">
+        <div className="flex-1 space-y-6">
         {/* Header */}
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
           <div>
@@ -385,17 +431,20 @@ User ID: ${user._id}
             </p>
           </div>
         )}
+        </div>
 
-        {/* Pagination */}
-        {filteredUsers.length > 0 && (
-          <Pagination
-            currentPage={currentPage}
-            totalPages={totalPages}
-            onPageChange={setCurrentPage}
-            itemsPerPage={itemsPerPage}
-            totalItems={filteredUsers.length}
-          />
-        )}
+        {/* Pagination - Fixed at bottom */}
+        <div className="mt-6 pb-4">
+          {filteredUsers.length > 0 && (
+            <Pagination
+              currentPage={currentPage}
+              totalPages={totalPages}
+              onPageChange={setCurrentPage}
+              itemsPerPage={itemsPerPage}
+              totalItems={filteredUsers.length}
+            />
+          )}
+        </div>
 
         {/* Add/Edit User Modal */}
         {showModal && (

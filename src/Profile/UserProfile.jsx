@@ -121,7 +121,34 @@ function UserProfile() {
     setPasswordData(prev => ({ ...prev, [name]: value }));
   };
 
+  // Validation functions
+  const validateEmail = (email) => {
+    return /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(email);
+  };
+
+  const validatePhone = (phone) => {
+    if (!phone) return true;
+    const digitsOnly = phone.replace(/\D/g, '');
+    return digitsOnly.length >= 9 && digitsOnly.length <= 15;
+  };
+
+  const validatePassword = (password) => {
+    return /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/.test(password);
+  };
+
   const handleSaveProfile = async () => {
+    // Validate email
+    if (!validateEmail(formData.email)) {
+      setMessage({ type: 'error', text: 'Please enter a valid email address' });
+      return;
+    }
+
+    // Validate phone if provided
+    if (formData.phoneNumber && !validatePhone(formData.phoneNumber)) {
+      setMessage({ type: 'error', text: 'Phone number must be between 9 and 15 digits' });
+      return;
+    }
+
     setLoading(true);
     setMessage({ type: '', text: '' });
 
@@ -150,8 +177,8 @@ function UserProfile() {
       return;
     }
 
-    if (passwordData.newPassword.length < 6) {
-      setMessage({ type: 'error', text: 'Password must be at least 6 characters' });
+    if (!validatePassword(passwordData.newPassword)) {
+      setMessage({ type: 'error', text: 'Password must be at least 8 characters and contain uppercase, lowercase, number, and special character (@$!%*?&)' });
       return;
     }
 

@@ -16,9 +16,13 @@ function SearchBar() {
   const [activeInput, setActiveInput] = useState(null);
   const [travellersOpen, setTravellersOpen] = useState(false);
   const [adults, setAdults] = useState(1);
+  const [children, setChildren] = useState(0);
   const [infants, setInfants] = useState(0);
 
-  const navigate = useNavigate(); //   INITIALIZE useNavigate 
+  const navigate = useNavigate(); //   INITIALIZE useNavigate
+
+  // Get today's date in YYYY-MM-DD format for min date validation
+  const today = new Date().toISOString().split('T')[0];
 
   // Swap function
   const swapLocations = () => {
@@ -133,7 +137,10 @@ function SearchBar() {
       originName: from, // Display name
       destinationName: to, // Display name
       date: departDate,
-      passengers: adults + infants,
+      passengers: adults + children + infants,
+      adults: adults,
+      children: children,
+      infants: infants,
       cabin: "Economy", // Assuming a default, you can add state for this
       tripType: flightType,
     });
@@ -360,6 +367,7 @@ function SearchBar() {
                 type="date"
                 value={departDate}
                 onChange={(e) => setDepartDate(e.target.value)}
+                min={today}
                 className="w-full bg-transparent text-white outline-none"
                 required
               />
@@ -374,6 +382,7 @@ function SearchBar() {
                   type="date"
                   value={returnDate}
                   onChange={(e) => setReturnDate(e.target.value)}
+                  min={departDate || today}
                   className="w-full bg-transparent text-white outline-none"
                   required
                 />
@@ -394,8 +403,7 @@ function SearchBar() {
                 Travellers
               </label>
               <div className="w-full bg-transparent text-white outline-none text-lg text-center">
-                {adults == 0 ? "No" : adults} Adult{adults != 1 ? "s" : ""},{" "}
-                {infants == 0 ? "No" : infants} Infant{infants != 1 ? "s" : ""}
+                {adults} Adult{adults != 1 ? "s" : ""}, {children} Child{children != 1 ? "ren" : ""}, {infants} Infant{infants != 1 ? "s" : ""}
               </div>
             </div>
 
@@ -407,6 +415,7 @@ function SearchBar() {
                 >
                   {[
                     ["Adults", adults, setAdults],
+                    ["Children", children, setChildren],
                     ["Infants", infants, setInfants],
                   ].map(([label, count, setter]) => (
                     <div
