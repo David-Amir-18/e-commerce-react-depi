@@ -4,7 +4,7 @@ import { bookingsAPI } from '../services/api';
 import {
   User, Mail, Phone, Calendar, Globe, Lock,
   Save, Edit2, X, Plane, MapPin, Clock, CheckCircle,
-  XCircle, AlertCircle, ChevronRight
+  XCircle, AlertCircle, ChevronRight, Eye, EyeOff
 } from 'lucide-react';
 
 function UserProfile() {
@@ -65,6 +65,12 @@ function UserProfile() {
     currentPassword: '',
     newPassword: '',
     confirmPassword: '',
+  });
+
+  const [showPasswords, setShowPasswords] = useState({
+    current: true,
+    new: true,
+    confirm: true,
   });
 
   // Check if user is Google OAuth user
@@ -507,40 +513,74 @@ function UserProfile() {
                           <label className="block text-sm font-medium text-gray-300 mb-2">
                             Current Password
                           </label>
-                          <input
-                            type="password"
-                            name="currentPassword"
-                            value={passwordData.currentPassword}
-                            onChange={handlePasswordChange}
-                            className="w-full px-4 py-3 bg-[#ffffff10] border border-[#ffffff30] rounded-lg text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-amber-400 focus:border-transparent transition-all"
-                            placeholder="Enter current password"
-                          />
+                          <div className="relative">
+                            <input
+                              type={showPasswords.current ? "text" : "password"}
+                              name="currentPassword"
+                              value={passwordData.currentPassword}
+                              onChange={handlePasswordChange}
+                              className="w-full px-4 py-3 pr-12 bg-[#ffffff10] border border-[#ffffff30] rounded-lg text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-amber-400 focus:border-transparent transition-all"
+                              placeholder="Enter current password"
+                            />
+                            <button
+                              type="button"
+                              onClick={() => setShowPasswords(prev => ({ ...prev, current: !prev.current }))}
+                              className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-white transition-colors"
+                            >
+                              {showPasswords.current ? <EyeOff className="w-5 h-5" /> : <Eye className="w-5 h-5" />}
+                            </button>
+                          </div>
                         </div>
                         <div>
                           <label className="block text-sm font-medium text-gray-300 mb-2">
                             New Password
                           </label>
-                          <input
-                            type="password"
-                            name="newPassword"
-                            value={passwordData.newPassword}
-                            onChange={handlePasswordChange}
-                            className="w-full px-4 py-3 bg-[#ffffff10] border border-[#ffffff30] rounded-lg text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-amber-400 focus:border-transparent transition-all"
-                            placeholder="Enter new password (min. 6 characters)"
-                          />
+                          <div className="relative">
+                            <input
+                              type={showPasswords.new ? "text" : "password"}
+                              name="newPassword"
+                              value={passwordData.newPassword}
+                              onChange={handlePasswordChange}
+                              className="w-full px-4 py-3 pr-12 bg-[#ffffff10] border border-[#ffffff30] rounded-lg text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-amber-400 focus:border-transparent transition-all"
+                              placeholder="Enter new password"
+                            />
+                            <button
+                              type="button"
+                              onClick={() => setShowPasswords(prev => ({ ...prev, new: !prev.new }))}
+                              className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-white transition-colors"
+                            >
+                              {showPasswords.new ? <EyeOff className="w-5 h-5" /> : <Eye className="w-5 h-5" />}
+                            </button>
+                          </div>
                         </div>
                         <div>
                           <label className="block text-sm font-medium text-gray-300 mb-2">
                             Confirm New Password
                           </label>
-                          <input
-                            type="password"
-                            name="confirmPassword"
-                            value={passwordData.confirmPassword}
-                            onChange={handlePasswordChange}
-                            className="w-full px-4 py-3 bg-[#ffffff10] border border-[#ffffff30] rounded-lg text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-amber-400 focus:border-transparent transition-all"
-                            placeholder="Confirm new password"
-                          />
+                          <div className="relative">
+                            <input
+                              type={showPasswords.confirm ? "text" : "password"}
+                              name="confirmPassword"
+                              value={passwordData.confirmPassword}
+                              onChange={handlePasswordChange}
+                              className={`w-full px-4 py-3 pr-12 bg-[#ffffff10] border rounded-lg text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-amber-400 focus:border-transparent transition-all ${
+                                passwordData.confirmPassword && passwordData.newPassword !== passwordData.confirmPassword
+                                  ? 'border-red-500'
+                                  : 'border-[#ffffff30]'
+                              }`}
+                              placeholder="Confirm new password"
+                            />
+                            <button
+                              type="button"
+                              onClick={() => setShowPasswords(prev => ({ ...prev, confirm: !prev.confirm }))}
+                              className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-white transition-colors"
+                            >
+                              {showPasswords.confirm ? <EyeOff className="w-5 h-5" /> : <Eye className="w-5 h-5" />}
+                            </button>
+                          </div>
+                          {passwordData.confirmPassword && passwordData.newPassword !== passwordData.confirmPassword && (
+                            <p className="text-red-400 text-xs mt-1">Passwords do not match</p>
+                          )}
                         </div>
                         <div className="flex gap-4 pt-2">
                           <button
@@ -594,80 +634,102 @@ function UserProfile() {
                   </div>
                 ) : (
                   <div className="space-y-4">
-                    {bookings.map((booking) => (
-                      <div
-                        key={booking._id}
-                        className="bg-slate-800/50 rounded-xl p-6 border border-white/10 hover:border-amber-400/30 transition-all"
-                      >
-                        <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-4">
-                          <div>
-                            <h3 className="text-xl font-semibold text-white mb-2">
-                              {booking.flightId?.airline || 'Flight'} - {booking.flightId?.flightNumber || 'N/A'}
-                            </h3>
-                            <div className="flex flex-wrap gap-4 text-sm text-gray-300">
-                              <span className="flex items-center gap-1">
-                                <MapPin className="w-4 h-4 text-amber-400" />
-                                {booking.flightId?.origin || 'N/A'} → {booking.flightId?.destination || 'N/A'}
-                              </span>
-                              <span className="flex items-center gap-1">
-                                <Calendar className="w-4 h-4 text-amber-400" />
-                                {booking.flightId?.departureTime
-                                  ? new Date(booking.flightId.departureTime).toLocaleDateString('en-US', {
-                                      year: 'numeric',
-                                      month: 'short',
-                                      day: 'numeric'
-                                    })
-                                  : 'N/A'}
+                    {bookings.map((booking) => {
+                      // Get flight info from either flightId (database flights) or flightDetails (SerpAPI flights)
+                      const flightInfo = booking.flightId || booking.flightDetails || {};
+                      const airline = flightInfo.airline || 'Flight';
+                      const flightNumber = flightInfo.flightNumber || 'N/A';
+                      const origin = flightInfo.origin || flightInfo.from || flightInfo.fromCode || 'N/A';
+                      const destination = flightInfo.destination || flightInfo.to || flightInfo.toCode || 'N/A';
+
+                      // Get departure date - handle both database format and SerpAPI format
+                      let departureDate = 'N/A';
+                      if (flightInfo.departureTime) {
+                        departureDate = new Date(flightInfo.departureTime).toLocaleDateString('en-US', {
+                          year: 'numeric',
+                          month: 'short',
+                          day: 'numeric'
+                        });
+                      } else if (flightInfo.departDate) {
+                        departureDate = flightInfo.departDate;
+                      }
+
+                      // Get departure time
+                      const departTime = flightInfo.departTime || '';
+
+                      // Get total price from pricing breakdown or calculate from flight price
+                      const totalPrice = booking.pricing?.totalCost ||
+                        (flightInfo.price ? flightInfo.price * (booking.seats || 1) : null);
+
+                      return (
+                        <div
+                          key={booking._id}
+                          className="bg-slate-800/50 rounded-xl p-6 border border-white/10 hover:border-amber-400/30 transition-all"
+                        >
+                          <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-4">
+                            <div>
+                              <h3 className="text-xl font-semibold text-white mb-2">
+                                {airline} - {flightNumber}
+                              </h3>
+                              <div className="flex flex-wrap gap-4 text-sm text-gray-300">
+                                <span className="flex items-center gap-1">
+                                  <MapPin className="w-4 h-4 text-amber-400" />
+                                  {origin} → {destination}
+                                </span>
+                                <span className="flex items-center gap-1">
+                                  <Calendar className="w-4 h-4 text-amber-400" />
+                                  {departureDate} {departTime && `at ${departTime}`}
+                                </span>
+                              </div>
+                            </div>
+                            <div className="flex items-center gap-3">
+                              <span
+                                className={`flex items-center gap-2 px-4 py-2 rounded-lg border font-semibold text-sm ${getStatusColor(
+                                  booking.status
+                                )}`}
+                              >
+                                {getStatusIcon(booking.status)}
+                                {booking.status.charAt(0).toUpperCase() + booking.status.slice(1)}
                               </span>
                             </div>
                           </div>
-                          <div className="flex items-center gap-3">
-                            <span
-                              className={`flex items-center gap-2 px-4 py-2 rounded-lg border font-semibold text-sm ${getStatusColor(
-                                booking.status
-                              )}`}
-                            >
-                              {getStatusIcon(booking.status)}
-                              {booking.status.charAt(0).toUpperCase() + booking.status.slice(1)}
-                            </span>
-                          </div>
-                        </div>
 
-                        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 pt-4 border-t border-white/10">
-                          <div>
-                            <p className="text-gray-400 text-sm mb-1">Booking Reference</p>
-                            <p className="text-white font-mono font-semibold">
-                              {booking._id?.slice(-8).toUpperCase()}
-                            </p>
-                          </div>
-                          <div>
-                            <p className="text-gray-400 text-sm mb-1">Seats Booked</p>
-                            <p className="text-white font-semibold">{booking.seats || 0}</p>
-                          </div>
-                          <div>
-                            <p className="text-gray-400 text-sm mb-1">Booked On</p>
-                            <p className="text-white font-semibold">
-                              {new Date(booking.createdAt).toLocaleDateString('en-US', {
-                                year: 'numeric',
-                                month: 'short',
-                                day: 'numeric'
-                              })}
-                            </p>
-                          </div>
-                        </div>
-
-                        {booking.flightId?.price && (
-                          <div className="mt-4 pt-4 border-t border-white/10">
-                            <div className="flex justify-between items-center">
-                              <span className="text-gray-400">Total Price</span>
-                              <span className="text-2xl font-bold text-amber-400">
-                                ${(booking.flightId.price * (booking.seats || 1)).toFixed(2)}
-                              </span>
+                          <div className="grid grid-cols-1 md:grid-cols-3 gap-4 pt-4 border-t border-white/10">
+                            <div>
+                              <p className="text-gray-400 text-sm mb-1">Booking Reference</p>
+                              <p className="text-white font-mono font-semibold">
+                                {booking.bookingReference || booking._id?.slice(-8).toUpperCase()}
+                              </p>
+                            </div>
+                            <div>
+                              <p className="text-gray-400 text-sm mb-1">Passengers</p>
+                              <p className="text-white font-semibold">{booking.seats || 0}</p>
+                            </div>
+                            <div>
+                              <p className="text-gray-400 text-sm mb-1">Booked On</p>
+                              <p className="text-white font-semibold">
+                                {new Date(booking.createdAt).toLocaleDateString('en-US', {
+                                  year: 'numeric',
+                                  month: 'short',
+                                  day: 'numeric'
+                                })}
+                              </p>
                             </div>
                           </div>
-                        )}
-                      </div>
-                    ))}
+
+                          {totalPrice && (
+                            <div className="mt-4 pt-4 border-t border-white/10">
+                              <div className="flex justify-between items-center">
+                                <span className="text-gray-400">Total Price</span>
+                                <span className="text-2xl font-bold text-amber-400">
+                                  ${totalPrice.toLocaleString()}
+                                </span>
+                              </div>
+                            </div>
+                          )}
+                        </div>
+                      );
+                    })}
                   </div>
                 )}
               </div>
