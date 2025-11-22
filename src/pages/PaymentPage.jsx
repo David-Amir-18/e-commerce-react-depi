@@ -4,6 +4,7 @@ import { ArrowLeft, CreditCard, Wallet, Building2, CheckCircle, Lock, Calendar, 
 import { Button } from '../components/ui/button';
 import { Badge } from '../components/ui/badge';
 import { Label } from '../components/ui/label';
+import { bookingsAPI } from '../services/api';
 
 export function PaymentPage() {
   const location = useLocation();
@@ -191,26 +192,89 @@ export function PaymentPage() {
 
     setIsProcessing(true);
 
-    // Simulate payment processing
-    await new Promise(resolve => setTimeout(resolve, 2500));
+    try {
+      // Transform passengerDetails to match backend schema
+      const transformedPassengerDetails = passengerDetails.map(passenger => ({
+        type: passenger.type.toLowerCase(), // Convert 'Adult' to 'adult'
+        title: passenger.data?.title || '',
+        firstName: passenger.data?.firstName || '',
+        lastName: passenger.data?.lastName || '',
+        dateOfBirth: passenger.data?.dateOfBirth || null,
+        nationality: passenger.data?.nationality || '',
+        passportNumber: passenger.data?.passportNumber || ''
+      }));
 
-    // Generate booking reference
-    const reference = generateBookingReference();
-    setBookingReference(reference);
+      // Transform contactDetails to match backend schema
+      const transformedContactDetails = {
+        email: contactDetails.email || '',
+        phone: contactDetails.phoneNumber || '',
+        country: contactDetails.country || ''
+      };
 
-    // Clear saved selections
-    sessionStorage.removeItem('selectedSeats');
-    sessionStorage.removeItem('selectedMeals');
-    sessionStorage.removeItem('selectedBaggage');
-    sessionStorage.removeItem('bookingOptionsCompleted');
+      // Prepare booking data
+      const bookingData = {
+        flightDetails: {
+          airline: flight.airline,
+          airlineLogo: flight.airlineLogo,
+          flightNumber: flight.flightNumber,
+          from: flight.from,
+          to: flight.to,
+          fromCode: flight.fromCode,
+          toCode: flight.toCode,
+          departTime: flight.departTime,
+          arriveTime: flight.arriveTime,
+          departDate: flight.departDate,
+          duration: flight.duration,
+          stops: flight.stops || 0,
+          cabinClass: flight.cabinClass || flight.class,
+          price: flight.price,
+          currency: flight.currency || 'USD'
+        },
+        seats: totalPassengers,
+        passengers: passengers,
+        passengerDetails: transformedPassengerDetails,
+        contactDetails: transformedContactDetails,
+        seatAssignments: savedSeats,
+        meals: savedMeals,
+        baggage: savedBaggage,
+        pricing: {
+          flightCost: flightCost,
+          mealsCost: mealsCost,
+          baggageCost: baggageCost,
+          taxesAndFees: taxesAndFees,
+          totalCost: totalCost
+        },
+        paymentMethod: paymentMethod
+      };
 
-    setIsProcessing(false);
-    setPaymentSuccess(true);
+      // Call the API to create booking
+      const response = await bookingsAPI.create(bookingData);
 
-    // Navigate to home after 5 seconds
-    setTimeout(() => {
-      navigate('/');
-    }, 5000);
+      if (response.success) {
+        setBookingReference(response.bookingReference || response.data?.bookingReference);
+
+        // Clear saved selections
+        sessionStorage.removeItem('selectedSeats');
+        sessionStorage.removeItem('selectedMeals');
+        sessionStorage.removeItem('selectedBaggage');
+        sessionStorage.removeItem('bookingOptionsCompleted');
+
+        setIsProcessing(false);
+        setPaymentSuccess(true);
+
+        // Navigate to home after 5 seconds
+        setTimeout(() => {
+          navigate('/');
+        }, 5000);
+      } else {
+        setIsProcessing(false);
+        alert(response.message || 'Failed to create booking. Please try again.');
+      }
+    } catch (error) {
+      setIsProcessing(false);
+      console.error('Booking error:', error);
+      alert(error.message || 'Failed to create booking. Please try again.');
+    }
   };
 
   const paymentMethods = [

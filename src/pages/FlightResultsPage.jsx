@@ -20,6 +20,9 @@ const useFlightSearch = () => {
     destinationName: searchParams.get("destinationName"),
     date: searchParams.get("date"),
     passengers: searchParams.get("passengers"),
+    adults: searchParams.get("adults"),
+    children: searchParams.get("children"),
+    infants: searchParams.get("infants"),
     cabin: searchParams.get("cabin"),
   };
 };
@@ -92,7 +95,22 @@ const FlightResultsPage = () => {
         // Transform the data
         const cleanData = transformSerpApiData(serpApiData);
 
-        setAllFlights(cleanData);
+        // Add random available seats that exceed total passengers
+        const totalPassengers = parseInt(criteria.passengers) || 1;
+        const addRandomSeats = (flights) => {
+          return flights.map(flight => ({
+            ...flight,
+            // Random seats between (passengers + 1) and (passengers + 50)
+            available: totalPassengers + Math.floor(Math.random() * 50) + 1
+          }));
+        };
+
+        const flightsWithSeats = {
+          bestFlights: addRandomSeats(cleanData.bestFlights),
+          otherFlights: addRandomSeats(cleanData.otherFlights)
+        };
+
+        setAllFlights(flightsWithSeats);
 
       } catch (err) {
         setError(err.message);

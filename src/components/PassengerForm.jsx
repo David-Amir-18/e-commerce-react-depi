@@ -20,18 +20,26 @@ export function PassengerForm({
 
   const [errors, setErrors] = useState({});
   const [showSaved, setShowSaved] = useState(false);
+  const [lastPassengerNumber, setLastPassengerNumber] = useState(passengerNumber);
 
-  // Update form data when the data prop changes (switching between passengers)
+  // Update form data when switching between passengers (not when saving)
   useEffect(() => {
-    setFormData(data || {
-      title: '',
-      firstName: '',
-      lastName: '',
-    });
-    // Clear errors when switching passengers
-    setErrors({});
-    setShowSaved(false);
-  }, [data, passengerNumber]);
+    // Only reset when switching to a different passenger
+    if (passengerNumber !== lastPassengerNumber) {
+      setFormData(data || {
+        title: '',
+        firstName: '',
+        lastName: '',
+      });
+      // Clear errors when switching passengers
+      setErrors({});
+      setShowSaved(false);
+      setLastPassengerNumber(passengerNumber);
+    } else if (data && !formData.title && !formData.firstName && !formData.lastName) {
+      // Load existing data if form is empty (initial load)
+      setFormData(data);
+    }
+  }, [data, passengerNumber, lastPassengerNumber]);
 
   const handleChange = (field, value) => {
     setFormData(prev => ({

@@ -12,10 +12,11 @@ export function PassengerDetailsPage() {
   const navigate = useNavigate();
   const { flight, searchCriteria } = location.state || {};
 
+  // Use search criteria as default, fallback to 1 adult
   const [passengers, setPassengers] = useState({
-    adults: 2,
-    children: 0,
-    infants: 0,
+    adults: parseInt(searchCriteria?.adults) || 1,
+    children: parseInt(searchCriteria?.children) || 0,
+    infants: parseInt(searchCriteria?.infants) || 0,
   });
 
   const [passengerDetails, setPassengerDetails] = useState([]);
