@@ -1,5 +1,5 @@
 import { Link, useLocation } from "react-router-dom";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import Overlay from "./Overlay";
 import { useAuth } from "../contexts/AuthContext";
 import ManageMyBooking from "@/components/ui/ManageMyBooking";
@@ -13,8 +13,18 @@ function Navbar() {
     const [isMenuOpen, setIsMenuOpen] = useState(false);
     const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
     const { isAuthenticated, user } = useAuth();
-    const location = useLocation()
+    const location = useLocation();
     const [configStyle, setConfigStyle] = useState();
+    
+    // For sliding border effect
+    const [activeLinkIndex, setActiveLinkIndex] = useState(null);
+    const [borderStyle, setBorderStyle] = useState({ left: 0, width: 0, opacity: 0 });
+    const linkRefs = useRef([]);
+    const containerRef = useRef(null);
+    
+    // Define navbar routes
+    const navbarRoutes = ['/contact', '/about', '/admin/dashboard'];
+    
     useEffect(() => {
         const handleResize = () => {
             setIsMobile(window.innerWidth < 768);
@@ -35,10 +45,57 @@ function Navbar() {
         console.log('ConfigStyle changed to:', configStyle);
     }, [configStyle]);
 
+    // Check if current route is a navbar route
+    useEffect(() => {
+        const currentIndex = navbarRoutes.indexOf(location.pathname);
+        
+        if (currentIndex !== -1 && linkRefs.current[currentIndex] && containerRef.current) {
+            // Current page is a navbar route - show border
+            setActiveLinkIndex(currentIndex);
+            updateBorderPosition(currentIndex);
+        } else {
+            // Current page is not a navbar route - hide border
+            setBorderStyle(prev => ({ ...prev, opacity: 0 }));
+            setActiveLinkIndex(null);
+        }
+    }, [location.pathname, isAuthenticated]);
+
+    const updateBorderPosition = (index) => {
+        if (linkRefs.current[index] && containerRef.current) {
+            const link = linkRefs.current[index];
+            const container = containerRef.current;
+            
+            const linkRect = link.getBoundingClientRect();
+            const containerRect = container.getBoundingClientRect();
+            
+            const left = linkRect.left - containerRect.left;
+            const width = linkRect.width;
+            
+            setBorderStyle({
+                left: left,
+                width: width,
+                opacity: 1
+            });
+        }
+    };
+
+    const handleLinkClick = (index) => {
+        setActiveLinkIndex(index);
+        updateBorderPosition(index);
+    };
+
+    // Recalculate border position on window resize
+    useEffect(() => {
+        if (activeLinkIndex !== null) {
+            const handleResize = () => updateBorderPosition(activeLinkIndex);
+            window.addEventListener('resize', handleResize);
+            return () => window.removeEventListener('resize', handleResize);
+        }
+    }, [activeLinkIndex]);
 
     return (
         <>
-            <nav className={`w-full py-3 ${configStyle} z-20`}>
+            <nav className={`w-full backdrop-blur-sm ${configStyle} z-20`}>
                 <div className="relative h-full top-0 z-20 container mx-auto px-8">
                     {isMobile && (
                         <>
@@ -46,39 +103,75 @@ function Navbar() {
                             <Overlay isMenuOpen={isMenuOpen} />
                         </>
                     )}
-                    <div className="px-6 py-4 flex items-center justify-between backdrop-blur-lg bg-white/10 rounded-2xl border border-white/10">
+                    <div className="py-4 flex items-center justify-between rounded-2xl">
                         {/* Brand */}
                         <Link
                             to="/"
-                            className="flex  items-center justify-center text-2xl font-semibold tracking-wide text-amber-400 hover:text-amber-300 transition-colors"
+                            className="flex items-center justify-center text-2xl font-semibold tracking-wide text-amber-400 hover:text-amber-300 transition-colors"
                         >
                             <img src={logo} width={50} className="mr-5" />
                             <h1 className="text-amber-300">Elysium</h1>
                         </Link>
-                        {/* <SearchBar/> */}
+                        
                         {/* Desktop Menu */}
-                        {/* Right Side */}
                         <div className="flex items-center gap-4">
                             {!isMobile && (
                                 <div className="flex items-center justify-between text-sm text-white">
                                     {/* Nav Links */}
-                                    <div className="flex sm:w-[300px] lg:w-[300px] justify-between items-center">
+                                    <div 
+                                        ref={containerRef}
+                                        className="backdrop-blur-xl bg-white/5 border border-white/15 rounded-xl px-8 py-5 flex sm:w-[300px] lg:w-[350px] justify-between items-center relative"
+                                    >
+                                        {/* Sliding Border Background */}
+                                        <div
+                                            className="absolute rounded-full bg-white/10 border border-white/20 transition-all duration-300 ease-out"
+                                            style={{
+                                                left: `${borderStyle.left - 15}px`,
+                                                width: `${borderStyle.width + 30}px`,
+                                                height: '36px'/*calc(100% - 40px)'*/,
+                                                top: '20px',
+                                                opacity: borderStyle.opacity,
+                                                pointerEvents: 'none'
+                                            }}
+                                        />
+                                        
                                         <Link
+                                            ref={el => linkRefs.current[0] = el}
                                             to="/contact"
-                                            className="hover:text-amber-400 transition-colors duration-200"
+                                            onClick={() => handleLinkClick(0)}
+                                            className={`hover:text-amber-400 transition-colors duration-200 relative z-10 ${
+                                                activeLinkIndex === 0 ? 'text-amber-300' : ''
+                                            }`}
+                                            style={activeLinkIndex === 0 ? {
+                                                textShadow: '0 0 10px rgba(252, 211, 77, 0.8), 0 0 20px rgba(252, 211, 77, 0.4)'
+                                            } : {}}
                                         >
                                             Contact
                                         </Link>
                                         <Link
+                                            ref={el => linkRefs.current[1] = el}
                                             to="/about"
-                                            className="hover:text-amber-400 transition-colors duration-200"
+                                            onClick={() => handleLinkClick(1)}
+                                            className={`hover:text-amber-400 transition-colors duration-200 relative z-10 ${
+                                                activeLinkIndex === 1 ? 'text-amber-300' : ''
+                                            }`}
+                                            style={activeLinkIndex === 1 ? {
+                                                textShadow: '0 0 10px rgba(252, 211, 77, 0.8), 0 0 20px rgba(252, 211, 77, 0.4)'
+                                            } : {}}
                                         >
                                             About
                                         </Link>
                                         {isAuthenticated && user?.role === 'admin' && (
                                             <Link
+                                                ref={el => linkRefs.current[2] = el}
                                                 to="/admin/dashboard"
-                                                className="hover:text-amber-400 transition-colors duration-200 font-semibold"
+                                                onClick={() => handleLinkClick(2)}
+                                                className={`hover:text-amber-400 transition-colors duration-200 font-semibold relative z-10 ${
+                                                    activeLinkIndex === 2 ? 'text-amber-300' : ''
+                                                }`}
+                                                style={activeLinkIndex === 2 ? {
+                                                    textShadow: '0 0 10px rgba(252, 211, 77, 0.8), 0 0 20px rgba(252, 211, 77, 0.4)'
+                                                } : {}}
                                             >
                                                 Admin
                                             </Link>
@@ -86,9 +179,7 @@ function Navbar() {
                                         {!isAuthenticated ? (
                                             <SignInBtn />
                                         ) : (
-                                            <>
-                                                <AccDropDown />
-                                            </>
+                                            <AccDropDown />
                                         )}
                                     </div>
                                 </div>
