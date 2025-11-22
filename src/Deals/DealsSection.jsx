@@ -58,7 +58,7 @@ const DealsSection = () => {
   };
 
   return (
-    <section className="relative z-10 py-20 px-4 md:px-8 max-w-7xl mx-auto">
+    <div className="relative z-10 pt-40 px-8 mx-auto">
       <h2 className="text-4xl font-bold text-white mb-8 mt-5">
         Explore everywhere in November
       </h2>
@@ -179,7 +179,7 @@ const DealsSection = () => {
           opacity: 0;
         }
       `}</style>
-    </section>
+    </div>
   );
 }
 

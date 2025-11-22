@@ -131,11 +131,13 @@ function Landing() {
                     </div>
 
                     {/* <div className="card card-util1 p-8"> */}
-                      <SearchBar/>
+                    <SearchBar />
                     {/* </div> */}
                 </div>
             </section>
-            <DealsSection/>
+            <section>
+                <DealsSection />
+            </section>
         </div>
     );
 }
