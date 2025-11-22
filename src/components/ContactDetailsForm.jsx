@@ -21,21 +21,55 @@ export function ContactDetailsForm({ data, onSave }) {
   }, [data]);
 
   const handleChange = (field, value) => {
-    setFormData(prev => ({
-      ...prev,
-      [field]: value,
-    }));
-    // Clear error for this field
-    if (errors[field]) {
-      setErrors(prev => ({
-        ...prev,
-        [field]: null,
-      }));
-    }
-    // Auto-save on change
-    onSave({
+    const newFormData = {
       ...formData,
       [field]: value,
+    };
+    setFormData(newFormData);
+
+    // Validate and set errors
+    const newErrors = { ...errors };
+
+    if (field === 'phoneNumber') {
+      const digitsOnly = value.replace(/\D/g, '');
+      const validation = getPhoneValidation(formData.country);
+      if (value && digitsOnly.length !== validation.digits) {
+        newErrors.phoneNumber = `Phone number must be exactly ${validation.digits} digits for ${formData.country || 'selected country'}`;
+      } else {
+        newErrors.phoneNumber = null;
+      }
+    }
+
+    if (field === 'email') {
+      if (value && !validateEmail(value)) {
+        newErrors.email = 'Please enter a valid email address';
+      } else {
+        newErrors.email = null;
+      }
+    }
+
+    if (field === 'country') {
+      // Re-validate phone when country changes
+      const digitsOnly = formData.phoneNumber?.replace(/\D/g, '') || '';
+      const validation = getPhoneValidation(value);
+      if (formData.phoneNumber && digitsOnly.length !== validation.digits) {
+        newErrors.phoneNumber = `Phone number must be exactly ${validation.digits} digits for ${value}`;
+      } else {
+        newErrors.phoneNumber = null;
+      }
+    }
+
+    setErrors(newErrors);
+
+    // Check if form is valid
+    const isValid = !newErrors.phoneNumber && !newErrors.email &&
+                    newFormData.contactPerson && newFormData.email &&
+                    newFormData.phoneNumber && newFormData.country;
+
+    // Auto-save on change with validation status
+    onSave({
+      ...newFormData,
+      isValid: isValid
     });
   };
 
@@ -204,10 +238,10 @@ export function ContactDetailsForm({ data, onSave }) {
                 const value = e.target.value.replace(/\D/g, '');
                 handleChange('phoneNumber', value);
               }}
-              placeholder={getPhoneValidation(formData.country).example}
+              placeholder="Enter phone number"
               className={`w-full bg-white/10 border ${
                 errors.phoneNumber ? 'border-red-400' : 'border-white/20'
-              } rounded-md pl-10 pr-4 py-2.5 text-zinc-300 placeholder-zinc-200 focus:outline-none focus:ring-2 focus:ring-yellow-400 focus:border-transparent transition-all`}
+              } rounded-md pl-10 pr-4 py-2.5 text-zinc-200 placeholder-zinc-400 focus:outline-none focus:ring-2 focus:ring-yellow-400 focus:border-transparent transition-all`}
             />
           </div>
           {errors.phoneNumber && (
@@ -232,10 +266,10 @@ export function ContactDetailsForm({ data, onSave }) {
               id="email"
               value={formData.email}
               onChange={(e) => handleChange('email', e.target.value)}
-              placeholder="your.email@example.com"
+              placeholder="Enter email address"
               className={`w-full bg-white/10 border ${
                 errors.email ? 'border-red-400' : 'border-white/20'
-              } rounded-md pl-10 pr-4 py-2.5 text-zinc-300 placeholder-zinc-200 focus:outline-none focus:ring-2 focus:ring-yellow-400 focus:border-transparent transition-all`}
+              } rounded-md pl-10 pr-4 py-2.5 text-zinc-200 placeholder-zinc-400 focus:outline-none focus:ring-2 focus:ring-yellow-400 focus:border-transparent transition-all`}
             />
           </div>
           {errors.email && (

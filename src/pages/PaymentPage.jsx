@@ -206,6 +206,7 @@ export function PaymentPage() {
 
       // Transform contactDetails to match backend schema
       const transformedContactDetails = {
+        contactPerson: contactDetails.contactPerson || '',
         email: contactDetails.email || '',
         phone: contactDetails.phoneNumber || '',
         country: contactDetails.country || ''

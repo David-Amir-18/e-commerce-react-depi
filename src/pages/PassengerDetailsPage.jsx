@@ -85,12 +85,31 @@ export function PassengerDetailsPage() {
 
   const allPassengersCompleted = passengerDetails.every(p => p.data && p.data.title && p.data.firstName && p.data.lastName);
 
+  // Phone validation by country
+  const phoneDigitsByCountry = {
+    'Egypt': 11, 'United States': 10, 'United Kingdom': 10, 'Japan': 10,
+    'Germany': 11, 'France': 9, 'Italy': 10, 'Spain': 9, 'Canada': 10,
+    'Australia': 9, 'India': 10, 'China': 11, 'Brazil': 11, 'Russia': 10,
+    'Saudi Arabia': 9, 'United Arab Emirates': 9, 'South Korea': 10,
+    'Mexico': 10, 'Turkey': 10, 'Netherlands': 9, 'default': 10
+  };
+
+  const getRequiredPhoneDigits = (country) => phoneDigitsByCountry[country] || phoneDigitsByCountry['default'];
+
+  const isPhoneValid = () => {
+    if (!contactDetails.phoneNumber || !contactDetails.country) return false;
+    const digitsOnly = contactDetails.phoneNumber.replace(/\D/g, '');
+    const requiredDigits = getRequiredPhoneDigits(contactDetails.country);
+    return digitsOnly.length === requiredDigits;
+  };
+
   const contactDetailsCompleted =
     contactDetails.contactPerson &&
     contactDetails.country &&
     contactDetails.phoneNumber &&
     contactDetails.email &&
-    /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(contactDetails.email);
+    /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(contactDetails.email) &&
+    isPhoneValid();
 
   const canContinue = allPassengersCompleted && contactDetailsCompleted;
 
