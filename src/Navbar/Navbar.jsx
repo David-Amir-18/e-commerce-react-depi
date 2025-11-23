@@ -123,7 +123,7 @@ function Navbar() {
                                             {/* Nav Links */}
                                             <div
                                                 ref={containerRef}
-                                                className="backdrop-blur-xl bg-white/5 border border-white/15 rounded-xl px-8 py-5 flex sm:w-[300px] lg:w-[350px] justify-between items-center relative"
+                                                className="backdrop-blur-xl bg-white/5 border border-white/15 rounded-xl px-8 py-5 flex sm:w-[300px] lg:w-[550px] justify-between items-center relative"
                                             >
                                                 {/* Sliding Border Background */}
                                                 <div
