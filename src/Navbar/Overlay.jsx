@@ -8,7 +8,7 @@ import Logo from "./../../public/Elysium Wings.png"
 function Overlay({ isMenuOpen }) {
   const { isAuthenticated, user } = useAuth();
   return (
-    <div className={`inset-shadow-black fixed top-0 right-0 z-50 w-full h-full transform transition-all duration-600 ${isMenuOpen ? 'translate-x-0' : 'translate-x-full'} backdrop-blur-md bg-[#ffffff12]`}>
+    <div className={`fixed top-0 right-0 z-50 w-full h-full transform transition-all duration-600 ${isMenuOpen ? 'translate-x-0' : 'translate-x-full'} backdrop-blur-md bg-white/3`}>
       <div className="flex flex-col items-center justify-center h-[100vh] gap-12 text-white text-[16px]">
         <img src={Logo} width={100}></img>
         <div className="flex flex-col items-center justify-center space-y-8 text-white text-[16px] m-0">
