@@ -10,188 +10,188 @@ import SearchBar from "@/Searchbars/SearchBar";
 import logo from "../../public/Elysium Wings.svg"
 
 function Navbar() {
-    const [isMenuOpen, setIsMenuOpen] = useState(false);
-    const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
-    const { isAuthenticated, user } = useAuth();
-    const location = useLocation();
-    const [configStyle, setConfigStyle] = useState();
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
+  const { isAuthenticated, user } = useAuth();
+  const location = useLocation();
+  const [configStyle, setConfigStyle] = useState();
 
-    // For sliding border effect
-    const [activeLinkIndex, setActiveLinkIndex] = useState(null);
-    const [borderStyle, setBorderStyle] = useState({ left: 0, width: 0, opacity: 0 });
-    const linkRefs = useRef([]);
-    const containerRef = useRef(null);
+  // For sliding border effect
+  const [activeLinkIndex, setActiveLinkIndex] = useState(null);
+  const [borderStyle, setBorderStyle] = useState({ left: 0, width: 0, opacity: 0 });
+  const linkRefs = useRef([]);
+  const containerRef = useRef(null);
 
-    // Define navbar routes
-    const navbarRoutes = ['/contact', '/about', '/admin/dashboard'];
+  // Define navbar routes
+  const navbarRoutes = ['/contact', '/about', '/admin/dashboard'];
 
-    useEffect(() => {
-        const handleResize = () => {
-            setIsMobile(window.innerWidth < 768);
-        };
-
-        window.addEventListener('resize', handleResize);
-        return () => window.removeEventListener('resize', handleResize);
-    }, []);
-
-    useEffect(() => {
-        let exclusionList = ['/flights', "/profile", '', '', '', '']
-        setConfigStyle(exclusionList.indexOf(location.pathname) != -1
-            ? "absolute "
-            : "fixed bg-black/0");
-    }, [location.pathname]);
-
-    useEffect(() => {
-        console.log('ConfigStyle changed to:', configStyle);
-    }, [configStyle]);
-
-    // Check if current route is a navbar route
-    useEffect(() => {
-        const currentIndex = navbarRoutes.indexOf(location.pathname);
-
-        if (currentIndex !== -1 && linkRefs.current[currentIndex] && containerRef.current) {
-            // Current page is a navbar route - show border
-            setActiveLinkIndex(currentIndex);
-            updateBorderPosition(currentIndex);
-        } else {
-            // Current page is not a navbar route - hide border
-            setBorderStyle(prev => ({ ...prev, opacity: 0 }));
-            setActiveLinkIndex(null);
-        }
-    }, [location.pathname, isAuthenticated]);
-
-    const updateBorderPosition = (index) => {
-        if (linkRefs.current[index] && containerRef.current) {
-            const link = linkRefs.current[index];
-            const container = containerRef.current;
-
-            const linkRect = link.getBoundingClientRect();
-            const containerRect = container.getBoundingClientRect();
-
-            const left = linkRect.left - containerRect.left;
-            const width = linkRect.width;
-
-            setBorderStyle({
-                left: left,
-                width: width,
-                opacity: 1
-            });
-        }
+  useEffect(() => {
+    const handleResize = () => {
+      setIsMobile(window.innerWidth < 768);
     };
 
-    const handleLinkClick = (index) => {
-        setActiveLinkIndex(index);
-        updateBorderPosition(index);
-    };
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
 
-    // Recalculate border position on window resize
-    useEffect(() => {
-        if (activeLinkIndex !== null) {
-            const handleResize = () => updateBorderPosition(activeLinkIndex);
-            window.addEventListener('resize', handleResize);
-            return () => window.removeEventListener('resize', handleResize);
-        }
-    }, [activeLinkIndex]);
+  useEffect(() => {
+    let exclusionList = ['/flights', "/profile", '', '', '', '']
+    setConfigStyle(exclusionList.indexOf(location.pathname) != -1
+      ? "absolute "
+      : "fixed bg-black/0");
+  }, [location.pathname]);
 
-    return (
-        <>
-            <nav className={`w-full ${configStyle} z-20`}>
-                <div className="relative h-full top-0 z-20">
-                    {isMobile && (
-                        <>
-                            <BurgerMenu isMenuOpen={isMenuOpen} setIsMenuOpen={setIsMenuOpen} />
-                            <Overlay isMenuOpen={isMenuOpen} />
-                        </>
-                    )}
-                    <div className="backdrop-blur-lg w-full">
+  useEffect(() => {
+    console.log('ConfigStyle changed to:', configStyle);
+  }, [configStyle]);
 
-                        <div className="container mx-auto px-8">
-                            <div className="py-4 flex items-center justify-between rounded-2xl">
-                                {/* Brand */}
-                                <Link
-                                    to="/"
-                                    className="flex items-center justify-center text-2xl font-semibold tracking-wide text-amber-400 hover:text-amber-300 transition-colors"
-                                >
-                                    <img src={logo} width={50} className="mr-5" />
-                                    <h1 className="text-amber-300">Elysium</h1>
-                                </Link>
+  // Check if current route is a navbar route
+  useEffect(() => {
+    const currentIndex = navbarRoutes.indexOf(location.pathname);
 
-                                {/* Desktop Menu */}
-                                <div className="flex items-center gap-4">
-                                    {!isMobile && (
-                                        <div className="flex items-center justify-between text-sm text-white">
-                                            {/* Nav Links */}
-                                            <div
-                                                ref={containerRef}
-                                                className="backdrop-blur-xl bg-white/5 border border-white/15 rounded-xl px-8 py-5 flex sm:w-[300px] lg:w-[550px] justify-between items-center relative"
-                                            >
-                                                {/* Sliding Border Background */}
-                                                <div
-                                                    className="absolute rounded-full bg-white/10 border border-white/20 transition-all duration-300 ease-out"
-                                                    style={{
-                                                        left: `${borderStyle.left - 15}px`,
-                                                        width: `${borderStyle.width + 30}px`,
-                                                        height: '36px'/*calc(100% - 40px)'*/,
-                                                        top: '20px',
-                                                        opacity: borderStyle.opacity,
-                                                        pointerEvents: 'none'
-                                                    }}
-                                                />
+    if (currentIndex !== -1 && linkRefs.current[currentIndex] && containerRef.current) {
+      // Current page is a navbar route - show border
+      setActiveLinkIndex(currentIndex);
+      updateBorderPosition(currentIndex);
+    } else {
+      // Current page is not a navbar route - hide border
+      setBorderStyle(prev => ({ ...prev, opacity: 0 }));
+      setActiveLinkIndex(null);
+    }
+  }, [location.pathname, isAuthenticated]);
 
-                                                <Link
-                                                    ref={el => linkRefs.current[0] = el}
-                                                    to="/contact"
-                                                    onClick={() => handleLinkClick(0)}
-                                                    className={`hover:text-amber-400 transition-colors duration-200 relative z-10 ${activeLinkIndex === 0 ? 'text-amber-300' : ''
-                                                        }`}
-                                                    style={activeLinkIndex === 0 ? {
-                                                        textShadow: '0 0 10px rgba(252, 211, 77, 0.8), 0 0 20px rgba(252, 211, 77, 0.4)'
-                                                    } : {}}
-                                                >
-                                                    Contact
-                                                </Link>
-                                                <Link
-                                                    ref={el => linkRefs.current[1] = el}
-                                                    to="/about"
-                                                    onClick={() => handleLinkClick(1)}
-                                                    className={`hover:text-amber-400 transition-colors duration-200 relative z-10 ${activeLinkIndex === 1 ? 'text-amber-300' : ''
-                                                        }`}
-                                                    style={activeLinkIndex === 1 ? {
-                                                        textShadow: '0 0 10px rgba(252, 211, 77, 0.8), 0 0 20px rgba(252, 211, 77, 0.4)'
-                                                    } : {}}
-                                                >
-                                                    About
-                                                </Link>
-                                                {isAuthenticated && user?.role === 'admin' && (
-                                                    <Link
-                                                        ref={el => linkRefs.current[2] = el}
-                                                        to="/admin/dashboard"
-                                                        onClick={() => handleLinkClick(2)}
-                                                        className={`hover:text-amber-400 transition-colors duration-200 font-semibold relative z-10 ${activeLinkIndex === 2 ? 'text-amber-300' : ''
-                                                            }`}
-                                                        style={activeLinkIndex === 2 ? {
-                                                            textShadow: '0 0 10px rgba(252, 211, 77, 0.8), 0 0 20px rgba(252, 211, 77, 0.4)'
-                                                        } : {}}
-                                                    >
-                                                        Admin
-                                                    </Link>
-                                                )}
-                                                {!isAuthenticated ? (
-                                                    <SignInBtn />
-                                                ) : (
-                                                    <AccDropDown />
-                                                )}
-                                            </div>
-                                        </div>
-                                    )}
-                                </div>
-                            </div>
-                        </div>
+  const updateBorderPosition = (index) => {
+    if (linkRefs.current[index] && containerRef.current) {
+      const link = linkRefs.current[index];
+      const container = containerRef.current;
+
+      const linkRect = link.getBoundingClientRect();
+      const containerRect = container.getBoundingClientRect();
+
+      const left = linkRect.left - containerRect.left;
+      const width = linkRect.width;
+
+      setBorderStyle({
+        left: left,
+        width: width,
+        opacity: 1
+      });
+    }
+  };
+
+  const handleLinkClick = (index) => {
+    setActiveLinkIndex(index);
+    updateBorderPosition(index);
+  };
+
+  // Recalculate border position on window resize
+  useEffect(() => {
+    if (activeLinkIndex !== null) {
+      const handleResize = () => updateBorderPosition(activeLinkIndex);
+      window.addEventListener('resize', handleResize);
+      return () => window.removeEventListener('resize', handleResize);
+    }
+  }, [activeLinkIndex]);
+
+  return (
+    <>
+      <nav className={`w-full ${configStyle} z-20`}>
+        <div className="relative h-full top-0 z-20">
+          {isMobile && (
+            <>
+              <BurgerMenu isMenuOpen={isMenuOpen} setIsMenuOpen={setIsMenuOpen} />
+              <Overlay isMenuOpen={isMenuOpen} />
+            </>
+          )}
+          <div className="backdrop-blur-lg w-full">
+
+            <div className="container mx-auto px-8">
+              <div className="py-4 flex items-center justify-between rounded-2xl">
+                {/* Brand */}
+                <Link
+                  to="/"
+                  className="flex items-center justify-center text-2xl font-semibold tracking-wide text-amber-400 hover:text-amber-300 transition-colors"
+                >
+                  <img src={logo} width={50} className="mr-5" />
+                  <h1 className="text-amber-300">Elysium</h1>
+                </Link>
+
+                {/* Desktop Menu */}
+                <div className="flex items-center gap-4">
+                  {!isMobile && (
+                    <div className="flex items-center justify-between text-sm text-white">
+                      {/* Nav Links */}
+                      <div
+                        ref={containerRef}
+                        className="backdrop-blur-xl bg-white/5 border border-white/15 rounded-xl px-8 py-5 flex sm:w-[300px] lg:w-[550px] justify-between items-center relative"
+                      >
+                        {/* Sliding Border Background */}
+                        <div
+                          className="absolute rounded-full bg-white/10 border border-white/20 transition-all duration-300 ease-out"
+                          style={{
+                            left: `${borderStyle.left - 15}px`,
+                            width: `${borderStyle.width + 30}px`,
+                            height: '36px'/*calc(100% - 40px)'*/,
+                            top: '20px',
+                            opacity: borderStyle.opacity,
+                            pointerEvents: 'none'
+                          }}
+                        />
+
+                        <Link
+                          ref={el => linkRefs.current[0] = el}
+                          to="/contact"
+                          onClick={() => handleLinkClick(0)}
+                          className={`hover:text-amber-400 transition-colors duration-200 relative z-10 ${activeLinkIndex === 0 ? 'text-amber-300' : ''
+                            }`}
+                          style={activeLinkIndex === 0 ? {
+                            textShadow: '0 0 10px rgba(252, 211, 77, 0.8), 0 0 20px rgba(252, 211, 77, 0.4)'
+                          } : {}}
+                        >
+                          Contact
+                        </Link>
+                        <Link
+                          ref={el => linkRefs.current[1] = el}
+                          to="/about"
+                          onClick={() => handleLinkClick(1)}
+                          className={`hover:text-amber-400 transition-colors duration-200 relative z-10 ${activeLinkIndex === 1 ? 'text-amber-300' : ''
+                            }`}
+                          style={activeLinkIndex === 1 ? {
+                            textShadow: '0 0 10px rgba(252, 211, 77, 0.8), 0 0 20px rgba(252, 211, 77, 0.4)'
+                          } : {}}
+                        >
+                          About
+                        </Link>
+                        {isAuthenticated && user?.role === 'admin' && (
+                          <Link
+                            ref={el => linkRefs.current[2] = el}
+                            to="/admin/dashboard"
+                            onClick={() => handleLinkClick(2)}
+                            className={`hover:text-amber-400 transition-colors duration-200 font-semibold relative z-10 ${activeLinkIndex === 2 ? 'text-amber-300' : ''
+                              }`}
+                            style={activeLinkIndex === 2 ? {
+                              textShadow: '0 0 10px rgba(252, 211, 77, 0.8), 0 0 20px rgba(252, 211, 77, 0.4)'
+                            } : {}}
+                          >
+                            Admin
+                          </Link>
+                        )}
+                        {!isAuthenticated ? (
+                          <SignInBtn />
+                        ) : (
+                          <AccDropDown />
+                        )}
+                      </div>
                     </div>
+                  )}
                 </div>
-            </nav>
-        </>
-    );
+              </div>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </>
+  );
 }
 
 export default Navbar;
