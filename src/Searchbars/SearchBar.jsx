@@ -60,6 +60,15 @@ function SearchBar() {
     if (type === "from") setFrom(value);
     else setTo(value);
 
+    if(value === ""){
+      if(type === "from"){
+        setFromCode("");
+      } 
+      else {
+        setToCode("");
+      }
+    }
+
     // Require at least 2 characters before searching
     if (value.trim().length < 2) {
       setSuggestions([]);
@@ -126,22 +135,67 @@ function SearchBar() {
       return;
     }
 
-    if (!fromCode || !toCode) {
-      alert("Please select a city or airport from the dropdown suggestions.");
-      return;
+    let finalOriginCode = fromCode;
+    let finalDestinationCode = toCode;
+
+    console.log("Resolving codes...", {
+      fromInput: from,
+      toInput: to,
+      fromCodeState: fromCode,
+      toCodeState: toCode,
+      destinationsCount: destinations.length
+    });
+
+    
+    if (!finalOriginCode) {
+      const searchTerm = from.trim().toLowerCase();
+      const match = destinations.find(
+        (item) => 
+          
+          (item.name && item.name.toLowerCase() === searchTerm) || 
+          (item.code && item.code.toLowerCase() === searchTerm)
+      );
+      if (match) {
+        console.log("Found Origin Match: ", match);
+        finalOriginCode = match.code;
+      } else {
+        console.warn("No Origin Match Found", searchTerm);
+      }
+    }
+
+    
+    if (!finalDestinationCode) {
+      const searchTerm = to.trim().toLowerCase();
+      const match = destinations.find(
+        (item) => 
+          // --- FIX: Added (item.name &&) check ---
+          (item.name && item.name.toLowerCase() === searchTerm) || 
+          (item.code && item.code.toLowerCase() === searchTerm)
+      );
+      if (match) {
+        console.log("Found Destination Match: ", match);
+        finalDestinationCode = match.code;
+      } else {
+        console.warn("No Destination Match Found", searchTerm);
+      }
+    }
+
+    if (!finalOriginCode || !finalDestinationCode) {
+      alert("We couldn't find a valid airport. Please check your spelling or select from the list.");
+      return; 
     }
 
     const queryParams = new URLSearchParams({
-      origin: fromCode, // Use airport/city/country code
-      destination: toCode, // Use airport/city/country code
-      originName: from, // Display name
-      destinationName: to, // Display name
+      origin: finalOriginCode,
+      destination: finalDestinationCode,
+      originName: from,
+      destinationName: to,
       date: departDate,
       passengers: adults + children + infants,
       adults: adults,
       children: children,
       infants: infants,
-      cabin: "Economy", // Assuming a default, you can add state for this
+      cabin: "Economy",
       tripType: flightType,
     });
 
