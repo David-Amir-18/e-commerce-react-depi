@@ -186,50 +186,6 @@ const Bookings = () => {
     showAlert('info', 'Booking Details', details);
   };
 
-  // const clearAllBookings = () => {
-  //   showAlert(
-  //     'info',
-  //     'Clear All Bookings',
-  //     'This feature requires individual booking deletion. Would you like to delete all bookings one by one?',
-  //     async () => {
-  //       if (bookings.length === 0) {
-  //         showAlert('info', 'No Data', 'There are no bookings to delete.');
-  //         return;
-  //       }
-        
-  //       showAlert(
-  //         'warning',
-  //         'Confirm Clear All',
-  //         `This will delete all ${bookings.length} bookings. Are you absolutely sure?`,
-  //         async () => {
-  //           let successCount = 0;
-  //           let errorCount = 0;
-            
-  //           for (const booking of bookings) {
-  //             try {
-  //               await bookingsAPI.delete(booking._id);
-  //               successCount++;
-  //             } catch (error) {
-  //               console.error(`Failed to delete booking ${booking._id}:`, error);
-  //               errorCount++;
-  //             }
-  //           }
-            
-  //           // Refresh the bookings list
-  //           await fetchBookings();
-            
-  //           if (errorCount === 0) {
-  //             showAlert('success', 'All Cleared!', `Successfully deleted all ${successCount} bookings.`);
-  //           } else {
-  //             showAlert('warning', 'Partially Completed', `Deleted ${successCount} bookings. ${errorCount} failed.`);
-  //           }
-  //         },
-  //         true
-  //       );
-  //     },
-  //     true
-  //   );
-  // };
 
   if (loading) {
     return (
@@ -256,11 +212,6 @@ const Bookings = () => {
             <h1 className="text-2xl sm:text-3xl font-bold text-amber-400 mb-2">Booking Management</h1>
             <p className="text-sm sm:text-base text-gray-300">View and manage all flight bookings</p>
           </div>
-          {/* <div className="flex flex-col sm:flex-row gap-2">
-            <button onClick={clearAllBookings} className="border border-red-400 text-red-400 hover:bg-red-500/10 px-4 py-2 rounded-lg transition-all text-sm sm:text-base">
-              Clear All
-            </button>
-          </div> */}
         </div>
 
         {/* Search Bar */}

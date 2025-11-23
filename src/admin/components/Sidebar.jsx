@@ -45,8 +45,7 @@ const Sidebar = () => {
 
       {/* Sidebar */}
       <aside className={`fixed left-0 top-0 w-64 min-h-screen bg-gradient-to-b from-[#0a0a0a]/90 to-[#1a1a1a]/80 backdrop-blur-xl border-r border-amber-400/20 flex flex-col shadow-[0_0_25px_rgba(255,193,7,0.15)] transition-transform duration-300 z-40 ${
-        isMobileMenuOpen ? 'translate-x-0' : '-translate-x-full lg:translate-x-0'
-      }`}>
+        isMobileMenuOpen ? 'translate-x-0' : '-translate-x-full lg:translate-x-0'}`}>
       {/* Header */}
       <div className="p-6 border-b border-amber-400/20">
         <h1 className="text-2xl font-extrabold text-amber-400 ">
