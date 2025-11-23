@@ -80,20 +80,6 @@ function Landing() {
             </video>
             <section className="relative z-10 flex items-center justify-center min-h-screen">
                 <div className=" max-md:px-0  px-8 grid grid-cols-1 lg:grid-cols-[2fr_1fr] w-full gap-10">
-                    {/*
-                    Original Images 
-                    <div className="flex flex-col items-center justify-end gap-5 mb-5 md:mb-0">
-                        <p className="text-[#ffffff] text-3xl">Popular Locations</p>
-                        <div className="flex">
-                            <div className="aspect-square w-[180px] mr-4">
-                                <img className="w-full h-full rounded-2xl" src={korea}></img>
-                            </div>
-                            <div className="aspect-square w-[180px]">
-                                <img className="w-full h-full rounded-2xl" src={Gevora}></img>
-                            </div>
-                        </div>
-                    </div> */
-                    }
                     <div className="flex items-center">
                         <div className="card gap-5 h-full w-full justify-between">
                             <h1 className="text-5xl lg:text-7xl xl:text-8xl text-amber-300 leading-[1.3]">Experience Flight Beyond First Class</h1>
