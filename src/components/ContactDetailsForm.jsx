@@ -21,30 +21,100 @@ export function ContactDetailsForm({ data, onSave }) {
   }, [data]);
 
   const handleChange = (field, value) => {
-    setFormData(prev => ({
-      ...prev,
-      [field]: value,
-    }));
-    // Clear error for this field
-    if (errors[field]) {
-      setErrors(prev => ({
-        ...prev,
-        [field]: null,
-      }));
-    }
-    // Auto-save on change
-    onSave({
+    const newFormData = {
       ...formData,
       [field]: value,
+    };
+    setFormData(newFormData);
+
+    // Validate and set errors
+    const newErrors = { ...errors };
+
+    if (field === 'phoneNumber') {
+      const digitsOnly = value.replace(/\D/g, '');
+      const validation = getPhoneValidation(formData.country);
+      if (value && digitsOnly.length !== validation.digits) {
+        newErrors.phoneNumber = `Phone number must be exactly ${validation.digits} digits for ${formData.country || 'selected country'}`;
+      } else {
+        newErrors.phoneNumber = null;
+      }
+    }
+
+    if (field === 'email') {
+      if (value && !validateEmail(value)) {
+        newErrors.email = 'Please enter a valid email address';
+      } else {
+        newErrors.email = null;
+      }
+    }
+
+    if (field === 'country') {
+      // Re-validate phone when country changes
+      const digitsOnly = formData.phoneNumber?.replace(/\D/g, '') || '';
+      const validation = getPhoneValidation(value);
+      if (formData.phoneNumber && digitsOnly.length !== validation.digits) {
+        newErrors.phoneNumber = `Phone number must be exactly ${validation.digits} digits for ${value}`;
+      } else {
+        newErrors.phoneNumber = null;
+      }
+    }
+
+    setErrors(newErrors);
+
+    // Check if form is valid
+    const isValid = !newErrors.phoneNumber && !newErrors.email &&
+                    newFormData.contactPerson && newFormData.email &&
+                    newFormData.phoneNumber && newFormData.country;
+
+    // Auto-save on change with validation status
+    onSave({
+      ...newFormData,
+      isValid: isValid
     });
   };
 
   const validateEmail = (email) => {
-    return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+    return /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(email);
   };
 
-  const validatePhone = (phone) => {
-    return /^[0-9+\-\s()]{10,20}$/.test(phone);
+  // Country-specific phone number lengths (digits only, without country code)
+  const phoneDigitsByCountry = {
+    'Egypt': { digits: 11, code: '+20', example: '01012345678' },
+    'United States': { digits: 10, code: '+1', example: '2025551234' },
+    'United Kingdom': { digits: 10, code: '+44', example: '7911123456' },
+    'Japan': { digits: 10, code: '+81', example: '9012345678' },
+    'Germany': { digits: 11, code: '+49', example: '15112345678' },
+    'France': { digits: 9, code: '+33', example: '612345678' },
+    'Italy': { digits: 10, code: '+39', example: '3123456789' },
+    'Spain': { digits: 9, code: '+34', example: '612345678' },
+    'Canada': { digits: 10, code: '+1', example: '4165551234' },
+    'Australia': { digits: 9, code: '+61', example: '412345678' },
+    'India': { digits: 10, code: '+91', example: '9876543210' },
+    'China': { digits: 11, code: '+86', example: '13812345678' },
+    'Brazil': { digits: 11, code: '+55', example: '11987654321' },
+    'Russia': { digits: 10, code: '+7', example: '9123456789' },
+    'Saudi Arabia': { digits: 9, code: '+966', example: '512345678' },
+    'United Arab Emirates': { digits: 9, code: '+971', example: '501234567' },
+    'South Korea': { digits: 10, code: '+82', example: '1012345678' },
+    'Mexico': { digits: 10, code: '+52', example: '5512345678' },
+    'Turkey': { digits: 10, code: '+90', example: '5321234567' },
+    'Netherlands': { digits: 9, code: '+31', example: '612345678' },
+    'default': { digits: 10, code: '', example: '1234567890' }
+  };
+
+  const getPhoneValidation = (country) => {
+    return phoneDigitsByCountry[country] || phoneDigitsByCountry['default'];
+  };
+
+  const validatePhone = (phone, country) => {
+    const digitsOnly = phone.replace(/\D/g, '');
+    const validation = getPhoneValidation(country);
+    return digitsOnly.length === validation.digits;
+  };
+
+  const getPhoneError = (country) => {
+    const validation = getPhoneValidation(country);
+    return `Phone number must be exactly ${validation.digits} digits for ${country || 'selected country'}`;
   };
 
    const countries = [
@@ -163,17 +233,25 @@ export function ContactDetailsForm({ data, onSave }) {
               type="tel"
               id="phoneNumber"
               value={formData.phoneNumber}
-              onChange={(e) => handleChange('phoneNumber', e.target.value)}
-              placeholder="+1 (555) 123-4567"
+              onChange={(e) => {
+                // Only allow digits
+                const value = e.target.value.replace(/\D/g, '');
+                handleChange('phoneNumber', value);
+              }}
+              placeholder="Enter phone number"
               className={`w-full bg-white/10 border ${
                 errors.phoneNumber ? 'border-red-400' : 'border-white/20'
-              } rounded-md pl-10 pr-4 py-2.5 text-zinc-300 placeholder-zinc-200 focus:outline-none focus:ring-2 focus:ring-yellow-400 focus:border-transparent transition-all`}
+              } rounded-md pl-10 pr-4 py-2.5 text-zinc-200 placeholder-zinc-400 focus:outline-none focus:ring-2 focus:ring-yellow-400 focus:border-transparent transition-all`}
             />
           </div>
           {errors.phoneNumber && (
             <p className="text-red-400 text-xs mt-1">{errors.phoneNumber}</p>
           )}
-          <p className="text-zinc-500 text-xs mt-1">Include country code (e.g., +1, +20, +971)</p>
+          <p className="text-zinc-500 text-xs mt-1">
+            {formData.country
+              ? `Enter ${getPhoneValidation(formData.country).digits} digits for ${formData.country}`
+              : 'Select a country first to see required digits'}
+          </p>
         </div>
 
         {/* Email */}
@@ -188,10 +266,10 @@ export function ContactDetailsForm({ data, onSave }) {
               id="email"
               value={formData.email}
               onChange={(e) => handleChange('email', e.target.value)}
-              placeholder="your.email@example.com"
+              placeholder="Enter email address"
               className={`w-full bg-white/10 border ${
                 errors.email ? 'border-red-400' : 'border-white/20'
-              } rounded-md pl-10 pr-4 py-2.5 text-zinc-300 placeholder-zinc-200 focus:outline-none focus:ring-2 focus:ring-yellow-400 focus:border-transparent transition-all`}
+              } rounded-md pl-10 pr-4 py-2.5 text-zinc-200 placeholder-zinc-400 focus:outline-none focus:ring-2 focus:ring-yellow-400 focus:border-transparent transition-all`}
             />
           </div>
           {errors.email && (

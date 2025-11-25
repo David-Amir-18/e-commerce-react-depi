@@ -84,6 +84,14 @@ const Flights = () => {
     // Validate dates
     const depDate = new Date(formData.departureTime);
     const arrDate = new Date(formData.arrivalTime);
+    const now = new Date();
+
+    // Check if departure is in the past (only for new flights)
+    if (!editingFlight && depDate <= now) {
+      showAlert('warning', 'Invalid Date!', 'Departure time must be in the future');
+      return;
+    }
+
     if (depDate >= arrDate) {
       showAlert('warning', 'Invalid Dates!', 'Arrival time must be after departure time');
       return;

@@ -237,8 +237,8 @@ export const bookingsAPI = {
     });
   },
 
-  // Cancel booking
-  delete: async (id) => {
+  // Cancel booking (user)
+  cancel: async (id) => {
     return apiCall(`/bookings/${id}`, {
       method: 'DELETE',
     });
@@ -249,6 +249,13 @@ export const bookingsAPI = {
     return apiCall(`/bookings/${id}/status`, {
       method: 'PATCH',
       body: JSON.stringify({ status }),
+    });
+  },
+
+  // Delete booking permanently (admin only)
+  delete: async (id) => {
+    return apiCall(`/bookings/${id}/admin`, {
+      method: 'DELETE',
     });
   },
 };
@@ -266,6 +273,14 @@ export const usersAPI = {
   getById: async (id) => {
     return apiCall(`/users/${id}`, {
       method: 'GET',
+    });
+  },
+
+  // Create user (admin only)
+  create: async (userData) => {
+    return apiCall('/users', {
+      method: 'POST',
+      body: JSON.stringify(userData),
     });
   },
 

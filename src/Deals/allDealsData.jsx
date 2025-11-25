@@ -10,7 +10,7 @@ const allDealsData = {
     },
     { 
       id: 2, // Corrected ID to be unique
-      img: 'https://url-shortener.me/AA8O', 
+      img: 'https://images.unsplash.com/photo-1555993539-1732b0258235?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NHx8QXRoZW5zfGVufDB8fDB8fHww', 
       dest: 'Athens',
       destCode: 'ATH',
       desc: 'Great Value', 
@@ -34,7 +34,7 @@ const allDealsData = {
     },
     { 
       id: 5, 
-      img: 'https://url-shortener.me/A9ZY', 
+      img: 'https://images.unsplash.com/photo-1623439844752-524658b16ce6?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTB8fElzdGFuYnVsfGVufDB8fDB8fHww', 
       dest: 'Istanbul',
       destCode: 'IST',
       desc: 'Budget Option', 
@@ -42,7 +42,7 @@ const allDealsData = {
     },
     { 
       id: 6, 
-      img: 'https://url-shortener.me/AA0A', 
+      img: 'https://images.unsplash.com/photo-1558102400-72da9fdbecae?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTB8fExpc2JvbnxlbnwwfHwwfHx8MA%3D%3D', 
       dest: 'Lisbon',
       destCode: 'LIS',
       desc: 'Low Cost', 
@@ -85,7 +85,7 @@ const allDealsData = {
     },
     { 
       id: 11, 
-      img: 'https://url-shortener.me/AA0V', 
+      img: 'https://images.unsplash.com/photo-1576924542622-772281b13aa8?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTR8fGFtc3RlcmRhbXxlbnwwfHwwfHx8MA%3D%3D', 
       dest: 'Amsterdam',
       destCode: 'AMS',
       desc: 'Non-Stop', 
@@ -93,7 +93,7 @@ const allDealsData = {
     },
     { 
       id: 12, 
-      img: '	https://url-shortener.me/AA8O', 
+      img: '	https://images.unsplash.com/photo-1555993539-1732b0258235?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NHx8QXRoZW5zfGVufDB8fDB8fHww', 
       dest: 'Athens',
       destCode: 'ATH',
       desc: 'Direct Connection', 
@@ -104,7 +104,7 @@ const allDealsData = {
   'Suggested for you': [
     { 
       id: 13, 
-      img: 'https://url-shortener.me/AA0A', 
+      img: 'https://images.unsplash.com/photo-1558102400-72da9fdbecae?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTB8fExpc2JvbnxlbnwwfHwwfHx8MA%3D%3D', 
       dest: 'Lisbon',
       destCode: 'LIS',
       desc: 'Trending Now', 
@@ -136,7 +136,7 @@ const allDealsData = {
     },
     { 
       id: 17, 
-      img: '	https://url-shortener.me/AA0V', 
+      img: '	https://images.unsplash.com/photo-1576924542622-772281b13aa8?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTR8fGFtc3RlcmRhbXxlbnwwfHwwfHx8MA%3D%3D', 
       dest: 'Amsterdam',
       destCode: 'AMS',
       desc: 'Top Pick', 
@@ -144,7 +144,7 @@ const allDealsData = {
     },
     { 
       id: 18, 
-      img: 'https://url-shortener.me/AA19', 
+      img: 'https://images.unsplash.com/photo-1647252262017-582a7dbb73d0?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NHx8RG9oYXxlbnwwfHwwfHx8MA%3D%3D', 
       dest: 'Doha',
       destCode: 'DOH',
       desc: 'Hidden Gem', 
@@ -155,7 +155,7 @@ const allDealsData = {
   'Underrated destinations': [
     { 
       id: 19, 
-      img: 'https://url-shortener.me/AA9F', 
+      img: 'https://images.unsplash.com/photo-1541849546-216549ae216d?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8OHx8cHJhZ3VlfGVufDB8fDB8fHww', 
       dest: 'Prague',
       destCode: 'PRG',
       desc: 'Hidden Treasure', 
@@ -187,7 +187,7 @@ const allDealsData = {
     },
     { 
       id: 23, 
-      img: 'https://url-shortener.me/AAA0', 
+      img: 'https://images.unsplash.com/photo-1619284518317-85b1ab8c7723?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NHx8TWFuY2hlc3RlcnxlbnwwfHwwfHx8MA%3D%3D', 
       dest: 'Manchester',
       destCode: 'MAN',
       desc: 'Undiscovered', 
@@ -195,7 +195,7 @@ const allDealsData = {
     },
     { 
       id: 24, 
-      img: 'https://url-shortener.me/AAAC', 
+      img: 'https://images.unsplash.com/photo-1557349015-700e29626930?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MjB8fEdlbmV2YXxlbnwwfHwwfHx8MA%3D%3D', 
       dest: 'Geneva',
       destCode: 'GVA',
       desc: 'Secret Spot', 
@@ -214,7 +214,7 @@ const allDealsData = {
     },
     { 
       id: 26, 
-      img: 'https://url-shortener.me/AA2B', 
+      img: 'https://images.unsplash.com/photo-1722264219947-725d4e20ef23?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8SHVyZ2hhZGF8ZW58MHx8MHx8fDA%3D', 
       dest: 'Hurghada',
       destCode: 'HRG',
       desc: 'Beach Resort', 
@@ -222,7 +222,7 @@ const allDealsData = {
     },
     { 
       id: 27, 
-      img: 'https://url-shortener.me/AA2M', 
+      img: 'https://images.unsplash.com/photo-1506966953602-c20cc11f75e3?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTB8fE1pYW1pfGVufDB8fDB8fHww', 
       dest: 'Miami',
       destCode: 'MIA',
       desc: 'Ocean Views', 
@@ -230,7 +230,7 @@ const allDealsData = {
     },
     { 
       id: 28, 
-      img: 'https://url-shortener.me/AA25', 
+      img: 'https://images.unsplash.com/photo-1578912996078-305d92249aa6?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTJ8fEJhcmNlbG9uYXxlbnwwfHwwfHx8MA%3D%3D', 
       dest: 'Barcelona',
       destCode: 'BCN',
       desc: 'Catalonian Coast', 
@@ -238,7 +238,7 @@ const allDealsData = {
     },
     { 
       id: 29, 
-      img: 'https://url-shortener.me/AA2F', 
+      img: 'https://images.unsplash.com/photo-1580058328338-5412e1123bf8?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTh8fHNoYXJtJTIwZWwlMjBzaGVpa2h8ZW58MHx8MHx8fDA%3D', 
       dest: 'Sharm El-Sheikh',
       destCode: 'SSH',
       desc: 'Explore the reefs', 
@@ -273,7 +273,7 @@ const allDealsData = {
     },
     { 
       id: 33, 
-      img: 'https://url-shortener.me/AA8O', 
+      img: 'https://images.unsplash.com/photo-1555993539-1732b0258235?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NHx8QXRoZW5zfGVufDB8fDB8fHww', 
       dest: 'Athens',
       destCode: 'ATH',
       desc: 'Classical Culture', 
@@ -281,7 +281,7 @@ const allDealsData = {
     },
     { 
       id: 34, 
-      img: 'https://url-shortener.me/A9ZY', 
+      img: 'https://images.unsplash.com/photo-1623439844752-524658b16ce6?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTB8fElzdGFuYnVsfGVufDB8fDB8fHww', 
       dest: 'Istanbul',
       destCode: 'IST',
       desc: 'Rich Heritage', 
@@ -316,7 +316,7 @@ const allDealsData = {
     },
     { 
       id: 38, 
-      img: 'https://url-shortener.me/A9ZY', 
+      img: 'https://images.unsplash.com/photo-1623439844752-524658b16ce6?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTB8fElzdGFuYnVsfGVufDB8fDB8fHww', 
       dest: 'Istanbul',
       destCode: 'IST',
       desc: 'Turkish Delights', 
@@ -340,7 +340,7 @@ const allDealsData = {
     },
     { 
       id: 41, 
-      img: 'https://url-shortener.me/AA2M', 
+      img: 'https://images.unsplash.com/photo-1506966953602-c20cc11f75e3?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTB8fE1pYW1pfGVufDB8fDB8fHww', 
       dest: 'Miami',
       destCode: 'MIA',
       desc: 'Fusion Cuisine', 
@@ -348,7 +348,7 @@ const allDealsData = {
     },
     { 
       id: 42, 
-      img: 'https://url-shortener.me/AA0A', 
+      img: 'https://images.unsplash.com/photo-1558102400-72da9fdbecae?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTB8fExpc2JvbnxlbnwwfHwwfHx8MA%3D%3D', 
       dest: 'Lisbon',
       destCode: 'LIS',
       desc: 'Portuguese Flavors', 

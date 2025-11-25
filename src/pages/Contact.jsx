@@ -1,21 +1,39 @@
 import { useState } from "react";
 import goldParticles from "./../Landing Page/private assets/gold-particle.1920x1080.mp4"
 
+const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000/api';
+
 export default function Contact() {
     const [form, setForm] = useState({ name: "", email: "", subject: "", message: "" });
     const [status, setStatus] = useState(null);
+    const [loading, setLoading] = useState(false);
 
     const handleChange = (e) => setForm({ ...form, [e.target.name]: e.target.value });
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        // Replace with real API call as needed
+        setLoading(true);
+        setStatus(null);
+
         try {
-            // await fetch('/api/contact', { method: 'POST', headers: {'Content-Type':'application/json'}, body: JSON.stringify(form) });
-            setStatus("success");
-            setForm({ name: "", email: "", subject: "", message: "" });
+            const response = await fetch(`${API_URL}/contact`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(form)
+            });
+
+            const data = await response.json();
+
+            if (data.success) {
+                setStatus("success");
+                setForm({ name: "", email: "", subject: "", message: "" });
+            } else {
+                setStatus("error");
+            }
         } catch (err) {
             setStatus("error");
+        } finally {
+            setLoading(false);
         }
     };
 
@@ -69,19 +87,28 @@ export default function Contact() {
                                 className="w-full p-3 rounded-xl bg-transparent border border-white/20 outline-none text-white"
                             />
 
-                            <div className="flex items-center gap-4">
-                                <button type="submit" className="bg-amber-400 text-gray-900 px-6 py-3 rounded-xl font-semibold hover:bg-amber-500 transition">
-                                    Send message
-                                </button>
-                                {status === "success" && <span className="text-green-400">Message sent.</span>}
-                                {status === "error" && <span className="text-red-400">Failed to send.</span>}
-                            </div>
+                            <button
+                                type="submit"
+                                disabled={loading}
+                                className="w-full bg-amber-400 text-gray-900 px-6 py-3 rounded-xl font-semibold hover:bg-amber-500 transition disabled:opacity-50 disabled:cursor-not-allowed"
+                            >
+                                {loading ? 'Sending...' : 'Send message'}
+                            </button>
+
+                            {status === "success" && (
+                                <div className="bg-green-500/20 border border-green-500/50 rounded-xl p-4 text-center">
+                                    <p className="text-green-400 font-semibold">Message sent successfully!</p>
+                                    <p className="text-green-300 text-sm mt-1">We'll get back to you as soon as possible.</p>
+                                </div>
+                            )}
+                            {status === "error" && (
+                                <div className="bg-red-500/20 border border-red-500/50 rounded-xl p-4 text-center">
+                                    <p className="text-red-400 font-semibold">Failed to send message</p>
+                                    <p className="text-red-300 text-sm mt-1">Please try again later.</p>
+                                </div>
+                            )}
                         </form>
                     </div>
-
-                    <p className="mt-6 text-gray-400 text-sm">
-                        Or email us directly: <a className="text-amber-300" href="mailto:yousf.1672004@gmail.com">elysium.site@proton.me</a>
-                    </p>
                 </section>
             </div>
         </>
