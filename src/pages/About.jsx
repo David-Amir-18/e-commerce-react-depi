@@ -8,7 +8,7 @@ export default function About() {
                               <source src={goldParticles} />
                         </video>
                         <section className="relative z-10 flex flex-col items-center justify-center container">
-                              <header className="mb-8 text-center">
+                              <header className="mt-20 mb-8 text-center">
                                     <h1 className="text-4xl font-bold text-amber-400">About Elysium</h1>
                                     <p className="text-gray-300 mt-2">We build flight tools that make planning simple and fast.</p>
                               </header>

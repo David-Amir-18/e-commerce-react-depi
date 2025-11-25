@@ -26,7 +26,7 @@ export default function Contact() {
                             <source src={goldParticles} />
                         </video>
                   <section className="relative z-10 flex flex-col items-center justify-center min-h-screen">
-                    <h1 className="text-3xl font-bold text-amber-300 mb-2">Contact Us</h1>
+                    <h1 className=" mt-20 text-3xl font-bold text-amber-300 mb-2">Contact Us</h1>
                     <p className="text-gray-300 mb-6">Questions or feedback? Send us a message and we'll respond as soon as possible.</p>
 
                     <div className="bg-white/5 backdrop-blur-md border border-white/20 rounded-2xl p-6 shadow-lg">
@@ -80,7 +80,7 @@ export default function Contact() {
                     </div>
 
                     <p className="mt-6 text-gray-400 text-sm">
-                        Or email directly: <a className="text-amber-300" href="mailto:yousf.1672004@gmail.com">yousf.1672004@gmail.com</a>
+                        Or email us directly: <a className="text-amber-300" href="mailto:yousf.1672004@gmail.com">elysium.site@proton.me</a>
                     </p>
                 </section>
             </div>
