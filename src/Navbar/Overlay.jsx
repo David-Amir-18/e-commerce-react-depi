@@ -7,7 +7,7 @@ import Logo from "./../../public/Elysium Wings.png";
 
 function Sidebar({ isMenuOpen, setIsMenuOpen }) {
   const { isAuthenticated, user } = useAuth();
-  
+  const closeMenu = () => setIsMenuOpen(false)
   return (
     <>
       {/* Backdrop */}
@@ -15,7 +15,7 @@ function Sidebar({ isMenuOpen, setIsMenuOpen }) {
         className={`fixed inset-0 z-40 backdrop-blur-sm bg-black/30 transition-opacity duration-300 ${
           isMenuOpen ? 'opacity-100' : 'opacity-0 pointer-events-none'
         }`}
-        onClick={() => setIsMenuOpen(false)}
+        onClick={() => closeMenu()}
       />
       
       {/* Sidebar */}
@@ -23,7 +23,7 @@ function Sidebar({ isMenuOpen, setIsMenuOpen }) {
         className={`fixed top-0 right-full z-50 h-full w-65 transform transition-transform duration-300 ease-in-out ${
           isMenuOpen ? 'translate-x-full' : 'translate-x-0'
         }`}
-        onClick={() => setIsMenuOpen(false)}
+        onClick={() => closeMenu()}
       >
         <div className="flex flex-col h-full px-8 py-12 bg-black/70 backdrop-blur-md">
           {/* Logo Section */}
@@ -50,21 +50,21 @@ function Sidebar({ isMenuOpen, setIsMenuOpen }) {
           {/* Navigation Links */}
           <nav className="flex flex-col space-y-4">
             <Link
-              onClick={() => setIsMenuOpen(false)}
+              onClick={() => closeMenu()}
               to="/"
               className="bg-white/20 rounded-lg w-full py-3 text-center backdrop-blur-3xl text-white text-[16px] transition-all hover:bg-amber-400 hover:text-black"
             >
               Home
             </Link>
             <Link
-              onClick={() => setIsMenuOpen(false)}
+              onClick={() => closeMenu()}
               to="/about"
               className="bg-white/20 rounded-lg w-full py-3 text-center backdrop-blur-3xl text-white text-[16px] transition-all hover:bg-amber-400 hover:text-black"
             >
               About
             </Link>
             <Link
-              onClick={() => setIsMenuOpen(false)}
+              onClick={() => closeMenu()}
               to="/contact"
               className="bg-white/20 rounded-lg w-full py-3 text-center backdrop-blur-3xl text-white text-[16px] transition-all hover:bg-amber-400 hover:text-black"
             >
@@ -72,7 +72,7 @@ function Sidebar({ isMenuOpen, setIsMenuOpen }) {
             </Link>
             {isAuthenticated && user?.role === 'admin' && (
               <Link
-                onClick={() => setIsMenuOpen(false)}
+                onClick={() => closeMenu()}
                 to="/admin/dashboard"
                 className="bg-white/20 font-bold text-amber-300 rounded-lg w-full py-3 text-center backdrop-blur-3xl transition-all hover:bg-amber-400 hover:text-black"
               >

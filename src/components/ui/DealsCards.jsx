@@ -4,7 +4,7 @@ const DealsCards = ({ imageUrl, destination, description, price, onClick }) => {
   const [imageError, setImageError] = useState(false);
 
   return (
-    <div onClick={onClick} className="bg-zinc-900 rounded-2xl overflow-hidden shadow-lg transition-transform duration-300 hover:scale-105 cursor-pointer border border-zinc-800/50">
+    <div onClick={onClick} className="bg-white/10 backdrop-blur-lg border-white/20 rounded-2xl overflow-hidden shadow-lg transition-transform duration-300 hover:scale-105 cursor-pointer border">
       {/* Image Section */}
       <div className="h-48 w-full overflow-hidden">
         <img 

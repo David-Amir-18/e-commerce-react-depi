@@ -6,7 +6,6 @@ import ManageMyBooking from "@/components/ui/ManageMyBooking";
 import SignInBtn from "@/components/ui/SignInBtn";
 import AccDropDown from "@/components/ui/AccDropDown";
 import BurgerMenu from "@/components/ui/BurgerMenu";
-import SearchBar from "@/Searchbars/SearchBar";
 import logo from "../../public/Elysium Wings.svg"
 
 function Navbar() {
@@ -103,14 +102,14 @@ function Navbar() {
               <Overlay isMenuOpen={isMenuOpen} />
             </>
           )}
-          <div className="backdrop-blur-lg w-full">
+          <div className="backdrop-blur-lg md:backdrop-blur-none w-full">
 
             <div className="container mx-auto px-8">
               <div className="py-4 flex items-center justify-between rounded-2xl">
                 {/* Brand */}
                 <Link
                   to="/"
-                  className="flex items-center justify-center text-2xl font-semibold tracking-wide text-amber-400 hover:text-amber-300 transition-colors"
+                  className="md:backdrop-blur-md md:py-4 md:px-8 md:border md:bg-white/5 rounded-xl flex items-center justify-center text-2xl font-semibold tracking-wide text-amber-400 hover:text-amber-300 transition-all hover:backdrop-blur-3xl hover:bg-amber-500/60 hover:shadow-[0px_0px_35px] shadow-amber-500"
                 >
                   <img src={logo} width={50} className="mr-5" />
                   <h1 className="text-amber-300">Elysium</h1>
@@ -123,7 +122,7 @@ function Navbar() {
                       {/* Nav Links */}
                       <div
                         ref={containerRef}
-                        className="backdrop-blur-xl bg-white/5 border border-white/15 rounded-xl px-8 py-5 flex sm:w-[300px] lg:w-[550px] justify-between items-center relative"
+                        className="backdrop-blur-md bg-white/5 border border-white/15 rounded-xl px-8 py-5 flex sm:w-[300px] lg:w-[550px] justify-between items-center relative"
                       >
                         {/* Sliding Border Background */}
                         <div
@@ -177,7 +176,7 @@ function Navbar() {
                           </Link>
                         )}
                         {!isAuthenticated ? (
-                          <SignInBtn />
+                            <SignInBtn setIsMenuOpen={setIsMenuOpen}/>
                         ) : (
                           <AccDropDown />
                         )}

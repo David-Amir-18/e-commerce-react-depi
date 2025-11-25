@@ -127,6 +127,15 @@ function SearchBar() {
     setSuggestions([]);
   };
 
+  function isPastDateString(departDateStr) {
+    // departDateStr: "YYYY-MM-DD"
+    const [y, m, d] = departDateStr.split('-').map(Number);
+    const depart = new Date(y, m - 1, d);        // local midnight for the depart date
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);                 // local midnight for today
+
+    return depart < today;                      // true only if strictly before today
+  }
   //  ADD THE SUBMIT HANDLER ---
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -184,6 +193,30 @@ function SearchBar() {
       alert("We couldn't find a valid airport. Please check your spelling or select from the list.");
       return; 
     }
+    
+    if(from === to) {
+      alert("The two locations are the same. Change one of them")
+      return;
+    }
+
+
+    if(isPastDateString(departDate)){
+      alert("You cannot choose a date in the past")
+      return;
+    }
+
+    if(adults == 0 && infants == 0){
+      console.log(adults, infants)
+      alert("you must specify the number of passengers")
+      return;
+    }
+
+
+    if(adults == 0 && infants == 1){
+      console.log(adults, infants)
+      alert("Infants must be accompanied by adults")
+      return;
+    }
 
     const queryParams = new URLSearchParams({
       origin: finalOriginCode,
@@ -202,7 +235,6 @@ function SearchBar() {
     if (flightType === "Round Trip") {
       queryParams.append("returnDate", returnDate);
     }
-
     navigate(`/flights?${queryParams.toString()}`);
   };
 
@@ -211,7 +243,7 @@ function SearchBar() {
       {/* ---  WRAP THE CONTENT IN A <form> --- */}
       <form
         onSubmit={handleSubmit}
-        className="bg-white/5 backdrop-blur-md border border-white/20 rounded-2xl shadow-2xl p-6 w-full max-w- text-white"
+        className="bg-white/5 border border-white/20 rounded-2xl shadow-2xl p-6 w-full max-w- text-white"
       >
         {/* Flight Type Buttons - Made more subtle */}
         <div className="mb-6">
@@ -242,7 +274,7 @@ function SearchBar() {
 
             {activeInput === "from" && suggestions.length > 0 && (
               <div className="absolute top-full left-0 right-0 mt-2 z-50">
-                <div className="bg-white/95 backdrop-blur-md rounded-xl shadow-lg border border-white/20 max-h-60 overflow-y-auto">
+                <div className="bg-white/5 backdrop-blur-lg rounded-xl shadow-lg border border-white/20 max-h-60 overflow-y-auto">
                   {suggestions.map((item) => (
                     <div
                       key={item.id}
@@ -250,22 +282,22 @@ function SearchBar() {
                         e.stopPropagation();
                         handleSelectSuggestion(item, "from");
                       }}
-                      className="px-4 py-3 hover:bg-amber-50/80 cursor-pointer border-b border-white/20"
+                      className="px-4 py-3 hover:bg-white/30 cursor-pointer border-b border-white/20"
                     >
                       <div className="flex items-center justify-between">
                         <div className="flex items-center gap-2">
                           {item.type === "country" ? (
-                            <Globe className="w-5 h-5 text-blue-600" />
+                            <Globe className="w-5 h-5 text-blue-500" />
                           ) : item.type === "city" ? (
                             <Building2 className="w-5 h-5 text-purple-600" />
                           ) : (
-                            <Plane className="w-5 h-5 text-amber-600" />
+                            <Plane className="w-5 h-5 text-amber-500" />
                           )}
                           <div>
-                            <span className="text-gray-800 font-medium">
+                            <span className="text-white font-medium">
                               {item.name}
                             </span>
-                            <span className="text-gray-500 text-xs ml-2">
+                            <span className="text-white text-xs ml-2">
                               {item.type === "country"
                                 ? "All cities & airports"
                                 : item.type === "city"
@@ -274,14 +306,14 @@ function SearchBar() {
                             </span>
                           </div>
                         </div>
-                        <span className="text-gray-400 text-xs">
+                        <span className="text-white text-xs">
                           {item.country}
                         </span>
                       </div>
                     </div>
                   ))}
                   {suggestions.length === 30 && (
-                    <div className="px-4 py-2 text-xs text-gray-500 bg-gray-50 text-center border-t border-gray-200">
+                    <div className="px-4 py-2 text-xs text-white bg-whitetext-center border-t border-white">
                       Showing top 30 results. Type more letters for specific
                       results.
                     </div>
@@ -358,7 +390,7 @@ function SearchBar() {
 
             {activeInput === "to" && suggestions.length > 0 && (
               <div className="absolute top-full left-0 right-0 mt-2 z-50">
-                <div className="bg-white/95 backdrop-blur-md rounded-xl shadow-lg border border-white/20 max-h-60 overflow-y-auto">
+                <div className="bg-white/5 backdrop-blur-lg rounded-xl shadow-lg border border-white/20 max-h-60 overflow-y-auto">
                   {suggestions.map((item) => (
                     <div
                       key={item.id}
@@ -366,22 +398,22 @@ function SearchBar() {
                         e.stopPropagation();
                         handleSelectSuggestion(item, "to");
                       }}
-                      className="px-4 py-3 hover:bg-amber-50/80 cursor-pointer border-b border-white/20"
+                      className="px-4 py-3 hover:bg-white/30 cursor-pointer border-b border-white/20"
                     >
                       <div className="flex items-center justify-between">
                         <div className="flex items-center gap-2">
                           {item.type === "country" ? (
-                            <Globe className="w-5 h-5 text-blue-600" />
+                            <Globe className="w-5 h-5 text-blue-500" />
                           ) : item.type === "city" ? (
                             <Building2 className="w-5 h-5 text-purple-600" />
                           ) : (
-                            <Plane className="w-5 h-5 text-amber-600" />
+                            <Plane className="w-5 h-5 text-amber-500" />
                           )}
                           <div>
-                            <span className="text-gray-800 font-medium">
+                            <span className="text-white font-medium">
                               {item.name}
                             </span>
-                            <span className="text-gray-500 text-xs ml-2">
+                            <span className="text-white text-xs ml-2">
                               {item.type === "country"
                                 ? "All cities & airports"
                                 : item.type === "city"
@@ -390,14 +422,14 @@ function SearchBar() {
                             </span>
                           </div>
                         </div>
-                        <span className="text-gray-400 text-xs">
+                        <span className="text-white text-xs">
                           {item.country}
                         </span>
                       </div>
                     </div>
                   ))}
                   {suggestions.length === 30 && (
-                    <div className="px-4 py-2 text-xs text-gray-500 bg-gray-50 text-center border-t border-gray-200">
+                    <div className="px-4 py-2 text-xs text-white bg-whitetext-center border-t border-white">
                       Showing top 30 results. Type more letters for specific
                       results.
                     </div>
@@ -464,7 +496,7 @@ function SearchBar() {
             {travellersOpen && (
               <div className="absolute top-full left-0 right-0 mt-2">
                 <div
-                  className="relative backdrop-blur-xl bg-black rounded-xl p-4 space-y-3 border border-white/20 shadow-xl"
+                  className="relative backdrop-blur-md bg-white/5 rounded-xl p-4 space-y-3 border border-white/20 shadow-xl"
                   onClick={(e) => e.stopPropagation()}
                 >
                   {[
@@ -476,7 +508,7 @@ function SearchBar() {
                       className="flex justify-between items-center"
                       key={label}
                     >
-                      <span className="font-medium text-gray-300">{label}</span>
+                      <span className="font-medium text-white">{label}</span>
                       <div className="flex items-center gap-3">
                         <button
                           type="button" // Use type="button"
@@ -488,7 +520,7 @@ function SearchBar() {
                         >
                           -
                         </button>
-                        <span className="w-8 text-center font-semibold text-gray-300">
+                        <span className="w-8 text-center font-semibold text-white">
                           {count}
                         </span>
                         <button
@@ -510,7 +542,7 @@ function SearchBar() {
                       e.stopPropagation();
                       setTravellersOpen(false);
                     }}
-                    className="w-full bg-amber-400 text-gray-900 py-3 rounded-xl mt-2 hover:bg-amber-500 font-semibold transition-colors"
+                    className="w-full bg-amber-400 text-white py-3 rounded-xl mt-2 hover:bg-amber-500 font-semibold transition-colors"
                   >
                     Done
                   </button>
@@ -521,7 +553,7 @@ function SearchBar() {
 
           <button
             type="submit"
-            className="bg-amber-400 text-gray-900 rounded-xl py-4 w-full hover:bg-amber-500 transition-all font-semibold shadow-lg text-lg"
+            className="bg-amber-400 text-white rounded-xl py-4 w-full hover:bg-amber-500 transition-all font-semibold shadow-lg text-lg"
           >
             Search Flights
           </button>

@@ -1,12 +1,4 @@
-// import Gevora from "./private assets/Gevora.jpg"
-// import korea from "./private assets/korea.jpg"
-// import globe from "./private assets/globe-regular-full.svg"
-
-// import { useNavigate } from 'react-router-dom';
 import goldParticles from './private assets/gold-particle.1920x1080.mp4'
-// import takeoff from "./private assets/takeoff-the-plane-svgrepo-com.svg"
-// import landing from "./private assets/plane-landing.svg"
-import WideVideo from "./private assets/3042099-hd_1920_1080_30fps.mp4"
 import { faGem } from "@fortawesome/free-regular-svg-icons/faGem"
 import { faBellConcierge } from "@fortawesome/free-solid-svg-icons/faBellConcierge"
 import { faShieldHalved } from "@fortawesome/free-solid-svg-icons/faShieldHalved"
@@ -17,62 +9,7 @@ import SearchBar from '@/Searchbars/SearchBar';
 import DealsSection from '@/Deals/DealsSection';
 
 
-// function getWeekDay(n = new Date().getDay()) {
-//     switch (n) {
-//         case 0:
-//             return "Sun"
-//         case 1:
-//             return "Mon"
-//         case 2:
-//             return "Tue"
-//         case 3:
-//             return "Wed"
-//         case 4:
-//             return "Thu"
-//         case 5:
-//             return "Fri"
-//         case 6:
-//             return "Sat"
-//         default:
-//             return "Invalid day"
-//     }
-// }
-
-// function getMonth(n = new Date().getMonth()) {
-//     switch (n) {
-//         case 0:
-//             return "Jan"
-//         case 1:
-//             return "Feb"
-//         case 2:
-//             return "Mar"
-//         case 3:
-//             return "Apr"
-//         case 4:
-//             return "May"
-//         case 5:
-//             return "Jun"
-//         case 6:
-//             return "Jul"
-//         case 7:
-//             return "Aug"
-//         case 8:
-//             return "Sep"
-//         case 9:
-//             return "Oct"
-//         case 10:
-//             return "Nov"
-//         case 11:
-//             return "Dec"
-//         default:
-//             return "Invalid month"
-//     }
-// }
-
 function Landing() {
-    // const navigate = useNavigate();
-    // let date = new Date()
-    // date = `${getWeekDay()}, ${date.getDate()} ${getMonth()} ${date.getFullYear()}` 
     return (
         <div id='hero' className="video-background min-h-screen overflow-y-auto bg-black py-20">
             <video className="fixed rotate-90 md:absolute md:rotate-0 top-0 w-[100vw] h-[100vh]  object-cover blur-[50px]" autoPlay muted loop playsInline>
