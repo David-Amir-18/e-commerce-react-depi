@@ -1,39 +1,32 @@
 import React, { useState, useEffect } from "react";
-import { Plane, Users, BookOpen, DollarSign, RefreshCw ,BarChart3} from "lucide-react";
+import { Users, BookOpen, DollarSign, BarChart3 } from "lucide-react";
 import goldParticles from "./assets/gold-particle.1920x1080.mp4";
 import { useAuth } from "@/contexts/AuthContext";
-import { flightsAPI, bookingsAPI, usersAPI } from "@/services/api";
+import { bookingsAPI, usersAPI } from "@/services/api";
 
 const Dashboard = () => {
   const { user } = useAuth();
   const [stats, setStats] = useState({
-    totalFlights: 0,
     activeUsers: 0,
     totalBookings: 0,
     totalRevenue: 0,
   });
   const [loading, setLoading] = useState(true);
-  const [refreshing, setRefreshing] = useState(false);
 
   // Fetch dashboard data
   const fetchDashboardData = async () => {
     try {
-      setRefreshing(true);
-      
       // Fetch all data in parallel
-      const [flightsResponse, usersResponse, bookingsResponse] = await Promise.all([
-        flightsAPI.getAll(),
+      const [usersResponse, bookingsResponse] = await Promise.all([
         usersAPI.getAll(),
         bookingsAPI.getAll()
       ]);
 
-      if (flightsResponse.success && usersResponse.success && bookingsResponse.success) {
-        const flights = flightsResponse.data || [];
+      if (usersResponse.success && bookingsResponse.success) {
         const users = usersResponse.data || [];
         const bookings = bookingsResponse.data || [];
 
         // Calculate stats
-        const totalFlights = flights.length;
         const activeUsers = users.filter(u => u.isActive).length;
         const totalBookings = bookings.length;
         
@@ -46,7 +39,6 @@ const Dashboard = () => {
           }, 0);
 
         setStats({
-          totalFlights,
           activeUsers,
           totalBookings,
           totalRevenue,
@@ -56,7 +48,6 @@ const Dashboard = () => {
       console.error('Error fetching dashboard data:', error);
     } finally {
       setLoading(false);
-      setRefreshing(false);
     }
   };
 
@@ -65,11 +56,6 @@ const Dashboard = () => {
   }, []);
 
   const dashboardStats = [
-    {
-      title: "Total Flights",
-      value: stats.totalFlights.toString(),
-      icon: <Plane size={24} />,
-    },
     {
       title: "Active Users",
       value: stats.activeUsers.toLocaleString(),
@@ -87,13 +73,9 @@ const Dashboard = () => {
     },
   ];
 
-  const handleRefresh = () => {
-    fetchDashboardData();
-  };
-
   if (loading) {
       return (
-        <div className="p-6 flex items-center justify-center min-h-screen bg- text-white">
+        <div className="p-6 flex items-center justify-center min-h-screen bg-black text-white">
           <div className="text-center">
             <BarChart3 className="animate-bounce text-amber-400 mx-auto mb-4" size={40} />
             <p className="text-gray-400">Loading Dashboard...</p>
@@ -125,21 +107,13 @@ const Dashboard = () => {
               Welcome back, <span className="text-amber-400">{user?.name || "Admin"}</span>
             </h1>
             <p className="text-gray-300">
-              Here's what's happening with your flights today.
+              Here's what's happening with your bookings today.
             </p>
           </div>
-          <button
-            onClick={handleRefresh}
-            disabled={refreshing}
-            className="flex items-center gap-2 bg-amber-500 hover:bg-amber-400 text-black font-semibold px-4 py-2 rounded-lg transition-all disabled:opacity-50"
-          >
-            <RefreshCw size={20} className={refreshing ? "animate-spin" : ""} />
-            {refreshing ? "Refreshing..." : "Refresh Data"}
-          </button>
         </div>
 
         {/* Stats Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           {dashboardStats.map((stat, index) => (
             <div
               key={index}
@@ -163,12 +137,12 @@ const Dashboard = () => {
         {/* Additional Content Space */}
         <div className="bg-white/10 backdrop-blur-md rounded-2xl p-8 border border-white/10 text-center">
           <div className="max-w-md mx-auto">
-            <Plane className="text-amber-400 mx-auto mb-4" size={48} />
+            <BookOpen className="text-amber-400 mx-auto mb-4" size={48} />
             <h3 className="text-xl font-semibold text-white mb-2">
-              Flight Management System
+              Booking Management System
             </h3>
             <p className="text-gray-300">
-              Manage flights, bookings, and users from the navigation menu.
+              Manage bookings and users from the navigation menu.
             </p>
           </div>
         </div>

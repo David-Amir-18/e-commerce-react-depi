@@ -14,7 +14,6 @@ import ProtectedRoute from "./components/ProtectedRoute";
 import AdminProtectedRoute from "./components/AdminProtectedRoute";
 import FlightResultsPage from "./pages/FlightResultsPage";
 import Dashboard from "./admin/Dashboard";
-import AdminFlights from "./admin/Flights";
 import AdminBookings from "./admin/Bookings";
 import AdminUsers from "./admin/Users";
 import AdminLayout from "./admin/components/AdminLayout";
@@ -71,16 +70,6 @@ function App() {
               <AdminProtectedRoute>
                 <AdminLayout>
                   <Dashboard />
-                </AdminLayout>
-              </AdminProtectedRoute>
-            }
-          ></Route>
-          <Route
-            path="/admin/flights"
-            element={
-              <AdminProtectedRoute>
-                <AdminLayout>
-                  <AdminFlights />
                 </AdminLayout>
               </AdminProtectedRoute>
             }
