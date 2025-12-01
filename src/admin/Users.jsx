@@ -262,7 +262,8 @@ User ID: ${user._id}
     user.name?.toLowerCase().includes(searchTerm.toLowerCase()) ||
     user.email?.toLowerCase().includes(searchTerm.toLowerCase()) ||
     user.phoneNumber?.includes(searchTerm) ||
-    user.passportNumber?.toLowerCase().includes(searchTerm.toLowerCase())
+    user.passportNumber?.toLowerCase().includes(searchTerm.toLowerCase())||
+    user.role?.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
   // Pagination logic
