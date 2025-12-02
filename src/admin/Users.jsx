@@ -4,6 +4,7 @@ import { Search, Trash2, Mail, Phone, User, UserPlus, Edit, Eye, X, AlertCircle,
 import goldParticles from "./assets/gold-particle.1920x1080.mp4";
 import Pagination from "./components/Pagination";
 import AlertModal from './components/AlertModal';
+import Loading from './components/Loading';
 
 const Users = () => {
   const [users, setUsers] = useState([]);
@@ -289,16 +290,9 @@ User ID: ${user._id}
       : 'bg-red-500/20 text-red-300 border border-red-500/30';
   };
 
-  if (loading) {
-    return (
-      <div className="p-6 flex items-center justify-center min-h-screen text-white">
-        <div className="text-center">
-          <User className="animate-bounce text-amber-400 mx-auto mb-4" size={40} />
-          <p className="text-gray-400">Loading users...</p>
-        </div>
-      </div>
-    );
-  }
+ if (loading) {
+  return <Loading icon={User} message="Loading users..." />;
+}
 
   return (
     <div className="relative min-h-screen overflow-hidden bg-black">

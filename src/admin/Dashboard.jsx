@@ -3,6 +3,7 @@ import { Users, BookOpen, DollarSign, BarChart3 } from "lucide-react";
 import goldParticles from "./assets/gold-particle.1920x1080.mp4";
 import { useAuth } from "@/contexts/AuthContext";
 import { bookingsAPI, usersAPI } from "@/services/api";
+import Loading from "./components/Loading";
 
 const Dashboard = () => {
   const { user } = useAuth();
@@ -74,15 +75,8 @@ const Dashboard = () => {
   ];
 
   if (loading) {
-      return (
-        <div className="p-6 flex items-center justify-center min-h-screen bg-black text-white">
-          <div className="text-center">
-            <BarChart3 className="animate-bounce text-amber-400 mx-auto mb-4" size={40} />
-            <p className="text-gray-400">Loading Dashboard...</p>
-          </div>
-        </div>
-      );
-    }
+  return <Loading icon={BarChart3} message="Loading Dashboard..." />;
+}
 
   return (
     <div className="relative min-h-screen overflow-hidden bg-black">

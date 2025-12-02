@@ -4,6 +4,7 @@ import { bookingsAPI } from '../services/api';
 import goldParticles from "./assets/gold-particle.1920x1080.mp4";
 import Pagination from "./components/Pagination";
 import AlertModal from './components/AlertModal';
+import Loading from './components/Loading';
 
 const Bookings = () => {
   const [bookings, setBookings] = useState([]);
@@ -188,15 +189,8 @@ const Bookings = () => {
 
 
   if (loading) {
-    return (
-      <div className="p-6 flex items-center justify-center min-h-screen bg- text-white">
-        <div className="text-center">
-          <Calendar className="animate-bounce text-amber-400 mx-auto mb-4" size={40} />
-          <p className="text-gray-400">Loading bookings...</p>
-        </div>
-      </div>
-    );
-  }
+  return <Loading icon={Calendar} message="Loading bookings..." />;
+}
 
   return (
     <div className="relative min-h-screen overflow-hidden bg-">
