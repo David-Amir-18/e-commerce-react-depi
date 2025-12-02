@@ -1,35 +1,20 @@
 import React, { useState, useEffect } from 'react';
-import { Search, Eye, Calendar, User, Plane, AlertCircle, CheckCircle, Info } from 'lucide-react';
+import { Search, Eye, Calendar, User, Plane } from 'lucide-react';
 import { bookingsAPI } from '../services/api';
 import goldParticles from "./assets/gold-particle.1920x1080.mp4";
 import Pagination from "./components/Pagination";
-import AlertModal from './components/AlertModal';
+import { useAlert } from './components/AlertModal';
 import Loading from './components/Loading';
 
 const Bookings = () => {
   const [bookings, setBookings] = useState([]);
   const [loading, setLoading] = useState(true);
   const [searchTerm, setSearchTerm] = useState('');
-  const [alert, setAlert] = useState(null);
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage] = useState(10);
+  const { showAlert, AlertComponent } = useAlert();
 
-  const showAlert = (type, title, message, onConfirm = null, showCancel = false) => {
-    setAlert({ type, title, message, onConfirm, showCancel });
-  };
-
-  const closeAlert = () => {
-    setAlert(null);
-  };
-
-  const handleAlertConfirm = () => {
-    if (alert?.onConfirm) {
-      alert.onConfirm();
-    }
-    closeAlert();
-  };
-
-  // Fetch bookings from API
+  // Fetch bookings
   useEffect(() => {
     fetchBookings();
   }, []);
@@ -100,10 +85,8 @@ const Bookings = () => {
 
   const filteredBookings = bookings.filter(booking => {
     const searchLower = searchTerm.toLowerCase();
-    // Get user info from userId or contactDetails
     const userName = (booking.userId?.name || booking.contactDetails?.contactPerson || '')?.toLowerCase();
     const userEmail = (booking.userId?.email || booking.contactDetails?.email || '')?.toLowerCase();
-    // Get flight info from flightId or flightDetails
     const flightInfo = booking.flightId || booking.flightDetails || {};
     const flightNumber = (flightInfo.flightNumber || '')?.toLowerCase();
     const origin = (flightInfo.origin || flightInfo.from || '')?.toLowerCase();
@@ -159,7 +142,7 @@ const Bookings = () => {
     const flightOrigin = flightInfo.origin || flightInfo.from || 'N/A';
     const flightDestination = flightInfo.destination || flightInfo.to || 'N/A';
 
-    // Get user info - fall back to contact details
+    // Get user info
     const userName = booking.userId?.name || booking.contactDetails?.contactPerson || 'Guest';
     const userEmail = booking.userId?.email || booking.contactDetails?.email || 'N/A';
     const userPhone = booking.userId?.phoneNumber || booking.contactDetails?.phone || 'N/A';
@@ -187,13 +170,12 @@ const Bookings = () => {
     showAlert('info', 'Booking Details', details);
   };
 
-
   if (loading) {
-  return <Loading icon={Calendar} message="Loading bookings..." />;
-}
+    return <Loading icon={Calendar} message="Loading bookings..." />;
+  }
 
   return (
-    <div className="relative min-h-screen overflow-hidden bg-">
+    <div className="relative min-h-screen overflow-hidden bg-black">
       <div className="absolute inset-0 bg-gradient-radial from-amber-900/20 via-black to-black pointer-events-none"></div>
       <video className="fixed top-0 w-full h-full object-cover blur-[50px]" autoPlay muted loop playsInline>
         <source src={goldParticles} />
@@ -338,20 +320,9 @@ const Bookings = () => {
             totalItems={filteredBookings.length}
           />
         )}
-
-        {/* Alert Modal */}
-         <AlertModal
-          isOpen={!!alert}
-          type={alert?.type}
-          title={alert?.title}
-          message={alert?.message}
-          showCancel={alert?.showCancel}
-          onConfirm={handleAlertConfirm}
-          onCancel={closeAlert}
-        />
+        <AlertComponent />
       </div>
     </div>
   );
 };
-
 export default Bookings;

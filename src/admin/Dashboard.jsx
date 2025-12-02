@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Users, BookOpen, DollarSign, BarChart3 } from "lucide-react";
+import { Users, BookOpen, DollarSign, BarChart3,Plane } from "lucide-react";
 import goldParticles from "./assets/gold-particle.1920x1080.mp4";
 import { useAuth } from "@/contexts/AuthContext";
 import { bookingsAPI, usersAPI } from "@/services/api";
@@ -17,7 +17,7 @@ const Dashboard = () => {
   // Fetch dashboard data
   const fetchDashboardData = async () => {
     try {
-      // Fetch all data in parallel
+      // Fetch all data
       const [usersResponse, bookingsResponse] = await Promise.all([
         usersAPI.getAll(),
         bookingsAPI.getAll()
@@ -131,12 +131,12 @@ const Dashboard = () => {
         {/* Additional Content Space */}
         <div className="bg-white/10 backdrop-blur-md rounded-2xl p-8 border border-white/10 text-center">
           <div className="max-w-md mx-auto">
-            <BookOpen className="text-amber-400 mx-auto mb-4" size={48} />
+            <Plane className="text-amber-400 mx-auto mb-4" size={48} />
             <h3 className="text-xl font-semibold text-white mb-2">
-              Booking Management System
+              Flight Management System
             </h3>
             <p className="text-gray-300">
-              Manage bookings and users from the navigation menu.
+              Manage users and bookings from the navigation menu.
             </p>
           </div>
         </div>
