@@ -1,14 +1,7 @@
-import React from "react";
-import { AlertCircle, CheckCircle, Info, X } from "lucide-react";
+import React, { useState } from 'react';
+import { AlertCircle, CheckCircle, Info } from 'lucide-react';
 
-const icons = {
-  success: <CheckCircle size={48} className="text-green-400" />,
-  error: <AlertCircle size={48} className="text-red-400" />,
-  warning: <AlertCircle size={48} className="text-amber-400" />,
-  info: <Info size={48} className="text-blue-400" />,
-};
-
-const AlertModal = ({
+export const AlertModal = ({
   isOpen,
   type = "info",
   title,
@@ -18,6 +11,13 @@ const AlertModal = ({
   onCancel,
 }) => {
   if (!isOpen) return null;
+
+  const icons = {
+    success: <CheckCircle size={48} className="text-green-400" />,
+    error: <AlertCircle size={48} className="text-red-400" />,
+    warning: <AlertCircle size={48} className="text-amber-400" />,
+    info: <Info size={48} className="text-blue-400" />,
+  };
 
   return (
     <div className="fixed inset-0 bg-black/50 backdrop-blur-sm flex items-center justify-center z-50 p-4">
@@ -65,4 +65,41 @@ const AlertModal = ({
   );
 };
 
-export default AlertModal;
+export const useAlert = () => {
+  const [alert, setAlert] = useState(null);
+
+  const showAlert = (type, title, message, onConfirm = null, showCancel = false) => {
+    setAlert({ type, title, message, onConfirm, showCancel });
+  };
+
+  const closeAlert = () => {
+    setAlert(null);
+  };
+
+  const handleAlertConfirm = () => {
+    if (alert?.onConfirm) {
+      alert.onConfirm();
+    }
+    closeAlert();
+  };
+
+  const AlertComponent = () => (
+    <AlertModal
+      isOpen={!!alert}
+      type={alert?.type}
+      title={alert?.title}
+      message={alert?.message}
+      showCancel={alert?.showCancel}
+      onConfirm={handleAlertConfirm}
+      onCancel={closeAlert}
+    />
+  );
+
+  return {
+    alert,
+    showAlert,
+    closeAlert,
+    handleAlertConfirm,
+    AlertComponent,
+  };
+};
