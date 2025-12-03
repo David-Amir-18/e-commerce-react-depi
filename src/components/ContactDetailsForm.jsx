@@ -13,7 +13,6 @@ export function ContactDetailsForm({ data, onSave }) {
 
   const [errors, setErrors] = useState({});
 
-  // Update form when data changes
   useEffect(() => {
     if (data) {
       setFormData(data);
@@ -27,7 +26,6 @@ export function ContactDetailsForm({ data, onSave }) {
     };
     setFormData(newFormData);
 
-    // Validate and set errors
     const newErrors = { ...errors };
 
     if (field === 'phoneNumber') {
@@ -48,8 +46,7 @@ export function ContactDetailsForm({ data, onSave }) {
       }
     }
 
-    if (field === 'country') {
-      // Re-validate phone when country changes
+    if (field === 'country') {
       const digitsOnly = formData.phoneNumber?.replace(/\D/g, '') || '';
       const validation = getPhoneValidation(value);
       if (formData.phoneNumber && digitsOnly.length !== validation.digits) {
@@ -61,12 +58,9 @@ export function ContactDetailsForm({ data, onSave }) {
 
     setErrors(newErrors);
 
-    // Check if form is valid
     const isValid = !newErrors.phoneNumber && !newErrors.email &&
                     newFormData.contactPerson && newFormData.email &&
-                    newFormData.phoneNumber && newFormData.country;
-
-    // Auto-save on change with validation status
+                    newFormData.phoneNumber && newFormData.country;
     onSave({
       ...newFormData,
       isValid: isValid
@@ -75,9 +69,7 @@ export function ContactDetailsForm({ data, onSave }) {
 
   const validateEmail = (email) => {
     return /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(email);
-  };
-
-  // Country-specific phone number lengths (digits only, without country code)
+  };
   const phoneDigitsByCountry = {
     'Egypt': { digits: 11, code: '+20', example: '01012345678' },
     'United States': { digits: 10, code: '+1', example: '2025551234' },
@@ -151,26 +143,16 @@ export function ContactDetailsForm({ data, onSave }) {
     'Yemen', 'Zambia', 'Zimbabwe'
   ];
   return (
-    <div className="bg-white/10 border border-white/20 rounded-xl p-6">
-      {/* Header */}
-      <div className="flex items-center gap-3 mb-4 pb-4 border-b border-white/20">
+    <div className="bg-white/10 border border-white/20 rounded-xl p-6">      <div className="flex items-center gap-3 mb-4 pb-4 border-b border-white/20">
         <Mail className="w-5 h-5 text-yellow-400" />
         <h3 className="text-lg font-bold text-zinc-300">
           Contact Details
         </h3>
-      </div>
-
-      {/* Info Message */}
-      <div className="bg-blue-400/10 border border-blue-400/30 rounded-lg p-4 mb-6">
+      </div>      <div className="bg-blue-400/10 border border-blue-400/30 rounded-lg p-4 mb-6">
         <p className="text-blue-300 text-sm">
           We'll use these details to send your booking confirmation and flight updates.
         </p>
-      </div>
-
-      {/* Form Fields */}
-      <div className="space-y-4">
-        {/* Contact Person */}
-        <div>
+      </div>      <div className="space-y-4">        <div>
           <Label htmlFor="contactPerson" className="text-zinc-300 mb-2 block">
             Contact Person Name <span className="text-red-400">*</span>
           </Label>
@@ -190,10 +172,7 @@ export function ContactDetailsForm({ data, onSave }) {
           {errors.contactPerson && (
             <p className="text-red-400 text-xs mt-1">{errors.contactPerson}</p>
           )}
-        </div>
-
-        {/* Country */}
-        <div>
+        </div>        <div>
           <Label htmlFor="country" className="text-zinc-300 mb-2 block">
             Country <span className="text-red-400">*</span>
           </Label>
@@ -220,10 +199,7 @@ export function ContactDetailsForm({ data, onSave }) {
           {errors.country && (
             <p className="text-red-400 text-xs mt-1">{errors.country}</p>
           )}
-        </div>
-
-        {/* Phone Number */}
-        <div>
+        </div>        <div>
           <Label htmlFor="phoneNumber" className="text-zinc-300 mb-2 block">
             Phone Number <span className="text-red-400">*</span>
           </Label>
@@ -233,8 +209,7 @@ export function ContactDetailsForm({ data, onSave }) {
               type="tel"
               id="phoneNumber"
               value={formData.phoneNumber}
-              onChange={(e) => {
-                // Only allow digits
+              onChange={(e) => {
                 const value = e.target.value.replace(/\D/g, '');
                 handleChange('phoneNumber', value);
               }}
@@ -252,10 +227,7 @@ export function ContactDetailsForm({ data, onSave }) {
               ? `Enter ${getPhoneValidation(formData.country).digits} digits for ${formData.country}`
               : 'Select a country first to see required digits'}
           </p>
-        </div>
-
-        {/* Email */}
-        <div>
+        </div>        <div>
           <Label htmlFor="email" className="text-zinc-300 mb-2 block">
             Email Address <span className="text-red-400">*</span>
           </Label>

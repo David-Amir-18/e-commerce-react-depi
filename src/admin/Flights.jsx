@@ -51,7 +51,6 @@ const Flights = () => {
     return `${year}-${month}-${day}T${hours}:${minutes}`;
   };
 
-  // Fetch flights from API
   useEffect(() => {
     const fetchFlights = async () => {
       try {
@@ -73,7 +72,6 @@ const Flights = () => {
   }, []);
 
   const handleSubmit = async () => {
-    // Validation
     if (!formData.flightNumber || !formData.origin || !formData.destination || 
         !formData.departureTime || !formData.arrivalTime || !formData.price || 
         !formData.totalSeats || !formData.availableSeats) { 
@@ -81,12 +79,10 @@ const Flights = () => {
       return;
     }
 
-    // Validate dates
     const depDate = new Date(formData.departureTime);
     const arrDate = new Date(formData.arrivalTime);
     const now = new Date();
 
-    // Check if departure is in the past (only for new flights)
     if (!editingFlight && depDate <= now) {
       showAlert('warning', 'Invalid Date!', 'Departure time must be in the future');
       return;
@@ -97,7 +93,6 @@ const Flights = () => {
       return;
     }
 
-    // Validate price and seats
     if (Number(formData.price) <= 0) {
       showAlert('warning', 'Invalid Price!', 'Price must be greater than 0');
       return;
@@ -133,7 +128,6 @@ const Flights = () => {
 
       let response;
       if (editingFlight) {
-        // Update flight
         response = await flightsAPI.update(editingFlight._id, flightData);
 
         if (response.success) {
@@ -145,7 +139,6 @@ const Flights = () => {
           showAlert('error', 'Update Failed', response.message || 'Failed to update flight.');
         }
       } else {
-        // Create new flight
         response = await flightsAPI.create(flightData);
 
         if (response.success) {
@@ -223,7 +216,6 @@ const Flights = () => {
         let successCount = 0;
         let errorCount = 0;
         
-        //delete
         const deletePromises = flights.map(async (flight) => {
           try {
             await flightsAPI.delete(flight._id);
@@ -297,13 +289,11 @@ const Flights = () => {
       f.destination?.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
-  // Pagination logic
   const totalPages = Math.ceil(filteredFlights.length / itemsPerPage);
   const indexOfLastItem = currentPage * itemsPerPage;
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
   const paginatedFlights = filteredFlights.slice(indexOfFirstItem, indexOfLastItem);
 
-  // Reset to page 1 when search changes
   useEffect(() => {
     setCurrentPage(1);
   }, [searchTerm]);
@@ -337,9 +327,7 @@ const Flights = () => {
         <source src={goldParticles} />
       </video>
       
-      <div className="relative z-10 p-4 sm:p-6 space-y-6 text-white pt-10 lg:pt-6">
-        {/* Header - Responsive */}
-        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+      <div className="relative z-10 p-4 sm:p-6 space-y-6 text-white pt-10 lg:pt-6">        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
           <div>
             <h1 className="text-2xl sm:text-3xl font-bold text-amber-400 mb-2">Flight Management</h1>
             <p className="text-sm sm:text-base text-gray-300">Manage and monitor all flight operations</p>
@@ -352,10 +340,7 @@ const Flights = () => {
               <Plus size={20} /> Add New Flight
             </button>
           </div>
-        </div>
-
-        {/* Search - Responsive */}
-        <div className="bg-white/10 backdrop-blur-md rounded-2xl p-4 sm:p-6">
+        </div>        <div className="bg-white/10 backdrop-blur-md rounded-2xl p-4 sm:p-6">
           <div className="flex-1 relative">
             <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" size={20} />
             <input type="text" placeholder="Search flights by number, origin, or destination..." value={searchTerm} onChange={(e) => setSearchTerm(e.target.value)}
@@ -525,10 +510,7 @@ const Flights = () => {
               </p>
             </div>
           )}
-        </div>
-
-        {/* Pagination */}
-        {filteredFlights.length > 0 && (
+        </div>        {filteredFlights.length > 0 && (
           <Pagination
             currentPage={currentPage}
             totalPages={totalPages}

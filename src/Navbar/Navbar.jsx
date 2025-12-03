@@ -16,13 +16,11 @@ function Navbar() {
     const location = useLocation();
     const [configStyle, setConfigStyle] = useState();
     
-    // For sliding border effect
     const [activeLinkIndex, setActiveLinkIndex] = useState(null);
     const [borderStyle, setBorderStyle] = useState({ left: 0, width: 0, opacity: 0 });
     const linkRefs = useRef([]);
     const containerRef = useRef(null);
     
-    // Define navbar routes
     const navbarRoutes = ['/contact', '/about', '/admin/dashboard'];
     
     useEffect(() => {
@@ -45,16 +43,13 @@ function Navbar() {
         console.log('ConfigStyle changed to:', configStyle);
     }, [configStyle]);
 
-    // Check if current route is a navbar route
     useEffect(() => {
         const currentIndex = navbarRoutes.indexOf(location.pathname);
         
         if (currentIndex !== -1 && linkRefs.current[currentIndex] && containerRef.current) {
-            // Current page is a navbar route - show border
             setActiveLinkIndex(currentIndex);
             updateBorderPosition(currentIndex);
         } else {
-            // Current page is not a navbar route - hide border
             setBorderStyle(prev => ({ ...prev, opacity: 0 }));
             setActiveLinkIndex(null);
         }
@@ -84,7 +79,6 @@ function Navbar() {
         updateBorderPosition(index);
     };
 
-    // Recalculate border position on window resize
     useEffect(() => {
         if (activeLinkIndex !== null) {
             const handleResize = () => updateBorderPosition(activeLinkIndex);

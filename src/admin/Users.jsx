@@ -62,7 +62,6 @@ const Users = () => {
     }
   };
 
-  // Validation functions
   const validateEmail = (email) => {
     return /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(email);
   };
@@ -72,7 +71,7 @@ const Users = () => {
   };
 
   const validatePhone = (phone) => {
-    if (!phone) return true; // Optional field
+    if (!phone) return true;
     const digitsOnly = phone.replace(/\D/g, '');
     return digitsOnly.length >= 9 && digitsOnly.length <= 15;
   };
@@ -83,13 +82,11 @@ const Users = () => {
       return;
     }
 
-    // Validate email format
     if (!validateEmail(formData.email)) {
       showAlert('warning', 'Invalid Email', 'Please enter a valid email address');
       return;
     }
 
-    // Validate phone number if provided
     if (formData.phoneNumber && !validatePhone(formData.phoneNumber)) {
       showAlert('warning', 'Invalid Phone', 'Phone number must be between 9 and 15 digits');
       return;
@@ -100,13 +97,11 @@ const Users = () => {
       return;
     }
 
-    // Validate password strength for new users or when password is being changed
     if (formData.password?.trim() && !validatePassword(formData.password)) {
       showAlert('warning', 'Weak Password', 'Password must be at least 8 characters and contain uppercase, lowercase, number, and special character (@$!%*?&)');
       return;
     }
 
-    // Check for duplicate email
     const emailExists = users.some(user =>
       user.email.toLowerCase() === formData.email.toLowerCase().trim() &&
       (!editingUser || user._id !== editingUser._id)
@@ -119,7 +114,6 @@ const Users = () => {
 
     try {
       let response;
-      // Update user
       if (editingUser) {
         const updateData = {
           name: formData.name.trim(),
@@ -131,7 +125,6 @@ const Users = () => {
           isActive: formData.isActive
         };
         
-        // Only include password if provided
         if (formData.password?.trim()) {
           updateData.password = formData.password;
         }
@@ -147,7 +140,6 @@ const Users = () => {
           showAlert('error', 'Update Failed', response.message || 'Failed to update user.');
         }
       } else {
-        // Create new user
         const userData = {
           name: formData.name.trim(),
           email: formData.email.trim(),
@@ -257,7 +249,6 @@ User ID: ${user._id}
       isActive: true
     });
   };
-   //search
   const filteredUsers = users.filter(user =>
     user.name?.toLowerCase().includes(searchTerm.toLowerCase()) ||
     user.email?.toLowerCase().includes(searchTerm.toLowerCase()) ||
@@ -265,13 +256,11 @@ User ID: ${user._id}
     user.passportNumber?.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
-  // Pagination logic
   const totalPages = Math.ceil(filteredUsers.length / itemsPerPage);
   const indexOfLastItem = currentPage * itemsPerPage;
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
   const paginatedUsers = filteredUsers.slice(indexOfFirstItem, indexOfLastItem);
 
-  // Reset to page 1 when search changes
   useEffect(() => {
     setCurrentPage(1);
   }, [searchTerm]);
@@ -308,9 +297,7 @@ User ID: ${user._id}
       </video>
       
       <div className="relative z-10 p-4 sm:p-6 text-white pt-10 lg:pt-6 min-h-screen flex flex-col">
-        <div className="flex-1 space-y-6">
-        {/* Header */}
-        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+        <div className="flex-1 space-y-6">        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
           <div>
             <h1 className="text-2xl sm:text-3xl font-bold text-amber-400 mb-2">User Management</h1>
             <p className="text-sm sm:text-base text-gray-300">Manage registered users and their accounts</p>
@@ -334,10 +321,7 @@ User ID: ${user._id}
               className="w-full bg-white/10 border border-white/20 text-white placeholder-gray-400 rounded-lg pl-10 pr-4 py-2 focus:ring-2 focus:ring-amber-400 outline-none text-sm sm:text-base"
             />
           </div>
-        </div>
-
-        {/* Results Count */}
-        <div>
+        </div>        <div>
           <p className="text-gray-400 text-sm sm:text-base">
             Showing {filteredUsers.length} of {users.length} users
           </p>
@@ -419,10 +403,7 @@ User ID: ${user._id}
               </div>
             </div>
           ))}
-        </div>
-
-        {/* Empty State */}
-        {filteredUsers.length === 0 && (
+        </div>        {filteredUsers.length === 0 && (
           <div className="bg-white/10 backdrop-blur-md rounded-2xl p-8 sm:p-12 text-center border border-white/10">
             <User className="text-gray-400 mx-auto mb-4" size={48} />
             <h3 className="text-base sm:text-lg font-medium text-white mb-2">No users found</h3>
@@ -564,10 +545,7 @@ User ID: ${user._id}
               </div>
             </div>
           </div>
-        )}
-
-        {/* Alert Modal */}
-         <AlertModal
+        )}         <AlertModal
           isOpen={!!alert}
           type={alert?.type}
           title={alert?.title}

@@ -17,7 +17,6 @@ function UserProfile() {
   const [bookings, setBookings] = useState([]);
   const [bookingsLoading, setBookingsLoading] = useState(false);
 
-  // Comprehensive list of countries
   const countries = [
     'Afghanistan', 'Albania', 'Algeria', 'Andorra', 'Angola', 'Antigua and Barbuda',
     'Argentina', 'Armenia', 'Australia', 'Austria', 'Azerbaijan', 'Bahamas', 'Bahrain',
@@ -50,9 +49,7 @@ function UserProfile() {
     'Uganda', 'Ukraine', 'United Arab Emirates', 'United Kingdom', 'United States',
     'Uruguay', 'Uzbekistan', 'Vanuatu', 'Vatican City', 'Venezuela', 'Vietnam',
     'Yemen', 'Zambia', 'Zimbabwe'
-  ];
-
-  // Form states
+  ];
   const [formData, setFormData] = useState({
     name: user?.name || '',
     email: user?.email || '',
@@ -73,16 +70,13 @@ function UserProfile() {
     confirm: true,
   });
 
-  // Check if user is Google OAuth user
   const isGoogleUser = user?.googleId;
 
-  // Debug user changes
   useEffect(() => {
     console.log('User object updated:', user);
     console.log('Is Google user:', isGoogleUser);
   }, [user, isGoogleUser]);
 
-  // Update form data when user changes
   useEffect(() => {
     if (user) {
       setFormData({
@@ -95,7 +89,6 @@ function UserProfile() {
     }
   }, [user]);
 
-  // Fetch bookings when tab changes to booking history
   useEffect(() => {
     if (activeTab === 'bookings') {
       fetchBookings();
@@ -127,7 +120,6 @@ function UserProfile() {
     setPasswordData(prev => ({ ...prev, [name]: value }));
   };
 
-  // Validation functions
   const validateEmail = (email) => {
     return /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(email);
   };
@@ -143,13 +135,11 @@ function UserProfile() {
   };
 
   const handleSaveProfile = async () => {
-    // Validate email
     if (!validateEmail(formData.email)) {
       setMessage({ type: 'error', text: 'Please enter a valid email address' });
       return;
     }
 
-    // Validate phone if provided
     if (formData.phoneNumber && !validatePhone(formData.phoneNumber)) {
       setMessage({ type: 'error', text: 'Phone number must be between 9 and 15 digits' });
       return;
@@ -253,9 +243,7 @@ function UserProfile() {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-black via-slate-800 to-amber-500 pt-24 px-4 md:px-8 pb-12">
-      <div className="container mx-auto max-w-7xl">
-        {/* Header */}
-        <div className="bg-white/10 backdrop-blur-md rounded-2xl p-6 md:p-8 border border-white/20 mb-6 mt-10">
+      <div className="container mx-auto max-w-7xl">        <div className="bg-white/10 backdrop-blur-md rounded-2xl p-6 md:p-8 border border-white/20 mb-6 mt-10">
           <div className="flex flex-col md:flex-row items-center gap-6">
             <div className="w-20 h-20 rounded-full bg-gradient-to-br from-amber-400 to-amber-600 text-white font-bold text-3xl flex items-center justify-center shadow-lg shadow-amber-400/30">
               {user?.name?.charAt(0).toUpperCase() || 'U'}
@@ -278,9 +266,7 @@ function UserProfile() {
         </div>
 
         {/* Main Content Area with Sidebar */}
-        <div className="flex flex-col lg:flex-row gap-6">
-          {/* Sidebar */}
-          <aside className="lg:w-64 flex-shrink-0">
+        <div className="flex flex-col lg:flex-row gap-6">          <aside className="lg:w-64 flex-shrink-0">
             <div className="bg-white/10 backdrop-blur-md rounded-2xl p-4 border border-white/20 sticky top-28">
               <nav className="space-y-2">
                 <button
@@ -365,10 +351,7 @@ function UserProfile() {
                           {user?.name || 'Not set'}
                         </p>
                       )}
-                    </div>
-
-                    {/* Email */}
-                    <div>
+                    </div>                    <div>
                       <label className="block text-sm font-medium text-gray-300 mb-2">
                         Email Address
                       </label>
@@ -389,10 +372,7 @@ function UserProfile() {
                       {isGoogleUser && isEditing && (
                         <p className="text-xs text-gray-400 mt-1">Email cannot be changed for Google accounts</p>
                       )}
-                    </div>
-
-                    {/* Phone Number */}
-                    <div>
+                    </div>                    <div>
                       <label className="block text-sm font-medium text-gray-300 mb-2">
                         Phone Number
                       </label>
@@ -436,10 +416,7 @@ function UserProfile() {
                             : 'Not set'}
                         </p>
                       )}
-                    </div>
-
-                    {/* Country */}
-                    <div className="md:col-span-2">
+                    </div>                    <div className="md:col-span-2">
                       <label className="block text-sm font-medium text-gray-300 mb-2">
                         Country
                       </label>
@@ -635,7 +612,6 @@ function UserProfile() {
                 ) : (
                   <div className="space-y-4">
                     {bookings.map((booking) => {
-                      // Get flight info from either flightId (database flights) or flightDetails (SerpAPI flights)
                       const flightInfo = booking.flightId || booking.flightDetails || {};
                       const airline = flightInfo.airline || 'Flight';
                       const flightNumber = flightInfo.flightNumber || 'N/A';
@@ -654,7 +630,6 @@ function UserProfile() {
                         departureDate = flightInfo.departDate;
                       }
 
-                      // Get departure time
                       const departTime = flightInfo.departTime || '';
 
                       // Get total price from pricing breakdown or calculate from flight price

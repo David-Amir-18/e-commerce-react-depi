@@ -15,12 +15,10 @@ const Dashboard = () => {
   const [loading, setLoading] = useState(true);
   const [refreshing, setRefreshing] = useState(false);
 
-  // Fetch dashboard data
   const fetchDashboardData = async () => {
     try {
       setRefreshing(true);
       
-      // Fetch all data in parallel
       const [flightsResponse, usersResponse, bookingsResponse] = await Promise.all([
         flightsAPI.getAll(),
         usersAPI.getAll(),
@@ -32,12 +30,10 @@ const Dashboard = () => {
         const users = usersResponse.data || [];
         const bookings = bookingsResponse.data || [];
 
-        // Calculate stats
         const totalFlights = flights.length;
         const activeUsers = users.filter(u => u.isActive).length;
         const totalBookings = bookings.length;
         
-        // Calculate total revenue from confirmed bookings
         const totalRevenue = bookings
           .filter(booking => booking.status === 'confirmed')
           .reduce((sum, booking) => {
@@ -103,9 +99,7 @@ const Dashboard = () => {
     }
 
   return (
-    <div className="relative min-h-screen overflow-hidden bg-black">
-      {/* Background gradient effect */}
-      <div className="absolute inset-0 bg-gradient-radial from-amber-900/20 via-black to-black pointer-events-none"></div>
+    <div className="relative min-h-screen overflow-hidden bg-black">      <div className="absolute inset-0 bg-gradient-radial from-amber-900/20 via-black to-black pointer-events-none"></div>
       <video
         className="fixed top-0 w-full h-full object-cover blur-[50px]"
         autoPlay
@@ -114,12 +108,7 @@ const Dashboard = () => {
         playsInline
       >
         <source src={goldParticles} />
-      </video>
-      
-      {/* Foreground Content */}
-      <div className="relative z-10 p-4 sm:p-6 space-y-6 text-white pt-10 lg:pt-6">
-        {/* Header */}
-        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+      </video>      <div className="relative z-10 p-4 sm:p-6 space-y-6 text-white pt-10 lg:pt-6">        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
           <div>
             <h1 className="text-3xl font-bold text-white mb-2">
               Welcome back, <span className="text-amber-400">{user?.name || "Admin"}</span>
@@ -136,10 +125,7 @@ const Dashboard = () => {
             <RefreshCw size={20} className={refreshing ? "animate-spin" : ""} />
             {refreshing ? "Refreshing..." : "Refresh Data"}
           </button>
-        </div>
-
-        {/* Stats Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-6">
+        </div>        <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-6">
           {dashboardStats.map((stat, index) => (
             <div
               key={index}
@@ -158,10 +144,7 @@ const Dashboard = () => {
               </div>
             </div>
           ))}
-        </div>
-
-        {/* Additional Content Space */}
-        <div className="bg-white/10 backdrop-blur-md rounded-2xl p-8 border border-white/10 text-center">
+        </div>        <div className="bg-white/10 backdrop-blur-md rounded-2xl p-8 border border-white/10 text-center">
           <div className="max-w-md mx-auto">
             <Plane className="text-amber-400 mx-auto mb-4" size={48} />
             <h3 className="text-xl font-semibold text-white mb-2">

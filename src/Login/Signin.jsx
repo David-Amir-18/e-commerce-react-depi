@@ -31,7 +31,6 @@ function SignIn() {
       const result = await login(email, password);
 
       if (result.success) {
-        // Redirect to the page they tried to visit or home
         const from = location.state?.from?.pathname || "/";
         navigate(from, { replace: true });
       } else {
@@ -52,7 +51,6 @@ function SignIn() {
       const result = await googleLogin(credentialResponse.credential);
 
       if (result.success) {
-        // Redirect to the page they tried to visit or home
         const from = location.state?.from?.pathname || "/";
         navigate(from, { replace: true });
       } else {
@@ -69,9 +67,7 @@ function SignIn() {
     setError("Google login failed. Please try again.");
   };
 
-  // --- STYLING CONSTANTS ---
 
-  // Dialog styles copied from your sign-in card
   const dialogContentClasses = `
     bg-[#00000066] backdrop-blur-md rounded-2xl shadow-2xl p-8 border border-[#ffffff20]
     text-white
@@ -80,7 +76,6 @@ function SignIn() {
     data-[state=open]:animate-soft-scale-in
   `;
 
-  // Text styles copied from your sign-in card
   const dialogHeaderTitleClasses = "text-2xl font-light text-white mb-2";
   const dialogHeaderDescriptionClasses = "text-gray-300 text-sm";
   const sectionTitleClasses = "text-lg font-semibold text-gray-100 mb-2";

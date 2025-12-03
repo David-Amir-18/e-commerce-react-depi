@@ -1,4 +1,3 @@
-// src/components/FilterSidebar.jsx
 
 import React from 'react';
 import { Checkbox } from "./ui/checkbox";
@@ -6,28 +5,22 @@ import { Label } from "./ui/label";
 import { Separator } from "./ui/separator";
 import { Button } from "./ui/button";
 
-// This component receives filter state and a function to update it from FlightResultsPage
 const FilterSidebar = ({ filters, setFilters, onApplyFilters }) => {
   
-  // This function handles the new range slider
   const handlePriceChange = (e) => {
-    const newMaxValue = parseInt(e.target.value); // Get the new max price
+    const newMaxValue = parseInt(e.target.value);
     
-    // Update the parent's filter state
     setFilters(prevFilters => {
       const updatedFilters = { 
         ...prevFilters, 
-        // Keep the min value (index 0), only update the max value (index 1)
         priceRange: [prevFilters.priceRange[0], newMaxValue] 
       };
       
-      // Apply filters immediately as the slider moves
       onApplyFilters(updatedFilters); 
       return updatedFilters;
     });
   };
 
-  // This function handles all checkbox clicks
   const handleCheckboxChange = (category, value) => {
     setFilters(prevFilters => {
       const currentValues = prevFilters[category] || [];
@@ -36,12 +29,11 @@ const FilterSidebar = ({ filters, setFilters, onApplyFilters }) => {
         : [...currentValues, value];
       
       const updatedFilters = { ...prevFilters, [category]: newValues };
-      onApplyFilters(updatedFilters); // Trigger filter application in parent
+      onApplyFilters(updatedFilters);
       return updatedFilters;
     });
   };
   
-  // This function resets all filters back to default
   const handleResetFilters = () => {
     const freshFilters = {
       stops: [],
@@ -54,7 +46,6 @@ const FilterSidebar = ({ filters, setFilters, onApplyFilters }) => {
     onApplyFilters(freshFilters);
   };
 
-  // Static options for filters (these could come from API meta-data in a real app)
   const airlinesOptions = ['Delta Airlines', 'United Airlines', 'American Airlines', 'Emirates'];
   const departureTimeOptions = [
     { label: 'Morning (6AM - 12PM)', value: 'morning' },

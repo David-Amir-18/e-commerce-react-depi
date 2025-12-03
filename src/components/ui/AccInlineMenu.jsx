@@ -1,9 +1,7 @@
-// AccInlineMenu.jsx
 import { useAuth } from "../../contexts/AuthContext";
 import { useNavigate } from "react-router-dom";
 import UserMenuContent from "./UserMenuContent";
 
-// AccInlineMenu.jsx
 export default function AccInlineMenu() {
   const { user, logout } = useAuth();
   const navigate = useNavigate();

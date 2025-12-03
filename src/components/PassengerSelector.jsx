@@ -16,7 +16,6 @@ export function PassengerSelector({ passengers, onPassengersChange }) {
 
   const handleDecrement = (type) => {
     if (passengers[type] <= 0) return;
-    // Ensure at least 1 adult remains
     if (type === 'adults' && passengers[type] <= 1) return;
     onPassengersChange({
       ...passengers,

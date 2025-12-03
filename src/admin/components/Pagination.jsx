@@ -38,18 +38,11 @@ const Pagination = ({ currentPage, totalPages, onPageChange, itemsPerPage, total
   if (totalPages <= 1) return null;
 
   return (
-    <div className="flex flex-col sm:flex-row items-center justify-between gap-4 mt-6 px-4">
-      {/* Items Info */}
-      <div className="text-sm text-gray-400">
+    <div className="flex flex-col sm:flex-row items-center justify-between gap-4 mt-6 px-4">      <div className="text-sm text-gray-400">
         Showing <span className="text-amber-400 font-semibold">{startItem}</span> to{' '}
         <span className="text-amber-400 font-semibold">{endItem}</span> of{' '}
         <span className="text-amber-400 font-semibold">{totalItems}</span> items
-      </div>
-
-      {/* Pagination Controls */}
-      <div className="flex items-center gap-2">
-        {/* Previous Button */}
-        <button
+      </div>      <div className="flex items-center gap-2">        <button
           onClick={() => onPageChange(currentPage - 1)}
           disabled={currentPage === 1}
           className={`p-2 rounded-lg transition-all ${
@@ -59,10 +52,7 @@ const Pagination = ({ currentPage, totalPages, onPageChange, itemsPerPage, total
           }`}
         >
           <ChevronLeft size={20} />
-        </button>
-
-        {/* Page Numbers */}
-        <div className="flex items-center gap-1">
+        </button>        <div className="flex items-center gap-1">
           {getPageNumbers().map((page, index) =>
             page === '...' ? (
               <span key={`ellipsis-${index}`} className="px-3 py-2 text-gray-400">
@@ -82,10 +72,7 @@ const Pagination = ({ currentPage, totalPages, onPageChange, itemsPerPage, total
               </button>
             )
           )}
-        </div>
-
-        {/* Next Button */}
-        <button
+        </div>        <button
           onClick={() => onPageChange(currentPage + 1)}
           disabled={currentPage === totalPages}
           className={`p-2 rounded-lg transition-all ${

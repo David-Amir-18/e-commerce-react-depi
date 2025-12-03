@@ -13,7 +13,6 @@ export function FoodSelectionPage() {
   const [selectedMeals, setSelectedMeals] = useState({});
   const [showSuccess, setShowSuccess] = useState(false);
 
-  // Load saved meals from sessionStorage
   useEffect(() => {
     const saved = sessionStorage.getItem('selectedMeals');
     if (saved) {
@@ -21,7 +20,6 @@ export function FoodSelectionPage() {
     }
   }, []);
 
-  // Redirect if no flight data
   useEffect(() => {
     if (!flight) {
       navigate('/flights');
@@ -123,10 +121,8 @@ export function FoodSelectionPage() {
       const current = prev[mealId] || 0;
       const newQuantity = Math.max(0, current + delta);
 
-      // Check if we've reached the limit BEFORE applying the change
       if (delta > 0) {
         const currentTotal = isBeverage ? getTotalBeverages(prev) : getTotalMeals(prev);
-        // Prevent increment if it would exceed the passenger limit
         if (currentTotal >= totalPassengers) {
           return prev;
         }
@@ -165,18 +161,14 @@ export function FoodSelectionPage() {
   };
 
   const handleConfirm = () => {
-    // Save to sessionStorage
     sessionStorage.setItem('selectedMeals', JSON.stringify(selectedMeals));
 
-    // Mark as completed
     const completed = JSON.parse(sessionStorage.getItem('bookingOptionsCompleted') || '{}');
     completed.food = true;
     sessionStorage.setItem('bookingOptionsCompleted', JSON.stringify(completed));
 
-    // Show success message
     setShowSuccess(true);
 
-    // Navigate back after short delay
     setTimeout(() => {
       navigate(returnRoute || '/booking/options', { state: location.state });
     }, 1500);
@@ -381,10 +373,7 @@ export function FoodSelectionPage() {
                 })}
               </div>
             </div>
-          </div>
-
-          {/* Sidebar */}
-          <div className="lg:col-span-1">
+          </div>          <div className="lg:col-span-1">
             <div className="sticky top-24 space-y-4">
               {/* Order Summary */}
               <div className="bg-white/10 border border-white/20 rounded-xl p-6">

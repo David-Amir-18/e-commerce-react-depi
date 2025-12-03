@@ -15,7 +15,6 @@ export function BookingOptionsPage() {
     baggage: false,
   });
 
-  // Load saved completion status from sessionStorage
   useEffect(() => {
     const saved = sessionStorage.getItem('bookingOptionsCompleted');
     if (saved) {
@@ -23,7 +22,6 @@ export function BookingOptionsPage() {
     }
   }, []);
 
-  // Redirect if no flight data
   useEffect(() => {
     if (!flight) {
       navigate('/flights');
@@ -152,9 +150,7 @@ export function BookingOptionsPage() {
                     className="w-full group"
                   >
                     <div className="bg-white/10 border border-white/20 rounded-xl overflow-hidden hover:border-yellow-400/50 transition-all duration-300 hover:shadow-lg hover:shadow-yellow-400/10">
-                      <div className="grid md:grid-cols-3 gap-4">
-                        {/* Image */}
-                        <div className="relative h-48 md:h-auto overflow-hidden">
+                      <div className="grid md:grid-cols-3 gap-4">                        <div className="relative h-48 md:h-auto overflow-hidden">
                           <img
                             src={option.image}
                             alt={option.title}
@@ -166,10 +162,7 @@ export function BookingOptionsPage() {
                               <CheckCircle className="w-5 h-5" />
                             </div>
                           )}
-                        </div>
-
-                        {/* Content */}
-                        <div className="md:col-span-2 p-6 flex flex-col justify-center">
+                        </div>                        <div className="md:col-span-2 p-6 flex flex-col justify-center">
                           <div className="flex items-start justify-between mb-3">
                             <div className="flex items-center gap-3">
                               <div className={`p-3 rounded-lg bg-${option.color}-400/10 border border-${option.color}-400/30`}>
@@ -206,10 +199,7 @@ export function BookingOptionsPage() {
                 );
               })}
             </div>
-          </div>
-
-          {/* Sidebar */}
-          <div className="lg:col-span-1">
+          </div>          <div className="lg:col-span-1">
             <div className="sticky top-24 space-y-4">
               {/* Important Notice */}
               <div className="bg-white/10 border border-white/20 rounded-xl p-6">

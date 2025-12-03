@@ -5,12 +5,10 @@ import { ChevronLeft, ChevronRight } from 'lucide-react';
 import {allDealsData,categories} from './allDealsData';
 
 const DealsSection = () => {
-  // Set default active tab to 'Cheapest flights'
   const [activeTab, setActiveTab] = useState('Cheapest flights');
   const scrollContainerRef = useRef(null);
   const navigate = useNavigate();
 
-  // Get deals based on active category
   const currentDeals = allDealsData[activeTab] || [];
 
   const handleScroll = (scrollOffset) => {
@@ -22,13 +20,10 @@ const DealsSection = () => {
     }
   };
 
-  const handleDealClick = (deal) => {
-    // searching for 30 days from now
+  const handleDealClick = (deal) => {
     const dateObj = new Date();
-    dateObj.setDate(dateObj.getDate() + 30); // Add 30 days
-    const futureDate = dateObj.toISOString().split('T')[0];
-
-    // DEFINE ORIGIN: Cairo
+    dateObj.setDate(dateObj.getDate() + 30);
+    const futureDate = dateObj.toISOString().split('T')[0];
     const originCode = 'CAI'; 
     const originName = 'Cairo';
     
@@ -42,17 +37,15 @@ const DealsSection = () => {
       origin: originCode,
       originName: originName,
       destination: deal.destCode,
-      destinationName: deal.dest, // Pass the full name so the Results Page looks nice immediately
-      date: futureDate, // Using the future date
+      destinationName: deal.dest,
+      date: futureDate,
       passengers: '1',
       cabin: "Economy",
       tripType: "One Way",
     });
 
     navigate(`/flights?${queryParams.toString()}`);
-  };
-
-  // Handle category change with smooth transition
+  };
   const handleCategoryChange = (category) => {
     setActiveTab(category);
   };

@@ -1,11 +1,9 @@
 
-// Helper to format "2023-10-03 15:10" to "15:10"
 const formatTime = (dateTimeString) => {
   if (!dateTimeString) return "00:00";
   return dateTimeString.split(' ')[1];
 };
 
-// Helper to format "2023-10-03 15:10" to "Oct 03, 2023"
 const formatDate = (dateTimeString) => {
   if (!dateTimeString) return "Jan 1, 2025";
   const date = new Date(dateTimeString);
@@ -14,7 +12,6 @@ const formatDate = (dateTimeString) => {
   });
 };
 
-// Helper to format 205 (minutes) to "3h 25m"
 const formatDuration = (minutes) => {
   if (!minutes) return "0h 0m";
   const h = Math.floor(minutes / 60);
@@ -22,7 +19,6 @@ const formatDuration = (minutes) => {
   return `${h}h ${m}m`;
 };
 
-// Helper to transform a flight array
 const transformFlightArray = (flights) => {
   return flights.map((flight, index) => {
     const firstLeg = flight.flights[0];
@@ -50,7 +46,6 @@ const transformFlightArray = (flights) => {
   });
 };
 
-// This is the main function that converts the API data
 export const transformSerpApiData = (serpApiData) => {
   const bestFlights = serpApiData.best_flights || [];
   const otherFlights = serpApiData.other_flights || [];

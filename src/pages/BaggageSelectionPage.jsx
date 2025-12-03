@@ -13,18 +13,15 @@ export function BaggageSelectionPage() {
   const [selectedBaggage, setSelectedBaggage] = useState([]);
   const [showSuccess, setShowSuccess] = useState(false);
 
-  // Load saved baggage from sessionStorage
   useEffect(() => {
     const saved = sessionStorage.getItem('selectedBaggage');
     if (saved) {
       setSelectedBaggage(JSON.parse(saved));
     } else {
-      // Initialize with default for each passenger
       setSelectedBaggage(Array(totalPassengers).fill('standard'));
     }
   }, [totalPassengers]);
 
-  // Redirect if no flight data
   useEffect(() => {
     if (!flight) {
       navigate('/flights');
@@ -104,18 +101,14 @@ export function BaggageSelectionPage() {
   };
 
   const handleConfirm = () => {
-    // Save to sessionStorage
     sessionStorage.setItem('selectedBaggage', JSON.stringify(selectedBaggage));
 
-    // Mark as completed
     const completed = JSON.parse(sessionStorage.getItem('bookingOptionsCompleted') || '{}');
     completed.baggage = true;
     sessionStorage.setItem('bookingOptionsCompleted', JSON.stringify(completed));
 
-    // Show success message
     setShowSuccess(true);
 
-    // Navigate back after short delay
     setTimeout(() => {
       navigate(returnRoute || '/booking/options', { state: location.state });
     }, 1500);
@@ -182,10 +175,7 @@ export function BaggageSelectionPage() {
                       <div className="absolute top-0 left-0 right-0 bg-gradient-to-r from-yellow-400 to-yellow-500 text-zinc-950 text-xs font-bold py-1 px-3 text-center z-10">
                         ⭐ MOST POPULAR
                       </div>
-                    )}
-
-                    {/* Image */}
-                    <div className={`relative h-32 overflow-hidden ${isPopular ? 'mt-6' : ''}`}>
+                    )}                    <div className={`relative h-32 overflow-hidden ${isPopular ? 'mt-6' : ''}`}>
                       <img
                         src={option.image}
                         alt={option.name}
@@ -197,10 +187,7 @@ export function BaggageSelectionPage() {
                           {count}
                         </div>
                       )}
-                    </div>
-
-                    {/* Details */}
-                    <div className="p-4">
+                    </div>                    <div className="p-4">
                       <div className="flex items-center gap-2 mb-2">
                         <Icon className={`w-5 h-5 text-${option.color}-400`} />
                         <h3 className="font-bold text-zinc-100">{option.name}</h3>
@@ -295,10 +282,7 @@ export function BaggageSelectionPage() {
                 })}
               </div>
             </div>
-          </div>
-
-          {/* Sidebar */}
-          <div className="lg:col-span-1">
+          </div>          <div className="lg:col-span-1">
             <div className="sticky top-24 space-y-4">
               {/* Cost Summary */}
               <div className="bg-white/10 border border-white/20 rounded-xl p-6">

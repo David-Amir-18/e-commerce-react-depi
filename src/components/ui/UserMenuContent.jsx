@@ -1,4 +1,3 @@
-// UserMenuContent.jsx
 import { DropdownMenuItem, DropdownMenuSeparator } from "../../components/ui/dropdown-menu";
 import { User, LogOut } from "lucide-react";
 

@@ -34,25 +34,21 @@ export function PaymentPage() {
 
   const [errors, setErrors] = useState({});
 
-  // Redirect if no flight data
   useEffect(() => {
     if (!flight) {
       navigate('/flights');
     }
   }, [flight, navigate]);
 
-  // Get saved selections from sessionStorage
   const savedSeats = JSON.parse(sessionStorage.getItem('selectedSeats') || '[]');
   const savedMeals = JSON.parse(sessionStorage.getItem('selectedMeals') || '{}');
   const savedBaggage = JSON.parse(sessionStorage.getItem('selectedBaggage') || '[]');
 
-  // Calculate costs
   const totalPassengers = passengers?.adults + passengers?.children + passengers?.infants || 0;
 
   const flightCost = flight?.price * totalPassengers || 0;
 
   const mealsCost = Object.entries(savedMeals).reduce((sum, [id, qty]) => {
-    // Meal prices
     const mealPrices = {
       chicken: 15, beef: 20, fish: 18, pasta: 12, salad: 10, vegan: 14,
       coffee: 3, tea: 2, juice: 5, soda: 3, water: 0
@@ -70,36 +66,27 @@ export function PaymentPage() {
   const totalCost = subtotal + taxesAndFees;
 
   const handleCardInputChange = (field, value) => {
-    let formattedValue = value;
-
-    // Format card number (16 digits with spaces)
+    let formattedValue = value;
     if (field === 'cardNumber') {
       formattedValue = value.replace(/\s/g, '').replace(/(\d{4})/g, '$1 ').trim();
-      formattedValue = formattedValue.slice(0, 19); // 16 digits + 3 spaces
-    }
-
-    // Format expiry date (MM/YY)
+      formattedValue = formattedValue.slice(0, 19);
+    }
     if (field === 'expiryDate') {
       formattedValue = value.replace(/\D/g, '');
       if (formattedValue.length >= 2) {
         formattedValue = formattedValue.slice(0, 2) + '/' + formattedValue.slice(2, 4);
       }
       formattedValue = formattedValue.slice(0, 5);
-    }
-
-    // Format CVV (3-4 digits)
+    }
     if (field === 'cvv') {
       formattedValue = value.replace(/\D/g, '').slice(0, 4);
-    }
-
-    // Format card name (letters and spaces only)
+    }
     if (field === 'cardName') {
       formattedValue = value.replace(/[^a-zA-Z\s]/g, '');
     }
 
     setCardDetails(prev => ({ ...prev, [field]: formattedValue }));
 
-    // Clear error for this field
     if (errors[field]) {
       setErrors(prev => ({ ...prev, [field]: null }));
     }
@@ -126,9 +113,8 @@ export function PaymentPage() {
         const month = parseInt(monthStr, 10);
         const year = parseInt(yearStr, 10);
 
-        // Current date: November 2025
-        const currentYear = 25; // 2025
-        const currentMonth = 11; // November
+        const currentYear = 25;
+        const currentMonth = 11;
 
         if (isNaN(month) || month < 1 || month > 12) {
           newErrors.expiryDate = 'Invalid month (01-12)';
@@ -139,7 +125,6 @@ export function PaymentPage() {
         } else if (year === currentYear && month < currentMonth) {
           newErrors.expiryDate = 'Card has expired';
         }
-        // Current month/year and future dates are valid
       }
 
       if (!cardDetails.cvv || cardDetails.cvv.length < 3) {
@@ -193,9 +178,8 @@ export function PaymentPage() {
     setIsProcessing(true);
 
     try {
-      // Transform passengerDetails to match backend schema
       const transformedPassengerDetails = passengerDetails.map(passenger => ({
-        type: passenger.type.toLowerCase(), // Convert 'Adult' to 'adult'
+        type: passenger.type.toLowerCase(),
         title: passenger.data?.title || '',
         firstName: passenger.data?.firstName || '',
         lastName: passenger.data?.lastName || '',
@@ -204,7 +188,6 @@ export function PaymentPage() {
         passportNumber: passenger.data?.passportNumber || ''
       }));
 
-      // Transform contactDetails to match backend schema
       const transformedContactDetails = {
         contactPerson: contactDetails.contactPerson || '',
         email: contactDetails.email || '',
@@ -212,7 +195,6 @@ export function PaymentPage() {
         country: contactDetails.country || ''
       };
 
-      // Prepare booking data
       const bookingData = {
         flightDetails: {
           airline: flight.airline,
@@ -248,13 +230,11 @@ export function PaymentPage() {
         paymentMethod: paymentMethod
       };
 
-      // Call the API to create booking
       const response = await bookingsAPI.create(bookingData);
 
       if (response.success) {
         setBookingReference(response.bookingReference || response.data?.bookingReference);
 
-        // Clear saved selections
         sessionStorage.removeItem('selectedSeats');
         sessionStorage.removeItem('selectedMeals');
         sessionStorage.removeItem('selectedBaggage');
@@ -263,7 +243,6 @@ export function PaymentPage() {
         setIsProcessing(false);
         setPaymentSuccess(true);
 
-        // Navigate to home after 5 seconds
         setTimeout(() => {
           navigate('/');
         }, 5000);
@@ -388,9 +367,7 @@ export function PaymentPage() {
                           ? 'border-yellow-400 shadow-lg shadow-yellow-400/20'
                           : 'border-white/30 hover:border-yellow-400/50'
                       }`}
-                    >
-                      {/* Image */}
-                      <div className="relative h-32 overflow-hidden">
+                    >                      <div className="relative h-32 overflow-hidden">
                         <img
                           src={method.image}
                           alt={method.name}
@@ -402,10 +379,7 @@ export function PaymentPage() {
                             <CheckCircle className="w-4 h-4 text-zinc-950" />
                           </div>
                         )}
-                      </div>
-
-                      {/* Content */}
-                      <div className="p-4 bg-white/10">
+                      </div>                      <div className="p-4 bg-white/10">
                         <div className="flex items-center gap-2 mb-2">
                           <Icon className={`w-5 h-5 ${isSelected ? 'text-yellow-400' : 'text-zinc-400'}`} />
                           <h3 className="font-semibold text-zinc-100 text-sm">{method.name}</h3>

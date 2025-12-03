@@ -22,21 +22,17 @@ export function PassengerForm({
   const [showSaved, setShowSaved] = useState(false);
   const [lastPassengerNumber, setLastPassengerNumber] = useState(passengerNumber);
 
-  // Update form data when switching between passengers (not when saving)
-  useEffect(() => {
-    // Only reset when switching to a different passenger
+  useEffect(() => {
     if (passengerNumber !== lastPassengerNumber) {
       setFormData(data || {
         title: '',
         firstName: '',
         lastName: '',
       });
-      // Clear errors when switching passengers
       setErrors({});
       setShowSaved(false);
       setLastPassengerNumber(passengerNumber);
-    } else if (data && !formData.title && !formData.firstName && !formData.lastName) {
-      // Load existing data if form is empty (initial load)
+    } else if (data && !formData.title && !formData.firstName && !formData.lastName) {
       setFormData(data);
     }
   }, [data, passengerNumber, lastPassengerNumber]);
@@ -46,7 +42,6 @@ export function PassengerForm({
       ...prev,
       [field]: value,
     }));
-    // Clear error for this field
     if (errors[field]) {
       setErrors(prev => ({
         ...prev,
@@ -80,18 +75,13 @@ export function PassengerForm({
 
   const handleSaveAndNext = () => {
     if (validateForm()) {
-      onSave(passengerNumber - 1, formData);
-
-      // Show saved indicator
-      setShowSaved(true);
-
-      // If not last passenger, move to next after a short delay
+      onSave(passengerNumber - 1, formData);
+      setShowSaved(true);
       if (!isLast) {
         setTimeout(() => {
           onNext();
         }, 800);
-      } else {
-        // Hide saved indicator after 3 seconds for last passenger
+      } else {
         setTimeout(() => {
           setShowSaved(false);
         }, 3000);
@@ -100,9 +90,7 @@ export function PassengerForm({
   };
 
   return (
-    <div className="bg-white/10 border border-white/20 rounded-xl p-6 mb-4">
-      {/* Header */}
-      <div className="flex items-center gap-3 mb-4 pb-4 border-b border-white/20">
+    <div className="bg-white/10 border border-white/20 rounded-xl p-6 mb-4">      <div className="flex items-center gap-3 mb-4 pb-4 border-b border-white/20">
         <User className="w-5 h-5 text-yellow-400" />
         <h3 className="text-lg font-bold text-zinc-100">
           Passenger {passengerNumber} ({passengerType})
@@ -123,12 +111,7 @@ export function PassengerForm({
             </p>
           </div>
         </div>
-      </div>
-
-      {/* Form Fields */}
-      <div className="space-y-4">
-        {/* Title */}
-        <div>
+      </div>      <div className="space-y-4">        <div>
           <Label htmlFor={`title-${passengerNumber}`} className="text-zinc-300 mb-2 block">
             Title <span className="text-red-400">*</span>
           </Label>

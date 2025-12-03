@@ -16,20 +16,17 @@ export const AuthProvider = ({ children }) => {
   const [loading, setLoading] = useState(true);
   const [isAuthenticated, setIsAuthenticated] = useState(false);
 
-  // Check if user is logged in on mount
   useEffect(() => {
     const initAuth = async () => {
       const token = tokenService.getToken();
       const savedUser = tokenService.getUser();
 
       if (token && savedUser) {
-        // Verify token is still valid
         try {
           const response = await authAPI.getMe();
           setUser(response.data);
           setIsAuthenticated(true);
         } catch (error) {
-          // Token is invalid or expired
           console.error('Token validation failed:', error);
           logout();
         }
@@ -40,7 +37,6 @@ export const AuthProvider = ({ children }) => {
     initAuth();
   }, []);
 
-  // Login function
   const login = async (email, password) => {
     try {
       const response = await authAPI.login({ email, password });
@@ -60,7 +56,6 @@ export const AuthProvider = ({ children }) => {
     }
   };
 
-  // Google Login function
   const googleLogin = async (credential) => {
     try {
       const response = await authAPI.googleLogin(credential);
@@ -80,7 +75,6 @@ export const AuthProvider = ({ children }) => {
     }
   };
 
-  // Register function
   const register = async (userData) => {
     try {
       const response = await authAPI.register(userData);
@@ -100,14 +94,12 @@ export const AuthProvider = ({ children }) => {
     }
   };
 
-  // Logout function
   const logout = () => {
     tokenService.clear();
     setUser(null);
     setIsAuthenticated(false);
   };
 
-  // Update user details
   const updateUser = async (userData) => {
     try {
       const response = await authAPI.updateDetails(userData);
@@ -131,7 +123,6 @@ export const AuthProvider = ({ children }) => {
     }
   };
 
-  // Change password
   const changePassword = async (currentPassword, newPassword) => {
     try {
       const response = await authAPI.changePassword(currentPassword, newPassword);

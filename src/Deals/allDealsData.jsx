@@ -9,7 +9,7 @@ const allDealsData = {
       price: '$100' 
     },
     { 
-      id: 2, // Corrected ID to be unique
+      id: 2,
       img: 'https://url-shortener.me/AA8O', 
       dest: 'Athens',
       destCode: 'ATH',

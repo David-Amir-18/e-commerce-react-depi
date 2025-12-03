@@ -1,7 +1,5 @@
-// API Configuration
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'http://localhost:5000/api';
 
-// API Error class for better error handling
 class APIError extends Error {
   constructor(message, status, data) {
     super(message);
@@ -11,7 +9,6 @@ class APIError extends Error {
   }
 }
 
-// Generic API call function
 async function apiCall(endpoint, options = {}) {
   const token = sessionStorage.getItem('authToken');
 
@@ -41,7 +38,6 @@ async function apiCall(endpoint, options = {}) {
     if (error instanceof APIError) {
       throw error;
     }
-    // Network or other errors
     throw new APIError(
       error.message || 'Network error. Please check your connection.',
       0,
@@ -50,9 +46,7 @@ async function apiCall(endpoint, options = {}) {
   }
 }
 
-// Authentication API Service
 export const authAPI = {
-  // Register new user
   register: async (userData) => {
     return apiCall('/auth/register', {
       method: 'POST',
@@ -60,7 +54,6 @@ export const authAPI = {
     });
   },
 
-  // Login user
   login: async (credentials) => {
     return apiCall('/auth/login', {
       method: 'POST',
@@ -68,7 +61,6 @@ export const authAPI = {
     });
   },
 
-  // Google OAuth login
   googleLogin: async (credential) => {
     return apiCall('/auth/google', {
       method: 'POST',
@@ -76,7 +68,6 @@ export const authAPI = {
     });
   },
 
-  // Forgot password
   forgotPassword: async (email, method = 'otp') => {
     return apiCall('/auth/forgot-password', {
       method: 'POST',
@@ -84,7 +75,6 @@ export const authAPI = {
     });
   },
 
-  // Verify OTP
   verifyOTP: async (email, otp) => {
     return apiCall('/auth/verify-otp', {
       method: 'POST',
@@ -92,7 +82,6 @@ export const authAPI = {
     });
   },
 
-  // Reset password
   resetPassword: async (resetData) => {
     return apiCall('/auth/reset-password', {
       method: 'POST',
@@ -100,14 +89,12 @@ export const authAPI = {
     });
   },
 
-  // Get current user profile
   getMe: async () => {
     return apiCall('/auth/me', {
       method: 'GET',
     });
   },
 
-  // Update user details
   updateDetails: async (userData) => {
     return apiCall('/auth/updatedetails', {
       method: 'PUT',
@@ -115,7 +102,6 @@ export const authAPI = {
     });
   },
 
-  // Change password (for authenticated users)
   changePassword: async (currentPassword, newPassword) => {
     return apiCall('/auth/change-password', {
       method: 'PATCH',
@@ -124,7 +110,6 @@ export const authAPI = {
   },
 };
 
-// Token Management
 export const tokenService = {
   setToken: (token) => {
     sessionStorage.setItem('authToken', token);
@@ -157,9 +142,7 @@ export const tokenService = {
   },
 };
 
-// Flights API Service (Admin)
 export const flightsAPI = {
-  // Get all flights
   getAll: async (params = {}) => {
     const queryString = new URLSearchParams(params).toString();
     return apiCall(`/flights${queryString ? `?${queryString}` : ''}`, {
@@ -167,14 +150,12 @@ export const flightsAPI = {
     });
   },
 
-  // Get single flight
   getById: async (id) => {
     return apiCall(`/flights/${id}`, {
       method: 'GET',
     });
   },
 
-  // Create flight (admin only)
   create: async (flightData) => {
     return apiCall('/flights', {
       method: 'POST',
@@ -182,7 +163,6 @@ export const flightsAPI = {
     });
   },
 
-  // Update flight (admin only)
   update: async (id, flightData) => {
     return apiCall(`/flights/${id}`, {
       method: 'PUT',
@@ -190,7 +170,6 @@ export const flightsAPI = {
     });
   },
 
-  // Delete flight (admin only)
   delete: async (id) => {
     return apiCall(`/flights/${id}`, {
       method: 'DELETE',
@@ -198,30 +177,25 @@ export const flightsAPI = {
   },
 };
 
-// Bookings API Service
 export const bookingsAPI = {
-  // Get all bookings (admin only)
   getAll: async () => {
     return apiCall('/bookings', {
       method: 'GET',
     });
   },
 
-  // Get user's bookings
   getMyBookings: async () => {
     return apiCall('/bookings/my-bookings', {
       method: 'GET',
     });
   },
 
-  // Get single booking
   getById: async (id) => {
     return apiCall(`/bookings/${id}`, {
       method: 'GET',
     });
   },
 
-  // Create booking
   create: async (bookingData) => {
     return apiCall('/bookings', {
       method: 'POST',
@@ -229,7 +203,6 @@ export const bookingsAPI = {
     });
   },
 
-  // Update booking
   update: async (id, bookingData) => {
     return apiCall(`/bookings/${id}`, {
       method: 'PUT',
@@ -237,14 +210,12 @@ export const bookingsAPI = {
     });
   },
 
-  // Cancel booking (user)
   cancel: async (id) => {
     return apiCall(`/bookings/${id}`, {
       method: 'DELETE',
     });
   },
 
-  // Update booking status (admin only)
   updateStatus: async (id, status) => {
     return apiCall(`/bookings/${id}/status`, {
       method: 'PATCH',
@@ -252,7 +223,6 @@ export const bookingsAPI = {
     });
   },
 
-  // Delete booking permanently (admin only)
   delete: async (id) => {
     return apiCall(`/bookings/${id}/admin`, {
       method: 'DELETE',
@@ -260,23 +230,19 @@ export const bookingsAPI = {
   },
 };
 
-// Users API Service (Admin only)
 export const usersAPI = {
-  // Get all users (admin only)
   getAll: async () => {
     return apiCall('/users', {
       method: 'GET',
     });
   },
 
-  // Get single user (admin only)
   getById: async (id) => {
     return apiCall(`/users/${id}`, {
       method: 'GET',
     });
   },
 
-  // Create user (admin only)
   create: async (userData) => {
     return apiCall('/users', {
       method: 'POST',
@@ -284,7 +250,6 @@ export const usersAPI = {
     });
   },
 
-  // Update user (admin only)
   update: async (id, userData) => {
     return apiCall(`/users/${id}`, {
       method: 'PUT',
@@ -292,7 +257,6 @@ export const usersAPI = {
     });
   },
 
-  // Delete user (admin only)
   delete: async (id) => {
     return apiCall(`/users/${id}`, {
       method: 'DELETE',

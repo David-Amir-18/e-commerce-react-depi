@@ -24,7 +24,6 @@ function Register() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
 
-  // --- STYLING CONSTANTS (Using the flex-col layout to fix spacing) ---
   const dialogContentClasses = `
     bg-[#00000066] backdrop-blur-md rounded-2xl shadow-2xl p-8 border border-[#ffffff20]
     text-white
@@ -37,16 +36,13 @@ function Register() {
   const sectionTitleClasses = "text-lg font-semibold text-gray-100 mb-2";
   const textClasses = "leading-relaxed text-gray-200";
   const listClasses = "list-disc pl-6 space-y-1 text-gray-200";
-  // --- END STYLING CONSTANTS ---
 
-  // Validation functions
   const validateEmail = (email) => {
     const emailRegex = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
     return emailRegex.test(email);
   };
 
   const validatePassword = (password) => {
-    // At least 8 chars, uppercase, lowercase, number, special char
     const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
     return passwordRegex.test(password);
   };
@@ -55,19 +51,16 @@ function Register() {
     e.preventDefault();
     setError("");
 
-    // Validate email format
     if (!validateEmail(email)) {
       setError("Please enter a valid email address");
       return;
     }
 
-    // Validate password strength
     if (!validatePassword(password)) {
       setError("Password must be at least 8 characters and contain uppercase, lowercase, number, and special character (@$!%*?&)");
       return;
     }
 
-    // Validate passwords match
     if (password !== confirmPassword) {
       setError("Passwords don't match");
       return;
@@ -88,7 +81,6 @@ function Register() {
       });
 
       if (result.success) {
-        // Redirect to home page after successful registration
         navigate("/", { replace: true });
       } else {
         setError(result.error);
@@ -108,7 +100,6 @@ function Register() {
       const result = await googleLogin(credentialResponse.credential);
 
       if (result.success) {
-        // Redirect to home page after successful Google registration
         navigate("/", { replace: true });
       } else {
         setError(result.error);

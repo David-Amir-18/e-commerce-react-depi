@@ -6,9 +6,9 @@ import { Globe, Building2, Plane } from "lucide-react";
 function SearchBar() {
   const [flightType, setFlightType] = useState("One Way");
   const [from, setFrom] = useState("");
-  const [fromCode, setFromCode] = useState(""); // Store airport code
+  const [fromCode, setFromCode] = useState("");
   const [to, setTo] = useState("");
-  const [toCode, setToCode] = useState(""); // Store airport code
+  const [toCode, setToCode] = useState("");
   const [departDate, setDepartDate] = useState("");
   const [returnDate, setReturnDate] = useState("");
   const [destinations, setDestinations] = useState([]);
@@ -19,12 +19,10 @@ function SearchBar() {
   const [children, setChildren] = useState(0);
   const [infants, setInfants] = useState(0);
 
-  const navigate = useNavigate(); //   INITIALIZE useNavigate
+  const navigate = useNavigate();
 
-  // Get today's date in YYYY-MM-DD format for min date validation
   const today = new Date().toISOString().split('T')[0];
 
-  // Swap function
   const swapLocations = () => {
     const tempCity = from;
     const tempCode = fromCode;
@@ -34,7 +32,6 @@ function SearchBar() {
     setToCode(tempCode);
   };
 
-  // Fetch destinations from JSON
   useEffect(() => {
     fetch("/destination.json")
       .then((res) => res.json())
@@ -42,7 +39,6 @@ function SearchBar() {
       .catch((err) => console.error("Error fetching Destination: ", err));
   }, []);
 
-  // Close dropdowns when clicking outside
   useEffect(() => {
     const handleClickOutside = () => {
       setSuggestions([]);
@@ -68,27 +64,22 @@ function SearchBar() {
 
     const searchTerm = value.toLowerCase();
 
-    // Filter and prioritize results
     const filtered = destinations.filter(
       (item) =>
         (item.name && item.name.toLowerCase().includes(searchTerm)) ||
         (item.code && item.code.toLowerCase().includes(searchTerm))
     );
 
-    // Sort by relevance and type priority
     const sorted = filtered.sort((a, b) => {
-      // Priority order: country > city > airport
       const typeOrder = { country: 0, city: 1, airport: 2 };
       const typeDiff = typeOrder[a.type] - typeOrder[b.type];
       if (typeDiff !== 0) return typeDiff;
 
-      // Then by exact code match
       const aCodeMatch = a.code?.toLowerCase() === searchTerm;
       const bCodeMatch = b.code?.toLowerCase() === searchTerm;
       if (aCodeMatch && !bCodeMatch) return -1;
       if (!aCodeMatch && bCodeMatch) return 1;
 
-      // Then by starts with
       const aStartsWith = a.name
         ? a.name.toLowerCase().startsWith(searchTerm)
         : "";
@@ -98,15 +89,12 @@ function SearchBar() {
       if (aStartsWith && !bStartsWith) return -1;
       if (!aStartsWith && bStartsWith) return 1;
 
-      // Finally alphabetically
       return a.name ? a.name.localeCompare(b.name) : "";
     });
 
-    // Limit to 30 suggestions for performance
     setSuggestions(sorted.slice(0, 30));
   };
 
-  // Handle selecting a suggestion
   const handleSelectSuggestion = (destination, type) => {
     if (type === "from") {
       setFrom(destination.name);
@@ -118,7 +106,6 @@ function SearchBar() {
     setSuggestions([]);
   };
 
-  //  ADD THE SUBMIT HANDLER ---
   const handleSubmit = (e) => {
     e.preventDefault();
     if (!from || !to || !departDate) {
@@ -132,16 +119,16 @@ function SearchBar() {
     }
 
     const queryParams = new URLSearchParams({
-      origin: fromCode, // Use airport/city/country code
-      destination: toCode, // Use airport/city/country code
-      originName: from, // Display name
-      destinationName: to, // Display name
+      origin: fromCode,
+      destination: toCode,
+      originName: from,
+      destinationName: to,
       date: departDate,
       passengers: adults + children + infants,
       adults: adults,
       children: children,
       infants: infants,
-      cabin: "Economy", // Assuming a default, you can add state for this
+      cabin: "Economy",
       tripType: flightType,
     });
 

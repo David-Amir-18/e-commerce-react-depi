@@ -5,12 +5,10 @@ import FilterSidebar from "../components/FilterSidebar";
 import { Plane } from "lucide-react";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "../components/ui/select";
 
-// Import your transformer
 import { transformSerpApiData } from "../services/dataTransformer"; 
 import SearchBar from "@/Searchbars/SearchBar";
 import FlightSearchDropDown from "@/components/ui/FlightSearchDropDown";
 
-// Helper hook to read URL params
 const useFlightSearch = () => {
   const [searchParams] = useSearchParams();
   return {
@@ -31,7 +29,6 @@ const FlightResultsPage = () => {
   const criteria = useFlightSearch();
   const navigate = useNavigate();
 
-  // Get backend API URL from .env
   const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
   const [allFlights, setAllFlights] = useState({ bestFlights: [], otherFlights: [] });
@@ -41,7 +38,6 @@ const FlightResultsPage = () => {
   const [error, setError] = useState(null);
   const [sortCriteria, setSortCriteria] = useState("recommended");
 
-  // Pagination state
   const [visibleBestCount, setVisibleBestCount] = useState(5);
   const [visibleOtherCount, setVisibleOtherCount] = useState(5);
   const FLIGHTS_PER_PAGE = 5;
@@ -54,12 +50,9 @@ const FlightResultsPage = () => {
     cabinClass: [],
   });
   
-  // Scroll to the top of the page on load
   useEffect(() => window.scrollTo(0, 0), [])
 
-  // useEffect to FETCH data on page load
   useEffect(() => {
-    // If there's no origin in the URL, don't do anything
     if (!criteria.origin || !criteria.destination || !criteria.date) {
       setLoading(false);
       setAllFlights({ bestFlights: [], otherFlights: [] });
@@ -72,7 +65,6 @@ const FlightResultsPage = () => {
       setLoading(true);
       setError(null);
 
-      // Build the backend API URL
       const backendUrl = new URL(`${API_BASE_URL}/flights/search`);
       backendUrl.searchParams.append('origin', criteria.origin);
       backendUrl.searchParams.append('destination', criteria.destination);
@@ -81,7 +73,6 @@ const FlightResultsPage = () => {
       backendUrl.searchParams.append('cabin', criteria.cabin || 'Economy');
 
       try {
-        // Call backend API (which calls SerpAPI server-side)
         const response = await fetch(backendUrl.toString());
 
         if (!response.ok) {
@@ -92,15 +83,12 @@ const FlightResultsPage = () => {
         const responseData = await response.json();
         const serpApiData = responseData.data;
 
-        // Transform the data
         const cleanData = transformSerpApiData(serpApiData);
 
-        // Add random available seats that exceed total passengers
         const totalPassengers = parseInt(criteria.passengers) || 1;
         const addRandomSeats = (flights) => {
           return flights.map(flight => ({
             ...flight,
-            // Random seats between (passengers + 1) and (passengers + 50)
             available: totalPassengers + Math.floor(Math.random() * 50) + 1
           }));
         };
@@ -121,15 +109,13 @@ const FlightResultsPage = () => {
 
     fetchData();
 
-  }, [criteria.origin, criteria.destination, criteria.date, API_BASE_URL]); // Reruns if search criteria change
+  }, [criteria.origin, criteria.destination, criteria.date, API_BASE_URL]);
 
   
-  // Wrap 'applyFilters' in 'useCallback'
   const applyFilters = useCallback((currentFilters, currentSort) => {
     const filterFlightArray = (flights) => {
       let tempFlights = [...flights];
 
-      // Filter by stops
       if (currentFilters.stops.length > 0) {
         tempFlights = tempFlights.filter((flight) => {
           const flightStops =
@@ -137,19 +123,16 @@ const FlightResultsPage = () => {
           return currentFilters.stops.includes(flightStops);
         });
       }
-      // Filter by price range
       tempFlights = tempFlights.filter(
         (flight) =>
           flight.price >= currentFilters.priceRange[0] &&
           flight.price <= currentFilters.priceRange[1]
       );
-      // Filter by airlines
       if (currentFilters.airlines.length > 0) {
         tempFlights = tempFlights.filter((flight) =>
           currentFilters.airlines.includes(flight.airline)
         );
       }
-      // Filter by departure time
       if (currentFilters.departureTime.length > 0) {
         tempFlights = tempFlights.filter((flight) => {
           const departureHour = parseInt(flight.departTime.split(":")[0]);
@@ -161,13 +144,11 @@ const FlightResultsPage = () => {
           return currentFilters.departureTime.includes(timeCategory);
         });
       }
-      // Filter by cabin class
       if (currentFilters.cabinClass.length > 0) {
         tempFlights = tempFlights.filter((flight) =>
           currentFilters.cabinClass.includes(flight.class)
         );
       }
-      // Sorting logic
       if (currentSort === 'price-low-high') {
         tempFlights.sort((a, b) => a.price - b.price);
       } else if (currentSort === 'price-high-low') {
@@ -180,15 +161,12 @@ const FlightResultsPage = () => {
     setFilteredOtherFlights(filterFlightArray(allFlights.otherFlights));
   }, [allFlights]);
 
-  // useEffect to apply filters when state changes
   useEffect(() => {
     applyFilters(filters, sortCriteria);
-    // Reset pagination when filters change
     setVisibleBestCount(5);
     setVisibleOtherCount(5);
   }, [filters, allFlights, sortCriteria, applyFilters]);
 
-  // Load More handlers
   const loadMoreBestFlights = () => {
     setVisibleBestCount(prev => prev + FLIGHTS_PER_PAGE);
   };
@@ -197,7 +175,6 @@ const FlightResultsPage = () => {
     setVisibleOtherCount(prev => prev + FLIGHTS_PER_PAGE);
   };
 
-  // Get visible flights
   const visibleBestFlights = filteredBestFlights.slice(0, visibleBestCount);
   const visibleOtherFlights = filteredOtherFlights.slice(0, visibleOtherCount);
 
@@ -205,7 +182,6 @@ const FlightResultsPage = () => {
   const hasMoreOtherFlights = visibleOtherCount < filteredOtherFlights.length;
 
 
-  // --- Render Logic ---
   if (loading) {
     return (
       <div className="min-h-screen text-white flex items-center justify-center pt-24 text-2xl">

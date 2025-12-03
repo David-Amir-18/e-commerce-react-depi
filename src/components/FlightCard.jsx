@@ -109,7 +109,5 @@ export function FlightCard({
       </div>
     </div>
   );
-}
-
-// Use 'export default' to match your other files
+}
 export default FlightCard;

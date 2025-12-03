@@ -12,7 +12,6 @@ export function PassengerDetailsPage() {
   const navigate = useNavigate();
   const { flight, searchCriteria } = location.state || {};
 
-  // Use search criteria as default, fallback to 1 adult
   const [passengers, setPassengers] = useState({
     adults: parseInt(searchCriteria?.adults) || 1,
     children: parseInt(searchCriteria?.children) || 0,
@@ -28,14 +27,12 @@ export function PassengerDetailsPage() {
     email: '',
   });
 
-  // Redirect if no flight data
   useEffect(() => {
     if (!flight) {
       navigate('/flights');
     }
   }, [flight, navigate]);
 
-  // Generate passenger list based on counts
   useEffect(() => {
     const newPassengerList = [];
 
@@ -62,7 +59,6 @@ export function PassengerDetailsPage() {
 
     setPassengerDetails(newPassengerList);
 
-    // Reset to first passenger if current index is out of bounds
     if (currentPassengerIndex >= newPassengerList.length && newPassengerList.length > 0) {
       setCurrentPassengerIndex(newPassengerList.length - 1);
     }
@@ -85,7 +81,6 @@ export function PassengerDetailsPage() {
 
   const allPassengersCompleted = passengerDetails.every(p => p.data && p.data.title && p.data.firstName && p.data.lastName);
 
-  // Phone validation by country
   const phoneDigitsByCountry = {
     'Egypt': 11, 'United States': 10, 'United Kingdom': 10, 'Japan': 10,
     'Germany': 11, 'France': 9, 'Italy': 10, 'Spain': 9, 'Canada': 10,

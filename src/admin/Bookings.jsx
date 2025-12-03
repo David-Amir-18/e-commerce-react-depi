@@ -28,7 +28,6 @@ const Bookings = () => {
     closeAlert();
   };
 
-  // Fetch bookings from API
   useEffect(() => {
     fetchBookings();
   }, []);
@@ -99,10 +98,8 @@ const Bookings = () => {
 
   const filteredBookings = bookings.filter(booking => {
     const searchLower = searchTerm.toLowerCase();
-    // Get user info from userId or contactDetails
     const userName = (booking.userId?.name || booking.contactDetails?.contactPerson || '')?.toLowerCase();
     const userEmail = (booking.userId?.email || booking.contactDetails?.email || '')?.toLowerCase();
-    // Get flight info from flightId or flightDetails
     const flightInfo = booking.flightId || booking.flightDetails || {};
     const flightNumber = (flightInfo.flightNumber || '')?.toLowerCase();
     const origin = (flightInfo.origin || flightInfo.from || '')?.toLowerCase();
@@ -121,13 +118,11 @@ const Bookings = () => {
            status.includes(searchLower);
   });
 
-  // Pagination logic
   const totalPages = Math.ceil(filteredBookings.length / itemsPerPage);
   const indexOfLastItem = currentPage * itemsPerPage;
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
   const paginatedBookings = filteredBookings.slice(indexOfFirstItem, indexOfLastItem);
 
-  // Reset to page 1 when search changes
   useEffect(() => {
     setCurrentPage(1);
   }, [searchTerm]);
@@ -153,12 +148,10 @@ const Bookings = () => {
   };
 
   const showBookingDetails = (booking) => {
-    // Get flight info
     const flightInfo = booking.flightId || booking.flightDetails || {};
     const flightOrigin = flightInfo.origin || flightInfo.from || 'N/A';
     const flightDestination = flightInfo.destination || flightInfo.to || 'N/A';
 
-    // Get user info - fall back to contact details
     const userName = booking.userId?.name || booking.contactDetails?.contactPerson || 'Guest';
     const userEmail = booking.userId?.email || booking.contactDetails?.email || 'N/A';
     const userPhone = booking.userId?.phoneNumber || booking.contactDetails?.phone || 'N/A';
@@ -186,50 +179,10 @@ const Bookings = () => {
     showAlert('info', 'Booking Details', details);
   };
 
-  // const clearAllBookings = () => {
-  //   showAlert(
-  //     'info',
-  //     'Clear All Bookings',
-  //     'This feature requires individual booking deletion. Would you like to delete all bookings one by one?',
-  //     async () => {
-  //       if (bookings.length === 0) {
-  //         showAlert('info', 'No Data', 'There are no bookings to delete.');
-  //         return;
-  //       }
         
-  //       showAlert(
-  //         'warning',
-  //         'Confirm Clear All',
-  //         `This will delete all ${bookings.length} bookings. Are you absolutely sure?`,
-  //         async () => {
-  //           let successCount = 0;
-  //           let errorCount = 0;
             
-  //           for (const booking of bookings) {
-  //             try {
-  //               await bookingsAPI.delete(booking._id);
-  //               successCount++;
-  //             } catch (error) {
-  //               console.error(`Failed to delete booking ${booking._id}:`, error);
-  //               errorCount++;
-  //             }
-  //           }
             
-  //           // Refresh the bookings list
-  //           await fetchBookings();
             
-  //           if (errorCount === 0) {
-  //             showAlert('success', 'All Cleared!', `Successfully deleted all ${successCount} bookings.`);
-  //           } else {
-  //             showAlert('warning', 'Partially Completed', `Deleted ${successCount} bookings. ${errorCount} failed.`);
-  //           }
-  //         },
-  //         true
-  //       );
-  //     },
-  //     true
-  //   );
-  // };
 
   if (loading) {
     return (
@@ -249,9 +202,7 @@ const Bookings = () => {
         <source src={goldParticles} />
       </video>
       
-      <div className="relative z-10 p-4 sm:p-6 space-y-6 text-white pt-10 lg:pt-6">
-        {/* Header */}
-        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+      <div className="relative z-10 p-4 sm:p-6 space-y-6 text-white pt-10 lg:pt-6">        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
           <div>
             <h1 className="text-2xl sm:text-3xl font-bold text-amber-400 mb-2">Booking Management</h1>
             <p className="text-sm sm:text-base text-gray-300">View and manage all flight bookings</p>
@@ -261,29 +212,19 @@ const Bookings = () => {
               Clear All
             </button>
           </div> */}
-        </div>
-
-        {/* Search Bar */}
-        <div className="bg-white/10 backdrop-blur-md rounded-2xl p-4 sm:p-6">
+        </div>        <div className="bg-white/10 backdrop-blur-md rounded-2xl p-4 sm:p-6">
           <div className="flex-1 relative">
             <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" size={20} />
             <input type="text" placeholder="Search bookings by user, flight, route, status, or ID..." value={searchTerm} onChange={(e) => setSearchTerm(e.target.value)}
               className="w-full bg-white/10 border border-white/20 text-white placeholder-gray-400 rounded-lg pl-10 pr-4 py-2 focus:ring-2 focus:ring-amber-400 outline-none text-sm sm:text-base"
             />
           </div>
-        </div>
-
-        {/* Results Count */}
-        <div>
+        </div>        <div>
           <p className="text-gray-400 text-sm sm:text-base">
             Showing {filteredBookings.length} of {bookings.length} bookings
           </p>
-        </div>
-
-        {/* Bookings Grid */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-4 sm:gap-6">
+        </div>        <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-4 sm:gap-6">
           {paginatedBookings.map((booking) => {
-            // Get flight info from either flightId or flightDetails
             const flightInfo = booking.flightId || booking.flightDetails || booking.flight || {};
             const flightOrigin = flightInfo.origin || flightInfo.from || flightInfo.fromCode || 'N/A';
             const flightDestination = flightInfo.destination || flightInfo.to || flightInfo.toCode || 'N/A';
@@ -297,9 +238,7 @@ const Bookings = () => {
             const totalPrice = booking.pricing?.totalCost || (booking.seats * flightPrice).toFixed(2);
 
             return (
-              <div key={booking._id} className="bg-white/10 backdrop-blur-md rounded-2xl p-4 sm:p-6 hover:bg-white/15 transition-all duration-300 border border-white/10 hover:border-amber-500/30">
-                {/* Header */}
-                <div className="flex items-start justify-between mb-4">
+              <div key={booking._id} className="bg-white/10 backdrop-blur-md rounded-2xl p-4 sm:p-6 hover:bg-white/15 transition-all duration-300 border border-white/10 hover:border-amber-500/30">                <div className="flex items-start justify-between mb-4">
                   <div className="min-w-0 flex-1">
                     <h3 className="font-mono font-semibold text-white text-xs sm:text-sm truncate">{booking.bookingReference || `#${booking._id.slice(-8)}`}</h3>
                     <p className="text-xs sm:text-sm text-gray-400">{formatDate(booking.createdAt)}</p>
@@ -307,19 +246,13 @@ const Bookings = () => {
                   <span className={`inline-flex items-center px-2 sm:px-3 py-1 rounded-full text-xs sm:text-sm font-medium ${getStatusColor(booking.status)} whitespace-nowrap flex-shrink-0 ml-2`}>
                     {booking.status}
                   </span>
-                </div>
-
-                {/* User Info */}
-                <div className="flex items-center gap-2 sm:gap-3 mb-4 p-2 sm:p-3 bg-white/5 rounded-lg">
+                </div>                <div className="flex items-center gap-2 sm:gap-3 mb-4 p-2 sm:p-3 bg-white/5 rounded-lg">
                   <User size={14} className="text-gray-400 flex-shrink-0 sm:w-4 sm:h-4" />
                   <div className="min-w-0">
                     <p className="font-medium text-white text-xs sm:text-sm truncate">{userName}</p>
                     <p className="text-xs text-gray-400 truncate">{userEmail}</p>
                   </div>
-                </div>
-
-                {/* Flight Info */}
-                <div className="space-y-2 sm:space-y-3">
+                </div>                <div className="space-y-2 sm:space-y-3">
                   <div className="flex items-center gap-2 sm:gap-3">
                     <Plane size={14} className="text-amber-500 flex-shrink-0 sm:w-4 sm:h-4" />
                     <span className="font-medium text-white text-xs sm:text-sm">{flightNumber}</span>
@@ -345,10 +278,7 @@ const Bookings = () => {
                       Departs: {flightInfo.departureTime ? formatDate(flightInfo.departureTime) : flightInfo.departDate}
                     </div>
                   )}
-                </div>
-
-                {/* Actions */}
-                <div className="mt-4 pt-4 border-t border-white/20 flex gap-2">
+                </div>                <div className="mt-4 pt-4 border-t border-white/20 flex gap-2">
                   <button className="flex-1 border border-white/20 hover:bg-white/10 rounded-lg px-2 sm:px-3 py-2 text-xs sm:text-sm transition-all text-white"
                     onClick={() => showBookingDetails(booking)}>
                     <Eye size={14} className="inline mr-1 sm:w-4 sm:h-4" /> Details
@@ -370,10 +300,7 @@ const Bookings = () => {
               </div>
             );
           })}
-        </div>
-
-        {/* Empty State */}
-        {filteredBookings.length === 0 && (
+        </div>        {filteredBookings.length === 0 && (
           <div className="bg-white/10 backdrop-blur-md rounded-2xl p-8 sm:p-12 text-center">
             <Calendar className="text-gray-400 mx-auto mb-4" size={48} />
             <h3 className="text-base sm:text-lg font-medium text-white mb-2">No bookings found</h3>
@@ -381,10 +308,7 @@ const Bookings = () => {
               {searchTerm ? 'Try adjusting your search criteria.' : 'No bookings have been made yet.'}
             </p>
           </div>
-        )}
-
-        {/* Pagination */}
-        {filteredBookings.length > 0 && (
+        )}        {filteredBookings.length > 0 && (
           <Pagination
             currentPage={currentPage}
             totalPages={totalPages}
@@ -392,10 +316,7 @@ const Bookings = () => {
             itemsPerPage={itemsPerPage}
             totalItems={filteredBookings.length}
           />
-        )}
-
-        {/* Alert Modal */}
-         <AlertModal
+        )}         <AlertModal
           isOpen={!!alert}
           type={alert?.type}
           title={alert?.title}

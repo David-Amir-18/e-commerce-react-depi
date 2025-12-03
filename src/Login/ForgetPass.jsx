@@ -19,7 +19,6 @@ function ForgetPass() {
 
       if (response.success) {
         setIsSubmitted(true);
-        // Navigate to OTP verification page after 2 seconds
         setTimeout(() => {
           navigate("/verify-otp", { state: { email } });
         }, 2000);

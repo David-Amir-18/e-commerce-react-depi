@@ -13,7 +13,6 @@ export function SeatSelectionPage() {
   const [selectedSeats, setSelectedSeats] = useState([]);
   const [showSuccess, setShowSuccess] = useState(false);
 
-  // Load saved seats from sessionStorage
   useEffect(() => {
     const saved = sessionStorage.getItem('selectedSeats');
     if (saved) {
@@ -21,33 +20,27 @@ export function SeatSelectionPage() {
     }
   }, []);
 
-  // Redirect if no flight data
   useEffect(() => {
     if (!flight) {
       navigate('/flights');
     }
   }, [flight, navigate]);
 
-  // Generate seat map (6 columns: A-F, 30 rows for economy)
   const rows = 30;
   const columns = ['A', 'B', 'C', 'D', 'E', 'F'];
 
-  // Some seats are already taken (randomly for demo)
   const occupiedSeats = ['1A', '1B', '2C', '3D', '5E', '5F', '7A', '8B', '10C', '12D', '15E', '18F', '20A', '22B'];
 
-  // Premium seats (rows 1-5)
   const premiumRows = [1, 2, 3, 4, 5];
 
   const handleSeatClick = (seatNumber) => {
     if (occupiedSeats.includes(seatNumber)) {
-      return; // Can't select occupied seats
+      return;
     }
 
     if (selectedSeats.includes(seatNumber)) {
-      // Deselect
       setSelectedSeats(selectedSeats.filter(s => s !== seatNumber));
     } else {
-      // Select (if not exceeding passenger count)
       if (selectedSeats.length < totalPassengers) {
         setSelectedSeats([...selectedSeats, seatNumber]);
       }
@@ -81,18 +74,14 @@ export function SeatSelectionPage() {
   };
 
   const handleConfirm = () => {
-    // Save to sessionStorage
     sessionStorage.setItem('selectedSeats', JSON.stringify(selectedSeats));
 
-    // Mark as completed
     const completed = JSON.parse(sessionStorage.getItem('bookingOptionsCompleted') || '{}');
     completed.seats = true;
     sessionStorage.setItem('bookingOptionsCompleted', JSON.stringify(completed));
 
-    // Show success message
     setShowSuccess(true);
 
-    // Navigate back after short delay
     setTimeout(() => {
       navigate(returnRoute || '/booking/options', { state: location.state });
     }, 1500);
