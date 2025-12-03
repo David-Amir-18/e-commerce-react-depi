@@ -3,7 +3,7 @@ import TOS from "@/components/TOS";
 import { Link } from "react-router-dom";
 function Footer() {
     return (
-        <footer className="relative z-10 w-full text-white py-20 border-t border-white/20 bg-slate-800">
+        <footer className="relative z-10 w-full text-white py-20 border-t border-white/20 ">
             <div className=" container mx-auto px-8 grid md:grid-cols-2 gap-10 items-start">
                 <div>
                     <Link to="/" className="text-2xl font-semibold text-amber-300 tracking-wide mb-4">ELYSIUM</Link>

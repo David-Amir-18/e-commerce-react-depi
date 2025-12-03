@@ -34,7 +34,7 @@ function App() {
   return (
     <GoogleOAuthProvider clientId={googleClientId}>
       <AuthProvider>
-        {!isAdminRoute && <AltNavbar />}
+        {!isAdminRoute && <Navbar />}
         <Routes>
           <Route index element={<Landing />}></Route>
           <Route path="/" element={<Landing />}></Route>
