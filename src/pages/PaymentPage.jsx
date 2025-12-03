@@ -34,7 +34,6 @@ export function PaymentPage() {
 
   const [errors, setErrors] = useState({});
 
-  // Redirect if no flight data
   useEffect(() => {
     if (!flight) {
       navigate('/flights');
@@ -46,13 +45,11 @@ export function PaymentPage() {
   const savedMeals = JSON.parse(sessionStorage.getItem('selectedMeals') || '{}');
   const savedBaggage = JSON.parse(sessionStorage.getItem('selectedBaggage') || '[]');
 
-  // Calculate costs
   const totalPassengers = passengers?.adults + passengers?.children + passengers?.infants || 0;
 
   const flightCost = flight?.price * totalPassengers || 0;
 
   const mealsCost = Object.entries(savedMeals).reduce((sum, [id, qty]) => {
-    // Meal prices
     const mealPrices = {
       chicken: 15, beef: 20, fish: 18, pasta: 12, salad: 10, vegan: 14,
       coffee: 3, tea: 2, juice: 5, soda: 3, water: 0
@@ -72,13 +69,11 @@ export function PaymentPage() {
   const handleCardInputChange = (field, value) => {
     let formattedValue = value;
 
-    // Format card number (16 digits with spaces)
     if (field === 'cardNumber') {
       formattedValue = value.replace(/\s/g, '').replace(/(\d{4})/g, '$1 ').trim();
-      formattedValue = formattedValue.slice(0, 19); // 16 digits + 3 spaces
+      formattedValue = formattedValue.slice(0, 19); 
     }
 
-    // Format expiry date (MM/YY)
     if (field === 'expiryDate') {
       formattedValue = value.replace(/\D/g, '');
       if (formattedValue.length >= 2) {
@@ -87,19 +82,16 @@ export function PaymentPage() {
       formattedValue = formattedValue.slice(0, 5);
     }
 
-    // Format CVV (3-4 digits)
     if (field === 'cvv') {
       formattedValue = value.replace(/\D/g, '').slice(0, 4);
     }
 
-    // Format card name (letters and spaces only)
     if (field === 'cardName') {
       formattedValue = value.replace(/[^a-zA-Z\s]/g, '');
     }
 
     setCardDetails(prev => ({ ...prev, [field]: formattedValue }));
 
-    // Clear error for this field
     if (errors[field]) {
       setErrors(prev => ({ ...prev, [field]: null }));
     }
@@ -126,9 +118,8 @@ export function PaymentPage() {
         const month = parseInt(monthStr, 10);
         const year = parseInt(yearStr, 10);
 
-        // Current date: November 2025
-        const currentYear = 25; // 2025
-        const currentMonth = 11; // November
+        const currentYear = 25; 
+        const currentMonth = 11; 
 
         if (isNaN(month) || month < 1 || month > 12) {
           newErrors.expiryDate = 'Invalid month (01-12)';
@@ -139,7 +130,6 @@ export function PaymentPage() {
         } else if (year === currentYear && month < currentMonth) {
           newErrors.expiryDate = 'Card has expired';
         }
-        // Current month/year and future dates are valid
       }
 
       if (!cardDetails.cvv || cardDetails.cvv.length < 3) {
@@ -195,7 +185,7 @@ export function PaymentPage() {
     try {
       // Transform passengerDetails to match backend schema
       const transformedPassengerDetails = passengerDetails.map(passenger => ({
-        type: passenger.type.toLowerCase(), // Convert 'Adult' to 'adult'
+        type: passenger.type.toLowerCase(), 
         title: passenger.data?.title || '',
         firstName: passenger.data?.firstName || '',
         lastName: passenger.data?.lastName || '',
@@ -212,7 +202,6 @@ export function PaymentPage() {
         country: contactDetails.country || ''
       };
 
-      // Prepare booking data
       const bookingData = {
         flightDetails: {
           airline: flight.airline,
@@ -254,7 +243,6 @@ export function PaymentPage() {
       if (response.success) {
         setBookingReference(response.bookingReference || response.data?.bookingReference);
 
-        // Clear saved selections
         sessionStorage.removeItem('selectedSeats');
         sessionStorage.removeItem('selectedMeals');
         sessionStorage.removeItem('selectedBaggage');
@@ -263,7 +251,6 @@ export function PaymentPage() {
         setIsProcessing(false);
         setPaymentSuccess(true);
 
-        // Navigate to home after 5 seconds
         setTimeout(() => {
           navigate('/');
         }, 5000);

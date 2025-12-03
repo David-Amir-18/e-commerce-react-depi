@@ -9,10 +9,8 @@ const Sidebar = () => {
 
   const menuItems = [
     { name: "Dashboard", icon: <BarChart3 size={20} />, path: "/admin/dashboard" },
-    // { name: "Flights", icon: <Plane size={20} />, path: "/admin/flights" },
     { name: "Users", icon: <Users size={20} />, path: "/admin/users" },
     { name: "Bookings", icon: <BookOpen size={20} />, path: "/admin/bookings" },
-   // { name: "Settings", icon: <Settings size={20} />, path: "/admin/settings" },
   ];
 
   const toggleMobileMenu = () => {

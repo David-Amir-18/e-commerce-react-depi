@@ -57,7 +57,7 @@ const Users = () => {
   };
 
   const validatePhone = (phone) => {
-    if (!phone) return true; // Optional field
+    if (!phone) return true; 
     const digitsOnly = phone.replace(/\D/g, '');
     return digitsOnly.length >= 9 && digitsOnly.length <= 15;
   };
@@ -68,13 +68,11 @@ const Users = () => {
       return;
     }
 
-    // Validate email format
     if (!validateEmail(formData.email)) {
       showAlert('warning', 'Invalid Email', 'Please enter a valid email address');
       return;
     }
 
-    // Validate phone number if provided
     if (formData.phoneNumber && !validatePhone(formData.phoneNumber)) {
       showAlert('warning', 'Invalid Phone', 'Phone number must be between 9 and 15 digits');
       return;
@@ -85,13 +83,11 @@ const Users = () => {
       return;
     }
 
-    // Validate password strength for new users or when password is being changed
     if (formData.password?.trim() && !validatePassword(formData.password)) {
       showAlert('warning', 'Weak Password', 'Password must be at least 8 characters and contain uppercase, lowercase, number, and special character (@$!%*?&)');
       return;
     }
 
-    // Check for duplicate email
     const emailExists = users.some(user =>
       user.email.toLowerCase() === formData.email.toLowerCase().trim() &&
       (!editingUser || user._id !== editingUser._id)
@@ -104,7 +100,6 @@ const Users = () => {
 
     try {
       let response;
-      // Update user
       if (editingUser) {
         const updateData = {
           name: formData.name.trim(),
@@ -116,7 +111,6 @@ const Users = () => {
           isActive: formData.isActive
         };
         
-        // Only include password if provided
         if (formData.password?.trim()) {
           updateData.password = formData.password;
         }
@@ -132,7 +126,6 @@ const Users = () => {
           showAlert('error', 'Update Failed', response.message || 'Failed to update user.');
         }
       } else {
-        // Create new user
         const userData = {
           name: formData.name.trim(),
           email: formData.email.trim(),
@@ -242,7 +235,6 @@ User ID: ${user._id}
     });
   };
 
-  //search
   const filteredUsers = users.filter(user =>
     user.name?.toLowerCase().includes(searchTerm.toLowerCase()) ||
     user.email?.toLowerCase().includes(searchTerm.toLowerCase()) ||
@@ -257,7 +249,6 @@ User ID: ${user._id}
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
   const paginatedUsers = filteredUsers.slice(indexOfFirstItem, indexOfLastItem);
 
-  // Reset to page 1 when search changes
   useEffect(() => {
     setCurrentPage(1);
   }, [searchTerm]);

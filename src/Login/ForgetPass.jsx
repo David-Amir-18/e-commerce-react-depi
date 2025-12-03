@@ -19,7 +19,6 @@ function ForgetPass() {
 
       if (response.success) {
         setIsSubmitted(true);
-        // Navigate to OTP verification page after 2 seconds
         setTimeout(() => {
           navigate("/verify-otp", { state: { email } });
         }, 2000);
@@ -67,7 +66,6 @@ function ForgetPass() {
               </p>
             </div>
 
-            {/* Error Message */}
             {error && (
               <div className="mb-6 p-4 bg-red-500/10 border border-red-500/50 rounded-lg">
                 <p className="text-red-400 text-sm">{error}</p>

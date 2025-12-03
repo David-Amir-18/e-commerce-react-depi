@@ -14,10 +14,8 @@ const Dashboard = () => {
   });
   const [loading, setLoading] = useState(true);
 
-  // Fetch dashboard data
   const fetchDashboardData = async () => {
     try {
-      // Fetch all data
       const [usersResponse, bookingsResponse] = await Promise.all([
         usersAPI.getAll(),
         bookingsAPI.getAll()
@@ -27,11 +25,9 @@ const Dashboard = () => {
         const users = usersResponse.data || [];
         const bookings = bookingsResponse.data || [];
 
-        // Calculate stats
         const activeUsers = users.filter(u => u.isActive).length;
         const totalBookings = bookings.length;
         
-        // Calculate total revenue from confirmed bookings
         const totalRevenue = bookings
           .filter(booking => booking.status === 'confirmed')
           .reduce((sum, booking) => {

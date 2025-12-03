@@ -31,7 +31,6 @@ function SignIn() {
       const result = await login(email, password);
 
       if (result.success) {
-        // Redirect to the page they tried to visit or home
         const from = location.state?.from?.pathname || "/";
         navigate(from, { replace: true });
       } else {
@@ -52,7 +51,6 @@ function SignIn() {
       const result = await googleLogin(credentialResponse.credential);
 
       if (result.success) {
-        // Redirect to the page they tried to visit or home
         const from = location.state?.from?.pathname || "/";
         navigate(from, { replace: true });
       } else {
@@ -69,9 +67,6 @@ function SignIn() {
     setError("Google login failed. Please try again.");
   };
 
-  // --- STYLING CONSTANTS ---
-
-  // Dialog styles copied from your sign-in card
   const dialogContentClasses = `
     bg-[#00000066] backdrop-blur-md rounded-2xl shadow-2xl p-8 border border-[#ffffff20]
     text-white
@@ -80,7 +75,6 @@ function SignIn() {
     data-[state=open]:animate-soft-scale-in
   `;
 
-  // Text styles copied from your sign-in card
   const dialogHeaderTitleClasses = "text-2xl font-light text-white mb-2";
   const dialogHeaderDescriptionClasses = "text-gray-300 text-sm";
   const sectionTitleClasses = "text-lg font-semibold text-gray-100 mb-2";
@@ -103,14 +97,12 @@ function SignIn() {
           </p>
         </div>
 
-        {/* Error Message */}
         {error && (
           <div className="mb-6 p-4 bg-red-500/10 border border-red-500/50 rounded-lg">
             <p className="text-red-400 text-sm">{error}</p>
           </div>
         )}
 
-        {/* --- Sign In Form --- */}
         <form onSubmit={handleSubmit} className="space-y-6">
           <div>
             <label
@@ -185,7 +177,6 @@ function SignIn() {
           </p>
         </div>
 
-        {/* --- Social Login --- */}
         <div className="mt-8 pt-6 border-t border-[#ffffff20]">
           <div className="relative mb-4">
             <div className="absolute inset-0 flex items-center">
@@ -210,11 +201,9 @@ function SignIn() {
           </div>
         </div>
 
-        {/* --- DIALOGS SECTION --- */}
         <div className="mt-6 text-center text-xs text-gray-400">
           <p>
             By continuing, you agree to our{" "}
-            {/* --- TERMS OF SERVICE DIALOG --- */}
             <Dialog>
               <DialogTrigger asChild>
                 <button
@@ -233,7 +222,6 @@ function SignIn() {
                     Last updated: October 24, 2025
                   </DialogDescription>
                 </DialogHeader>
-                {/* --- FIXED: Replaced div with ScrollArea --- */}
                 <ScrollArea className="max-h-[calc(80vh-150px)]">
                   <div className="space-y-4 text-sm pr-6">
                     <p className={textClasses}>
@@ -317,8 +305,7 @@ function SignIn() {
                 </ScrollArea>
               </DialogContent>
             </Dialog>{" "}
-            and {/* --- PRIVACY POLICY DIALOG --- */}
-            <Dialog>
+            and <Dialog>
               <DialogTrigger asChild>
                 <button
                   type="button"
@@ -336,7 +323,6 @@ function SignIn() {
                     Last updated: October 24, 2025
                   </DialogDescription>
                 </DialogHeader>
-                {/* --- FIXED: Replaced div with ScrollArea --- */}
                 <ScrollArea className="max-h-[calc(80vh-150px)]">
                   <div className="space-y-4 text-sm pr-6">
                     <p className={textClasses}>

@@ -14,7 +14,6 @@ const Bookings = () => {
   const [itemsPerPage] = useState(10);
   const { showAlert, AlertComponent } = useAlert();
 
-  // Fetch bookings
   useEffect(() => {
     fetchBookings();
   }, []);
@@ -111,7 +110,6 @@ const Bookings = () => {
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
   const paginatedBookings = filteredBookings.slice(indexOfFirstItem, indexOfLastItem);
 
-  // Reset to page 1 when search changes
   useEffect(() => {
     setCurrentPage(1);
   }, [searchTerm]);
@@ -137,12 +135,10 @@ const Bookings = () => {
   };
 
   const showBookingDetails = (booking) => {
-    // Get flight info
     const flightInfo = booking.flightId || booking.flightDetails || {};
     const flightOrigin = flightInfo.origin || flightInfo.from || 'N/A';
     const flightDestination = flightInfo.destination || flightInfo.to || 'N/A';
 
-    // Get user info
     const userName = booking.userId?.name || booking.contactDetails?.contactPerson || 'Guest';
     const userEmail = booking.userId?.email || booking.contactDetails?.email || 'N/A';
     const userPhone = booking.userId?.phoneNumber || booking.contactDetails?.phone || 'N/A';
