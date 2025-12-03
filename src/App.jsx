@@ -25,7 +25,7 @@ import BaggageSelectionPage from "./pages/BaggageSelectionPage";
 import PaymentPage from "./pages/PaymentPage";
 import About from "./pages/About";
 import Contact from "./pages/Contact";
-
+import AltNavbar from "./Navbar/AltNavbar"
 function App() {
   const googleClientId = import.meta.env.VITE_GOOGLE_CLIENT_ID;
   const location = useLocation();
@@ -34,7 +34,7 @@ function App() {
   return (
     <GoogleOAuthProvider clientId={googleClientId}>
       <AuthProvider>
-        {!isAdminRoute && <Navbar />}
+        {!isAdminRoute && <AltNavbar />}
         <Routes>
           <Route index element={<Landing />}></Route>
           <Route path="/" element={<Landing />}></Route>

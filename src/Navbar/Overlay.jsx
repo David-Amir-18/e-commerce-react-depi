@@ -1,11 +1,10 @@
 import { Link } from "react-router-dom";
 import { useAuth } from "../contexts/AuthContext";
 import SignInBtn from "@/components/ui/SignInBtn";
-import AccDropDown from "@/components/ui/AccDropDown";
 import AccInlineMenu from "@/components/ui/AccInlineMenu";
 import Logo from "./../../public/Elysium Wings.png";
 
-function Sidebar({ isMenuOpen, setIsMenuOpen }) {
+function Overlay({ isMenuOpen, setIsMenuOpen }) {
   const { isAuthenticated, user } = useAuth();
   const closeMenu = () => setIsMenuOpen(false)
   return (
@@ -29,14 +28,7 @@ function Sidebar({ isMenuOpen, setIsMenuOpen }) {
             </div>
 
             {isAuthenticated ? (
-              <>
-                <div className="hidden md:block">
-                  <AccDropDown />
-                </div>
-                <div className="block md:hidden">
-                  <AccInlineMenu />
-                </div>
-              </>
+              <AccInlineMenu />
             ) : (
               <SignInBtn />
             )}
@@ -78,4 +70,4 @@ function Sidebar({ isMenuOpen, setIsMenuOpen }) {
   );
 }
 
-export default Sidebar;
+export default Overlay;

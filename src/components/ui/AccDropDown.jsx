@@ -24,7 +24,7 @@ export default function AccDropDown() {
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
         <button
-          className="hidden md:flex w-10 h-10 rounded-full cursor-pointer bg-amber-400 text-white font-semibold items-center justify-center hover:bg-amber-500 transition-all hover:scale-110 focus:outline-none focus:ring-2 focus:ring-amber-400 focus:ring-offset-2 focus:ring-offset-slate-900"
+          className="flex w-10 h-10 rounded-full cursor-pointer bg-amber-400 text-white font-semibold items-center justify-center hover:bg-amber-500 transition-all hover:scale-110 focus:outline-none focus:ring-2 focus:ring-amber-400 focus:ring-offset-2 focus:ring-offset-slate-900"
           aria-label="User profile menu"
         >
           {getInitial()}
