@@ -164,8 +164,8 @@ export function PassengerDetailsPage() {
                     <div className="flex flex-col items-center">
                       <p className="text-zinc-400 text-sm mb-1">{flight.duration}</p>
                       <div className="relative w-full">
-                        <div className="h-px bg-zinc-700 w-full"></div>
-                        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-white/10 px-2">
+                        <div className="h-px bg-white/30 w-full"></div>
+                        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2  px-2">
                           <Plane className="w-4 h-4 text-yellow-400 rotate-90" />
                         </div>
                       </div>

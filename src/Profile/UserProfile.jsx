@@ -246,8 +246,8 @@ function UserProfile() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-black via-slate-800 to-amber-500 pt-24 px-4 md:px-8 pb-12">
-      <div className="container mx-auto max-w-7xl">
+    <div className="min-h-screen bg-gradient-to-br from-black via-slate-800 to-amber-500 pt-24 pb-12">
+      <div className="container mx-auto px-8">
         {/* Header */}
         <div className="bg-white/10 backdrop-blur-md rounded-2xl p-6 md:p-8 border border-white/20 mb-6 mt-10">
           <div className="flex flex-col md:flex-row items-center gap-6">
