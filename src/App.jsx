@@ -53,7 +53,6 @@ function App() {
           <Route path="/booking/baggage-selection" element={<BaggageSelectionPage />}></Route>
           <Route path="/booking/payment" element={<PaymentPage />}></Route>
 
-          {/* Protected Routes */}
           <Route
             path="/profile"
             element={
@@ -63,7 +62,6 @@ function App() {
             }
           ></Route>
 
-          {/* Admin Protected Routes */}
           <Route
             path="/admin/dashboard"
             element={

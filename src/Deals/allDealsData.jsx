@@ -8,8 +8,8 @@ const allDealsData = {
       desc: 'Budget Friendly', 
       price: '$100' 
     },
-    { 
-      id: 2, // Corrected ID to be unique
+    {
+      id: 2,
       img: 'https://images.unsplash.com/photo-1555993539-1732b0258235?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NHx8QXRoZW5zfGVufDB8fDB8fHww', 
       dest: 'Athens',
       destCode: 'ATH',

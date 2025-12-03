@@ -24,11 +24,9 @@ export function FlightCard({
   onSelect,
 }) {
   return (
-    
     <div className="bg-white/10 rounded-xl border border-white/20 hover:border-yellow-400/50 shadow-xl hover:shadow-yellow-400/10 transition-all duration-300 p-6">
       <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-6">
-        
-        {/* Airline and Flight Info */}
+
         <div className="flex items-center gap-4">
           <div className="w-16 h-16 bg-zinc-800 rounded-lg flex items-center justify-center border border-zinc-700">
             {airlineLogo ? (
@@ -43,7 +41,6 @@ export function FlightCard({
           </div>
         </div>
 
-        {/* Flight Times and Route */}
         <div className="flex-1 grid grid-cols-3 items-center gap-4">
           <div>
             <p className="text-zinc-100 text-2xl font-bold">{departTime}</p>
@@ -71,7 +68,6 @@ export function FlightCard({
           </div>
         </div>
 
-        {/* Price and Action */}
         <div className="flex flex-col items-end gap-3 lg:min-w-[200px]">
           <div className="text-right">
             <p className="text-zinc-400 text-sm">From</p>
@@ -89,7 +85,6 @@ export function FlightCard({
         </div>
       </div>
 
-      {/* Additional Info */}
       <div className="flex flex-wrap items-center gap-3 mt-4 pt-4 border-t border-white/20">
         <Badge variant="secondary" className="bg-zinc-800 text-zinc-300 border-zinc-700">
           <Calendar className="w-3 h-3 mr-1.5" />
@@ -111,5 +106,4 @@ export function FlightCard({
   );
 }
 
-// Use 'export default' to match your other files
 export default FlightCard;

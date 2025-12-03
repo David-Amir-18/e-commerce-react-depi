@@ -22,21 +22,17 @@ export function PassengerForm({
   const [showSaved, setShowSaved] = useState(false);
   const [lastPassengerNumber, setLastPassengerNumber] = useState(passengerNumber);
 
-  // Update form data when switching between passengers (not when saving)
   useEffect(() => {
-    // Only reset when switching to a different passenger
     if (passengerNumber !== lastPassengerNumber) {
       setFormData(data || {
         title: '',
         firstName: '',
         lastName: '',
       });
-      // Clear errors when switching passengers
       setErrors({});
       setShowSaved(false);
       setLastPassengerNumber(passengerNumber);
     } else if (data && !formData.title && !formData.firstName && !formData.lastName) {
-      // Load existing data if form is empty (initial load)
       setFormData(data);
     }
   }, [data, passengerNumber, lastPassengerNumber]);
@@ -46,7 +42,6 @@ export function PassengerForm({
       ...prev,
       [field]: value,
     }));
-    // Clear error for this field
     if (errors[field]) {
       setErrors(prev => ({
         ...prev,
@@ -82,16 +77,13 @@ export function PassengerForm({
     if (validateForm()) {
       onSave(passengerNumber - 1, formData);
 
-      // Show saved indicator
       setShowSaved(true);
 
-      // If not last passenger, move to next after a short delay
       if (!isLast) {
         setTimeout(() => {
           onNext();
         }, 800);
       } else {
-        // Hide saved indicator after 3 seconds for last passenger
         setTimeout(() => {
           setShowSaved(false);
         }, 3000);
@@ -101,7 +93,6 @@ export function PassengerForm({
 
   return (
     <div className="bg-white/10 border border-white/20 rounded-xl p-6 mb-4">
-      {/* Header */}
       <div className="flex items-center gap-3 mb-4 pb-4 border-b border-white/20">
         <User className="w-5 h-5 text-yellow-400" />
         <h3 className="text-lg font-bold text-zinc-100">
@@ -109,7 +100,6 @@ export function PassengerForm({
         </h3>
       </div>
 
-      {/* Warning Message */}
       <div className="bg-yellow-400/10 border border-yellow-400/30 rounded-lg p-4 mb-6">
         <div className="flex gap-3">
           <AlertCircle className="w-5 h-5 text-yellow-400 flex-shrink-0 mt-0.5" />
@@ -125,9 +115,7 @@ export function PassengerForm({
         </div>
       </div>
 
-      {/* Form Fields */}
       <div className="space-y-4">
-        {/* Title */}
         <div>
           <Label htmlFor={`title-${passengerNumber}`} className="text-zinc-300 mb-2 block">
             Title <span className="text-red-400">*</span>
@@ -154,7 +142,6 @@ export function PassengerForm({
           )}
         </div>
 
-        {/* First Name */}
         <div>
           <Label htmlFor={`firstName-${passengerNumber}`} className="text-zinc-300 mb-2 block">
             First Name <span className="text-red-400">*</span>
@@ -174,7 +161,6 @@ export function PassengerForm({
           )}
         </div>
 
-        {/* Last Name */}
         <div>
           <Label htmlFor={`lastName-${passengerNumber}`} className="text-zinc-300 mb-2 block">
             Last Name <span className="text-red-400">*</span>
@@ -195,7 +181,6 @@ export function PassengerForm({
         </div>
       </div>
 
-      {/* Saved Indicator */}
       {showSaved && (
         <div className="mt-4 bg-emerald-400/20 border border-emerald-400/30 rounded-lg p-3 flex items-center gap-2 animate-in fade-in slide-in-from-top-2 duration-300">
           <CheckCircle className="w-5 h-5 text-emerald-400 flex-shrink-0" />
@@ -205,7 +190,6 @@ export function PassengerForm({
         </div>
       )}
 
-      {/* Save Button */}
       <Button
         onClick={handleSaveAndNext}
         disabled={showSaved}

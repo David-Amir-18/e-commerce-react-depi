@@ -17,7 +17,6 @@ function UserProfile() {
   const [bookings, setBookings] = useState([]);
   const [bookingsLoading, setBookingsLoading] = useState(false);
 
-  // Comprehensive list of countries
   const countries = [
     'Afghanistan', 'Albania', 'Algeria', 'Andorra', 'Angola', 'Antigua and Barbuda',
     'Argentina', 'Armenia', 'Australia', 'Austria', 'Azerbaijan', 'Bahamas', 'Bahrain',
@@ -52,7 +51,6 @@ function UserProfile() {
     'Yemen', 'Zambia', 'Zimbabwe'
   ];
 
-  // Form states
   const [formData, setFormData] = useState({
     name: user?.name || '',
     email: user?.email || '',
@@ -73,16 +71,13 @@ function UserProfile() {
     confirm: true,
   });
 
-  // Check if user is Google OAuth user
   const isGoogleUser = user?.googleId;
 
-  // Debug user changes
   useEffect(() => {
     console.log('User object updated:', user);
     console.log('Is Google user:', isGoogleUser);
   }, [user, isGoogleUser]);
 
-  // Update form data when user changes
   useEffect(() => {
     if (user) {
       setFormData({
@@ -95,7 +90,6 @@ function UserProfile() {
     }
   }, [user]);
 
-  // Fetch bookings when tab changes to booking history
   useEffect(() => {
     if (activeTab === 'bookings') {
       fetchBookings();

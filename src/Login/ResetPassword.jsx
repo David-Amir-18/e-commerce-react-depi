@@ -14,7 +14,6 @@ function ResetPassword() {
   const [error, setError] = useState("");
   const [success, setSuccess] = useState(false);
 
-  // Validate password strength
   const validatePassword = (password) => {
     const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
     return passwordRegex.test(password);
@@ -24,13 +23,11 @@ function ResetPassword() {
     e.preventDefault();
     setError("");
 
-    // Validate password strength
     if (!validatePassword(newPassword)) {
       setError("Password must be at least 8 characters and contain uppercase, lowercase, number, and special character (@$!%*?&)");
       return;
     }
 
-    // Validate passwords match
     if (newPassword !== confirmPassword) {
       setError("Passwords do not match");
       return;
@@ -46,7 +43,6 @@ function ResetPassword() {
 
       if (response.success) {
         setSuccess(true);
-        // Redirect to signin after 3 seconds
         setTimeout(() => {
           navigate("/signin");
         }, 3000);

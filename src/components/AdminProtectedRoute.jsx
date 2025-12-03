@@ -5,7 +5,6 @@ const AdminProtectedRoute = ({ children }) => {
   const { user, isAuthenticated, loading } = useAuth();
   const location = useLocation();
 
-  // Show loading state while checking authentication
   if (loading) {
     return (
       <div className="min-h-screen w-full bg-cover bg-center bg-no-repeat flex items-center justify-center"
@@ -22,12 +21,10 @@ const AdminProtectedRoute = ({ children }) => {
     );
   }
 
-  // Redirect to signin if not authenticated
   if (!isAuthenticated) {
     return <Navigate to="/signin" state={{ from: location }} replace />;
   }
 
-  // Redirect to home if not an admin
   if (user?.role !== 'admin') {
     return <Navigate to="/" replace />;
   }
