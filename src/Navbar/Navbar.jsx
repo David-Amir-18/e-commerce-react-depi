@@ -93,16 +93,16 @@ function Navbar() {
           {isMobile && (
             <>
               <BurgerMenu isMenuOpen={isMenuOpen} setIsMenuOpen={setIsMenuOpen} />
-              <Overlay isMenuOpen={isMenuOpen} />
+              <Overlay isMenuOpen={isMenuOpen} setIsMenuOpen={setIsMenuOpen} />
             </>
           )}
           <div className="backdrop-blur-lg md:backdrop-blur-none w-full">
 
             <div className="container mx-auto px-8">
-              <div className="py-4 flex items-center justify-between rounded-2xl">
+              <div className="py-4 flex items-center justify-between rounded-2xl ">
                 <Link
                   to="/"
-                  className="md:backdrop-blur-md md:py-4 md:px-8 md:border md:bg-white/5 rounded-xl flex items-center justify-center text-2xl font-semibold tracking-wide text-amber-400 hover:text-amber-300 transition-all hover:backdrop-blur-3xl hover:bg-amber-500/60 hover:shadow-[0px_0px_35px] shadow-amber-500"
+                  className="md:backdrop-blur-md md:py-4 md:px-8 md:border md:bg-white/5 rounded-xl max-md:rounded-full flex items-center justify-center text-2xl font-semibold tracking-wide text-amber-400 hover:text-amber-300 transition-all hover:backdrop-blur-3xl hover:bg-amber-500/60 hover:shadow-[0px_0px_35px] shadow-amber-500 max-md:p-2"
                 >
                   <img src={logo} width={50} className="" />
                 </Link>
