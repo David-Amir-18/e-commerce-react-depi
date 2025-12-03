@@ -1,7 +1,7 @@
 import { useState } from "react";
 import goldParticles from "./../Landing Page/private assets/gold-particle.1920x1080.mp4"
 
-const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000/api';
+const API_URL = import.meta.env.VITE_API_BASE_URL || 'http://localhost:5000/api';
 
 export default function Contact() {
     const [form, setForm] = useState({ name: "", email: "", subject: "", message: "" });
