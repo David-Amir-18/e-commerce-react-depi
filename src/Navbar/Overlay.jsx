@@ -11,24 +11,23 @@ function Sidebar({ isMenuOpen, setIsMenuOpen }) {
   return (
     <>
       <div
-        className={`fixed inset-0 z-40 backdrop-blur-sm bg-black/30 transition-opacity duration-300 ${
-          isMenuOpen ? 'opacity-100' : 'opacity-0 pointer-events-none'
-        }`}
+        className={`fixed inset-0 z-40 backdrop-blur-sm bg-black/30 transition-opacity duration-300 ${isMenuOpen ? 'opacity-100' : 'opacity-0 pointer-events-none'
+          }`}
         onClick={() => closeMenu()}
       />
 
       <div
-        className={`fixed top-0 right-full z-50 h-full w-65 transform transition-transform duration-300 ease-in-out ${
-          isMenuOpen ? 'translate-x-full' : 'translate-x-0'
-        }`}
+        className={`fixed top-0 right-full z-50 h-full w-75 transform transition-transform duration-300 ease-in-out ${isMenuOpen ? 'translate-x-full' : 'translate-x-0'
+          }`}
         onClick={() => closeMenu()}
       >
-        <div className="flex flex-col h-full px-8 py-12 bg-black/70 backdrop-blur-md">
-          <div className="flex justify-center mb-12">
-            <img src={Logo} width={100} alt="Elysium Wings" />
-          </div>
+        <div className="h-full px-8 py-12 bg-black/70 backdrop-blur-md">
 
-          <div className="flex justify-center mb-8">
+          <nav className="flex flex-col space-y-4">
+            <div className="flex justify-center mb-12">
+              <img src={Logo} width={100} alt="Elysium Wings" />
+            </div>
+
             {isAuthenticated ? (
               <>
                 <div className="hidden md:block">
@@ -41,9 +40,7 @@ function Sidebar({ isMenuOpen, setIsMenuOpen }) {
             ) : (
               <SignInBtn />
             )}
-          </div>
 
-          <nav className="flex flex-col space-y-4">
             <Link
               onClick={() => closeMenu()}
               to="/"
