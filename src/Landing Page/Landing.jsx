@@ -7,6 +7,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import "./landing.css";
 import SearchBar from '@/Searchbars/SearchBar';
 import DealsSection from '@/Deals/DealsSection';
+import FAQ from '@/components/FAQ'
 
 
 function Landing() {
@@ -59,6 +60,7 @@ function Landing() {
             <section>
                 <DealsSection />
             </section>
+            <FAQ />
         </div>
     );
 }

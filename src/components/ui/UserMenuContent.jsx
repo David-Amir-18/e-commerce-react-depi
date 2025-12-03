@@ -8,9 +8,9 @@ export default function UserMenuContent({ user, onProfileClick, onLogout, inline
 
   return (
     <div className={`${inline ? "flex flex-col space-y-2" : ""}`}>
-      <div className="px-2 py-1.5 text-sm">
+      <div className="py-1.5 text-wrap">
         <p className="font-semibold text-amber-400">{user?.name}</p>
-        <p className="text-xs text-gray-400">{user?.email}</p>
+        <p className="text-[10px] text-gray-400 ">{user?.email}</p>
       </div>
       <Separator className="bg-amber-400/20" />
       <Item
