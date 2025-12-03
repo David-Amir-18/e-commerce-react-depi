@@ -14,7 +14,6 @@ import ProtectedRoute from "./components/ProtectedRoute";
 import AdminProtectedRoute from "./components/AdminProtectedRoute";
 import FlightResultsPage from "./pages/FlightResultsPage";
 import Dashboard from "./admin/Dashboard";
-import AdminFlights from "./admin/Flights";
 import AdminBookings from "./admin/Bookings";
 import AdminUsers from "./admin/Users";
 import AdminLayout from "./admin/components/AdminLayout";
@@ -54,7 +53,6 @@ function App() {
           <Route path="/booking/baggage-selection" element={<BaggageSelectionPage />}></Route>
           <Route path="/booking/payment" element={<PaymentPage />}></Route>
 
-          {/* Protected Routes */}
           <Route
             path="/profile"
             element={
@@ -64,23 +62,12 @@ function App() {
             }
           ></Route>
 
-          {/* Admin Protected Routes */}
           <Route
             path="/admin/dashboard"
             element={
               <AdminProtectedRoute>
                 <AdminLayout>
                   <Dashboard />
-                </AdminLayout>
-              </AdminProtectedRoute>
-            }
-          ></Route>
-          <Route
-            path="/admin/flights"
-            element={
-              <AdminProtectedRoute>
-                <AdminLayout>
-                  <AdminFlights />
                 </AdminLayout>
               </AdminProtectedRoute>
             }

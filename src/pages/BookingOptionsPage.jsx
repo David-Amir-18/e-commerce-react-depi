@@ -15,7 +15,6 @@ export function BookingOptionsPage() {
     baggage: false,
   });
 
-  // Load saved completion status from sessionStorage
   useEffect(() => {
     const saved = sessionStorage.getItem('bookingOptionsCompleted');
     if (saved) {
@@ -23,7 +22,6 @@ export function BookingOptionsPage() {
     }
   }, []);
 
-  // Redirect if no flight data
   useEffect(() => {
     if (!flight) {
       navigate('/flights');

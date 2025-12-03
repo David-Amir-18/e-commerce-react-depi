@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import {BarChart3,Plane, Users, BookOpen, LogOut, Settings, Home, Menu, X} from "lucide-react";
 import { useAuth } from "../../contexts/AuthContext";
-import logo from "../assets/path0.svg"
 const Sidebar = () => {
   const location = useLocation();
   const { logout, user } = useAuth();
@@ -10,10 +9,8 @@ const Sidebar = () => {
 
   const menuItems = [
     { name: "Dashboard", icon: <BarChart3 size={20} />, path: "/admin/dashboard" },
-    { name: "Flights", icon: <Plane size={20} />, path: "/admin/flights" },
     { name: "Users", icon: <Users size={20} />, path: "/admin/users" },
     { name: "Bookings", icon: <BookOpen size={20} />, path: "/admin/bookings" },
-   // { name: "Settings", icon: <Settings size={20} />, path: "/admin/settings" },
   ];
 
   const toggleMobileMenu = () => {

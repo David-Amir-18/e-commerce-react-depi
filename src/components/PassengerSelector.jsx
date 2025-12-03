@@ -16,7 +16,6 @@ export function PassengerSelector({ passengers, onPassengersChange }) {
 
   const handleDecrement = (type) => {
     if (passengers[type] <= 0) return;
-    // Ensure at least 1 adult remains
     if (type === 'adults' && passengers[type] <= 1) return;
     onPassengersChange({
       ...passengers,
@@ -31,7 +30,6 @@ export function PassengerSelector({ passengers, onPassengersChange }) {
         <h2 className="text-xl font-bold text-zinc-100">Passengers</h2>
       </div>
 
-      {/* Adults */}
       <div className="flex items-center justify-between py-4 border-b border-white/20">
         <div className="flex-1">
           <p className="text-zinc-100 font-semibold">Adults</p>
@@ -64,7 +62,6 @@ export function PassengerSelector({ passengers, onPassengersChange }) {
         </div>
       </div>
 
-      {/* Children */}
       <div className="flex items-center justify-between py-4 border-b border-white/20">
         <div className="flex-1">
           <p className="text-zinc-100 font-semibold">Child</p>
@@ -97,7 +94,6 @@ export function PassengerSelector({ passengers, onPassengersChange }) {
         </div>
       </div>
 
-      {/* Infants */}
       <div className="flex items-center justify-between py-4">
         <div className="flex-1">
           <p className="text-zinc-100 font-semibold">Infant</p>
@@ -130,7 +126,6 @@ export function PassengerSelector({ passengers, onPassengersChange }) {
         </div>
       </div>
 
-      {/* Note */}
       <div className="mt-4 pt-4 border-t border-white/20">
         <p className="text-zinc-400 text-sm">
           Please note: You can book for a maximum of {maxPassengers} passengers.

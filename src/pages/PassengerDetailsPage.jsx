@@ -12,7 +12,6 @@ export function PassengerDetailsPage() {
   const navigate = useNavigate();
   const { flight, searchCriteria } = location.state || {};
 
-  // Use search criteria as default, fallback to 1 adult
   const [passengers, setPassengers] = useState({
     adults: parseInt(searchCriteria?.adults) || 1,
     children: parseInt(searchCriteria?.children) || 0,
@@ -28,14 +27,12 @@ export function PassengerDetailsPage() {
     email: '',
   });
 
-  // Redirect if no flight data
   useEffect(() => {
     if (!flight) {
       navigate('/flights');
     }
   }, [flight, navigate]);
 
-  // Generate passenger list based on counts
   useEffect(() => {
     const newPassengerList = [];
 
@@ -62,7 +59,6 @@ export function PassengerDetailsPage() {
 
     setPassengerDetails(newPassengerList);
 
-    // Reset to first passenger if current index is out of bounds
     if (currentPassengerIndex >= newPassengerList.length && newPassengerList.length > 0) {
       setCurrentPassengerIndex(newPassengerList.length - 1);
     }

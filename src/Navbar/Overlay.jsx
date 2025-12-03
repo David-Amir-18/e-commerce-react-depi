@@ -10,15 +10,13 @@ function Sidebar({ isMenuOpen, setIsMenuOpen }) {
   const closeMenu = () => setIsMenuOpen(false)
   return (
     <>
-      {/* Backdrop */}
       <div
         className={`fixed inset-0 z-40 backdrop-blur-sm bg-black/30 transition-opacity duration-300 ${
           isMenuOpen ? 'opacity-100' : 'opacity-0 pointer-events-none'
         }`}
         onClick={() => closeMenu()}
       />
-      
-      {/* Sidebar */}
+
       <div
         className={`fixed top-0 right-full z-50 h-full w-65 transform transition-transform duration-300 ease-in-out ${
           isMenuOpen ? 'translate-x-full' : 'translate-x-0'
@@ -26,12 +24,10 @@ function Sidebar({ isMenuOpen, setIsMenuOpen }) {
         onClick={() => closeMenu()}
       >
         <div className="flex flex-col h-full px-8 py-12 bg-black/70 backdrop-blur-md">
-          {/* Logo Section */}
           <div className="flex justify-center mb-12">
             <img src={Logo} width={100} alt="Elysium Wings" />
           </div>
-          
-          {/* Auth Section */}
+
           <div className="flex justify-center mb-8">
             {isAuthenticated ? (
               <>
@@ -46,8 +42,7 @@ function Sidebar({ isMenuOpen, setIsMenuOpen }) {
               <SignInBtn />
             )}
           </div>
-          
-          {/* Navigation Links */}
+
           <nav className="flex flex-col space-y-4">
             <Link
               onClick={() => closeMenu()}

@@ -53,9 +53,7 @@ function Landing() {
                         </div>
                     </div>
 
-                    {/* <div className="card card-util1 p-8"> */}
                     <SearchBar />
-                    {/* </div> */}
                 </div>
             </section>
             <section>

@@ -20,7 +20,6 @@ function VerifyOTP() {
       const response = await authAPI.verifyOTP(email, otp);
 
       if (response.success) {
-        // Navigate to reset password with the token
         navigate("/reset-password", {
           state: { resetToken: response.resetToken, email },
         });
@@ -38,7 +37,7 @@ function VerifyOTP() {
 
     try {
       await authAPI.forgotPassword(email, "otp");
-      setError(""); // Clear any previous errors
+      setError("");
       alert("A new OTP has been sent to your email.");
     } catch (err) {
       setError(err.message || "Failed to resend OTP. Please try again.");

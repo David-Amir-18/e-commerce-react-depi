@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { usersAPI } from '../services/api';
-import { Search, Trash2, Mail, Phone, User, UserPlus, Edit, Eye, X, AlertCircle, CheckCircle, Info, Calendar, FileText } from 'lucide-react';
+import { Search, Trash2, Mail, Phone, User, UserPlus, Edit, Eye, X, Calendar, FileText } from 'lucide-react';
 import goldParticles from "./assets/gold-particle.1920x1080.mp4";
 import Pagination from "./components/Pagination";
-import AlertModal from './components/AlertModal';
+import Loading from './components/Loading';
+import { useAlert } from './components/AlertModal';
 
 const Users = () => {
   const [users, setUsers] = useState([]);
@@ -11,7 +12,6 @@ const Users = () => {
   const [searchTerm, setSearchTerm] = useState('');
   const [showModal, setShowModal] = useState(false);
   const [editingUser, setEditingUser] = useState(null);
-  const [alert, setAlert] = useState(null);
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage] = useState(10);
   const [formData, setFormData] = useState({
@@ -24,22 +24,7 @@ const Users = () => {
     passportNumber: '',
     isActive: true
   });
-
-  const showAlert = (type, title, message, onConfirm = null, showCancel = false) => {
-    setAlert({ type, title, message, onConfirm, showCancel });
-  };
-
-  const closeAlert = () => {
-    setAlert(null);
-  };
-
-  const handleAlertConfirm = () => {
-    if (alert?.onConfirm) {
-      alert.onConfirm();
-    }
-    closeAlert();
-  };
-
+  const { showAlert, AlertComponent } = useAlert();
 
   useEffect(() => {
     fetchUsers();
@@ -72,7 +57,7 @@ const Users = () => {
   };
 
   const validatePhone = (phone) => {
-    if (!phone) return true; // Optional field
+    if (!phone) return true; 
     const digitsOnly = phone.replace(/\D/g, '');
     return digitsOnly.length >= 9 && digitsOnly.length <= 15;
   };
@@ -83,13 +68,11 @@ const Users = () => {
       return;
     }
 
-    // Validate email format
     if (!validateEmail(formData.email)) {
       showAlert('warning', 'Invalid Email', 'Please enter a valid email address');
       return;
     }
 
-    // Validate phone number if provided
     if (formData.phoneNumber && !validatePhone(formData.phoneNumber)) {
       showAlert('warning', 'Invalid Phone', 'Phone number must be between 9 and 15 digits');
       return;
@@ -100,13 +83,11 @@ const Users = () => {
       return;
     }
 
-    // Validate password strength for new users or when password is being changed
     if (formData.password?.trim() && !validatePassword(formData.password)) {
       showAlert('warning', 'Weak Password', 'Password must be at least 8 characters and contain uppercase, lowercase, number, and special character (@$!%*?&)');
       return;
     }
 
-    // Check for duplicate email
     const emailExists = users.some(user =>
       user.email.toLowerCase() === formData.email.toLowerCase().trim() &&
       (!editingUser || user._id !== editingUser._id)
@@ -119,7 +100,6 @@ const Users = () => {
 
     try {
       let response;
-      // Update user
       if (editingUser) {
         const updateData = {
           name: formData.name.trim(),
@@ -131,7 +111,6 @@ const Users = () => {
           isActive: formData.isActive
         };
         
-        // Only include password if provided
         if (formData.password?.trim()) {
           updateData.password = formData.password;
         }
@@ -147,7 +126,6 @@ const Users = () => {
           showAlert('error', 'Update Failed', response.message || 'Failed to update user.');
         }
       } else {
-        // Create new user
         const userData = {
           name: formData.name.trim(),
           email: formData.email.trim(),
@@ -221,7 +199,6 @@ const Users = () => {
     );
   };
 
-
   const showUserDetails = (user) => {
     const formatDate = (dateString) => {
       if (!dateString) return 'Not set';
@@ -257,12 +234,13 @@ User ID: ${user._id}
       isActive: true
     });
   };
-   //search
+
   const filteredUsers = users.filter(user =>
     user.name?.toLowerCase().includes(searchTerm.toLowerCase()) ||
     user.email?.toLowerCase().includes(searchTerm.toLowerCase()) ||
     user.phoneNumber?.includes(searchTerm) ||
-    user.passportNumber?.toLowerCase().includes(searchTerm.toLowerCase())
+    user.passportNumber?.toLowerCase().includes(searchTerm.toLowerCase())||
+    user.role?.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
   // Pagination logic
@@ -271,7 +249,6 @@ User ID: ${user._id}
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
   const paginatedUsers = filteredUsers.slice(indexOfFirstItem, indexOfLastItem);
 
-  // Reset to page 1 when search changes
   useEffect(() => {
     setCurrentPage(1);
   }, [searchTerm]);
@@ -289,148 +266,145 @@ User ID: ${user._id}
   };
 
   if (loading) {
-    return (
-      <div className="p-6 flex items-center justify-center min-h-screen text-white">
-        <div className="text-center">
-          <User className="animate-bounce text-amber-400 mx-auto mb-4" size={40} />
-          <p className="text-gray-400">Loading users...</p>
-        </div>
-      </div>
-    );
+    return <Loading icon={User} message="Loading users..." />;
   }
 
   return (
     <div className="relative min-h-screen overflow-hidden bg-black">
       <div className="absolute inset-0 bg-gradient-radial from-amber-900/20 via-black to-black pointer-events-none"></div>
-      {/* Vedio background */}
+      {/* Video background */}
       <video className="fixed top-0 w-full h-full object-cover blur-[50px]" autoPlay muted loop playsInline>
         <source src={goldParticles} />
       </video>
       
       <div className="relative z-10 p-4 sm:p-6 text-white pt-10 lg:pt-6 min-h-screen flex flex-col">
         <div className="flex-1 space-y-6">
-        {/* Header */}
-        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-          <div>
-            <h1 className="text-2xl sm:text-3xl font-bold text-amber-400 mb-2">User Management</h1>
-            <p className="text-sm sm:text-base text-gray-300">Manage registered users and their accounts</p>
-          </div>
-          <div className="flex flex-col sm:flex-row gap-2">
-            <button onClick={() => { setShowModal(true); resetForm(); setEditingUser(null); }} className="bg-amber-500 hover:bg-amber-400 text-black font-semibold px-4 py-2 rounded-lg flex items-center justify-center gap-2 transition-all text-sm sm:text-base">
-              <UserPlus size={20} /> Add User
-            </button>
-          </div>
-        </div>
-
-        {/* Search */}
-        <div className="bg-white/10 backdrop-blur-md rounded-2xl p-4 sm:p-6">
-          <div className="flex-1 relative">
-            <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" size={20} />
-            <input 
-              type="text" 
-              placeholder="Search users by name, email, phone, or passport..." 
-              value={searchTerm} 
-              onChange={(e) => setSearchTerm(e.target.value)}
-              className="w-full bg-white/10 border border-white/20 text-white placeholder-gray-400 rounded-lg pl-10 pr-4 py-2 focus:ring-2 focus:ring-amber-400 outline-none text-sm sm:text-base"
-            />
-          </div>
-        </div>
-
-        {/* Results Count */}
-        <div>
-          <p className="text-gray-400 text-sm sm:text-base">
-            Showing {filteredUsers.length} of {users.length} users
-          </p>
-        </div>
-
-        {/* Users Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4 sm:gap-6">
-          {paginatedUsers.map((user) => (
-            <div key={user._id} className="bg-white/10 backdrop-blur-md rounded-2xl p-4 sm:p-6 hover:bg-white/15 transition-all duration-300 group border border-white/10 hover:border-amber-500/30">
-              <div className="flex items-start justify-between mb-4">
-                <div className="flex items-center gap-2 sm:gap-3 min-w-0">
-                  <div className="w-10 h-10 sm:w-12 sm:h-12 bg-amber-500 rounded-xl flex items-center justify-center group-hover:scale-110 transition-transform duration-300 flex-shrink-0">
-                    <User className="text-black" size={20} />
-                  </div>
-                  <div className="min-w-0">
-                    <h3 className="font-semibold text-white text-sm sm:text-base truncate">{user.name}</h3>
-                    <div className="flex flex-wrap gap-1 mt-1">
-                      <span className={`inline-flex items-center px-2 py-1 rounded-full text-xs font-medium ${getRoleColor(user.role)}`}>
-                        {user.role}
-                      </span>
-                      <span className={`inline-flex items-center px-2 py-1 rounded-full text-xs font-medium ${getStatusColor(user.isActive)}`}>
-                        {user.isActive ? 'Active' : 'Inactive'}
-                      </span>
-                    </div>
-                  </div>
-                </div>
-                <div className="flex gap-1 opacity-0 group-hover:opacity-100 transition-opacity flex-shrink-0">
-                  <button onClick={() => showUserDetails(user)} className="p-1.5 sm:p-2 text-green-400 hover:bg-white/10 rounded-lg transition-colors" title="View Details">
-                    <Eye size={14} className="sm:w-4 sm:h-4" />
-                  </button>
-                  <button onClick={() => handleEdit(user)} className="p-1.5 sm:p-2 text-blue-400 hover:bg-white/10 rounded-lg transition-colors" title="Edit User">
-                    <Edit size={14} className="sm:w-4 sm:h-4" />
-                  </button>
-                  <button onClick={() => handleDelete(user._id)} className="p-1.5 sm:p-2 text-red-400 hover:bg-white/10 rounded-lg transition-colors" title="Delete User">
-                    <Trash2 size={14} className="sm:w-4 sm:h-4" />
-                  </button>
-                </div>
-              </div>
-              
-              <div className="space-y-2">
-                <div className="flex items-center gap-2 text-xs sm:text-sm">
-                  <Mail size={14} className="text-gray-400 flex-shrink-0" />
-                  <span className="text-gray-300 truncate">{user.email}</span>
-                </div>
-                {user.phoneNumber && (
-                  <div className="flex items-center gap-2 text-xs sm:text-sm">
-                    <Phone size={14} className="text-gray-400 flex-shrink-0" />
-                    <span className="text-gray-300">{user.phoneNumber}</span>
-                  </div>
-                )}
-                {user.passportNumber && (
-                  <div className="flex items-center gap-2 text-xs sm:text-sm">
-                    <FileText size={14} className="text-gray-400 flex-shrink-0" />
-                    <span className="text-gray-300 truncate">Passport: {user.passportNumber}</span>
-                  </div>
-                )}
-                {user.dateOfBirth && (
-                  <div className="flex items-center gap-2 text-xs sm:text-sm">
-                    <Calendar size={14} className="text-gray-400 flex-shrink-0" />
-                    <span className="text-gray-300">
-                      DOB: {new Date(user.dateOfBirth).toLocaleDateString()}
-                    </span>
-                  </div>
-                )}
-                {user.googleId && (
-                  <div className="flex items-center gap-2 text-xs sm:text-sm">
-                    <span className="text-blue-400">Google OAuth</span>
-                  </div>
-                )}
-              </div>
-              
-              <div className="mt-4 pt-4 border-t border-white/20">
-                <div className="flex justify-between items-center">
-                  <span className="text-xs sm:text-sm text-gray-400">Member since</span>
-                  <span className="font-semibold text-amber-400 text-sm">
-                    {new Date(user.createdAt).toLocaleDateString()}
-                  </span>
-                </div>
-              </div>
+          {/* Header */}
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+            <div>
+              <h1 className="text-2xl sm:text-3xl font-bold text-amber-400 mb-2">User Management</h1>
+              <p className="text-sm sm:text-base text-gray-300">Manage registered users and their accounts</p>
             </div>
-          ))}
-        </div>
+            <div className="flex flex-col sm:flex-row gap-2">
+              <button onClick={() => { 
+                setShowModal(true);
+                resetForm();
+                setEditingUser(null);
+                }} className="bg-amber-500 hover:bg-amber-400 text-black font-semibold px-4 py-2 rounded-lg flex items-center justify-center gap-2 transition-all text-sm sm:text-base">
+                <UserPlus size={20} /> Add User
+              </button>
+            </div>
+          </div>
 
-        {/* Empty State */}
-        {filteredUsers.length === 0 && (
-          <div className="bg-white/10 backdrop-blur-md rounded-2xl p-8 sm:p-12 text-center border border-white/10">
-            <User className="text-gray-400 mx-auto mb-4" size={48} />
-            <h3 className="text-base sm:text-lg font-medium text-white mb-2">No users found</h3>
-            <p className="text-sm sm:text-base text-gray-400">
-              {searchTerm ? 'Try adjusting your search criteria.' : 'Add your first user to get started!'}
+          {/* Search */}
+          <div className="bg-white/10 backdrop-blur-md rounded-2xl p-4 sm:p-6">
+            <div className="flex-1 relative">
+              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" size={20} />
+              <input 
+                type="text" 
+                placeholder="Search users by name, email, phone, or passport..." 
+                value={searchTerm} 
+                onChange={(e) => setSearchTerm(e.target.value)}
+                className="w-full bg-white/10 border border-white/20 text-white placeholder-gray-400 rounded-lg pl-10 pr-4 py-2 focus:ring-2 focus:ring-amber-400 outline-none text-sm sm:text-base"
+              />
+            </div>
+          </div>
+
+          {/* Results Count */}
+          <div>
+            <p className="text-gray-400 text-sm sm:text-base">
+              Showing {filteredUsers.length} of {users.length} users
             </p>
           </div>
-        )}
+
+          {/* Users Grid */}
+          <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4 sm:gap-6">
+            {paginatedUsers.map((user) => (
+              <div key={user._id} className="bg-white/10 backdrop-blur-md rounded-2xl p-4 sm:p-6 hover:bg-white/15 transition-all duration-300 group border border-white/10 hover:border-amber-500/30">
+                <div className="flex items-start justify-between mb-4">
+                  <div className="flex items-center gap-2 sm:gap-3 min-w-0">
+                    <div className="w-10 h-10 sm:w-12 sm:h-12 bg-amber-500 rounded-xl flex items-center justify-center group-hover:scale-110 transition-transform duration-300 flex-shrink-0">
+                      <User className="text-black" size={20} />
+                    </div>
+                    <div className="min-w-0">
+                      <h3 className="font-semibold text-white text-sm sm:text-base truncate">{user.name}</h3>
+                      <div className="flex flex-wrap gap-1 mt-1">
+                        <span className={`inline-flex items-center px-2 py-1 rounded-full text-xs font-medium ${getRoleColor(user.role)}`}>
+                          {user.role}
+                        </span>
+                        <span className={`inline-flex items-center px-2 py-1 rounded-full text-xs font-medium ${getStatusColor(user.isActive)}`}>
+                          {user.isActive ? 'Active' : 'Inactive'}
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="flex gap-1 opacity-0 group-hover:opacity-100 transition-opacity flex-shrink-0">
+                    <button onClick={() => showUserDetails(user)} className="p-1.5 sm:p-2 text-green-400 hover:bg-white/10 rounded-lg transition-colors" title="View Details">
+                      <Eye size={14} className="sm:w-4 sm:h-4" />
+                    </button>
+                    <button onClick={() => handleEdit(user)} className="p-1.5 sm:p-2 text-blue-400 hover:bg-white/10 rounded-lg transition-colors" title="Edit User">
+                      <Edit size={14} className="sm:w-4 sm:h-4" />
+                    </button>
+                    <button onClick={() => handleDelete(user._id)} className="p-1.5 sm:p-2 text-red-400 hover:bg-white/10 rounded-lg transition-colors" title="Delete User">
+                      <Trash2 size={14} className="sm:w-4 sm:h-4" />
+                    </button>
+                  </div>
+                </div>
+                
+                <div className="space-y-2">
+                  <div className="flex items-center gap-2 text-xs sm:text-sm">
+                    <Mail size={14} className="text-gray-400 flex-shrink-0" />
+                    <span className="text-gray-300 truncate">{user.email}</span>
+                  </div>
+                  {user.phoneNumber && (
+                    <div className="flex items-center gap-2 text-xs sm:text-sm">
+                      <Phone size={14} className="text-gray-400 flex-shrink-0" />
+                      <span className="text-gray-300">{user.phoneNumber}</span>
+                    </div>
+                  )}
+                  {user.passportNumber && (
+                    <div className="flex items-center gap-2 text-xs sm:text-sm">
+                      <FileText size={14} className="text-gray-400 flex-shrink-0" />
+                      <span className="text-gray-300 truncate">Passport: {user.passportNumber}</span>
+                    </div>
+                  )}
+                  {user.dateOfBirth && (
+                    <div className="flex items-center gap-2 text-xs sm:text-sm">
+                      <Calendar size={14} className="text-gray-400 flex-shrink-0" />
+                      <span className="text-gray-300">
+                        DOB: {new Date(user.dateOfBirth).toLocaleDateString()}
+                      </span>
+                    </div>
+                  )}
+                  {user.googleId && (
+                    <div className="flex items-center gap-2 text-xs sm:text-sm">
+                      <span className="text-blue-400">Google OAuth</span>
+                    </div>
+                  )}
+                </div>
+                
+                <div className="mt-4 pt-4 border-t border-white/20">
+                  <div className="flex justify-between items-center">
+                    <span className="text-xs sm:text-sm text-gray-400">Member since</span>
+                    <span className="font-semibold text-amber-400 text-sm">
+                      {new Date(user.createdAt).toLocaleDateString()}
+                    </span>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+
+          {/* Empty State */}
+          {filteredUsers.length === 0 && (
+            <div className="bg-white/10 backdrop-blur-md rounded-2xl p-8 sm:p-12 text-center border border-white/10">
+              <User className="text-gray-400 mx-auto mb-4" size={48} />
+              <h3 className="text-base sm:text-lg font-medium text-white mb-2">No users found</h3>
+              <p className="text-sm sm:text-base text-gray-400">
+                {searchTerm ? 'Try adjusting your search criteria.' : 'Add your first user to get started!'}
+              </p>
+            </div>
+          )}
         </div>
 
         {/* Pagination - Fixed at bottom */}
@@ -567,18 +541,9 @@ User ID: ${user._id}
         )}
 
         {/* Alert Modal */}
-         <AlertModal
-          isOpen={!!alert}
-          type={alert?.type}
-          title={alert?.title}
-          message={alert?.message}
-          showCancel={alert?.showCancel}
-          onConfirm={handleAlertConfirm}
-          onCancel={closeAlert}
-        />
+        <AlertComponent />
       </div>
     </div>
   );
 };
-
 export default Users;

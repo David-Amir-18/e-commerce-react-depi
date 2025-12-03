@@ -1,47 +1,38 @@
-// src/components/FilterSidebar.jsx
-
 import React from 'react';
 import { Checkbox } from "./ui/checkbox";
 import { Label } from "./ui/label";
 import { Separator } from "./ui/separator";
 import { Button } from "./ui/button";
 
-// This component receives filter state and a function to update it from FlightResultsPage
 const FilterSidebar = ({ filters, setFilters, onApplyFilters }) => {
-  
-  // This function handles the new range slider
+
   const handlePriceChange = (e) => {
-    const newMaxValue = parseInt(e.target.value); // Get the new max price
-    
-    // Update the parent's filter state
+    const newMaxValue = parseInt(e.target.value);
+
     setFilters(prevFilters => {
-      const updatedFilters = { 
-        ...prevFilters, 
-        // Keep the min value (index 0), only update the max value (index 1)
-        priceRange: [prevFilters.priceRange[0], newMaxValue] 
+      const updatedFilters = {
+        ...prevFilters,
+        priceRange: [prevFilters.priceRange[0], newMaxValue]
       };
-      
-      // Apply filters immediately as the slider moves
-      onApplyFilters(updatedFilters); 
+
+      onApplyFilters(updatedFilters);
       return updatedFilters;
     });
   };
 
-  // This function handles all checkbox clicks
   const handleCheckboxChange = (category, value) => {
     setFilters(prevFilters => {
       const currentValues = prevFilters[category] || [];
       const newValues = currentValues.includes(value)
         ? currentValues.filter(item => item !== value)
         : [...currentValues, value];
-      
+
       const updatedFilters = { ...prevFilters, [category]: newValues };
-      onApplyFilters(updatedFilters); // Trigger filter application in parent
+      onApplyFilters(updatedFilters);
       return updatedFilters;
     });
   };
-  
-  // This function resets all filters back to default
+
   const handleResetFilters = () => {
     const freshFilters = {
       stops: [],
@@ -54,7 +45,6 @@ const FilterSidebar = ({ filters, setFilters, onApplyFilters }) => {
     onApplyFilters(freshFilters);
   };
 
-  // Static options for filters (these could come from API meta-data in a real app)
   const airlinesOptions = ['Delta Airlines', 'United Airlines', 'American Airlines', 'Emirates'];
   const departureTimeOptions = [
     { label: 'Morning (6AM - 12PM)', value: 'morning' },
@@ -68,7 +58,6 @@ const FilterSidebar = ({ filters, setFilters, onApplyFilters }) => {
   return (
     <aside className="bg-white/10 rounded-xl shadow-2xl border border-white/20 p-6 w-full lg:sticky top-[50px]">
       <div className="space-y-6">
-        {/* Filter Results Header */}
         <div>
           <h3 className="text-zinc-100 text-xl font-semibold mb-4">Filter Results</h3>
           <Button 
@@ -82,7 +71,6 @@ const FilterSidebar = ({ filters, setFilters, onApplyFilters }) => {
 
         <Separator className="bg-white/40" />
 
-        {/* STOPS FILTER (Filled In) */}
         <div className="space-y-3">
           <h4 className="text-zinc-200 font-semibold">Stops</h4>
           <div className="space-y-2">
@@ -104,7 +92,6 @@ const FilterSidebar = ({ filters, setFilters, onApplyFilters }) => {
 
         <Separator className="bg-white/40" />
 
-        {/* PRICE RANGE FILTER (Filled In) */}
         <div className="space-y-3">
           <h4 className="text-zinc-200 font-semibold">Price Range</h4>
           <div className="pt-2">
@@ -113,8 +100,8 @@ const FilterSidebar = ({ filters, setFilters, onApplyFilters }) => {
               min="0"
               max="2000"
               step="50"
-              value={filters.priceRange[1]} // Control the slider by the max price
-              onChange={handlePriceChange}   // Use our new handler
+              value={filters.priceRange[1]}
+              onChange={handlePriceChange}
               className="w-full h-2 bg-white/20 rounded-lg appearance-none cursor-pointer accent-yellow-400"
             />
           </div>
@@ -126,7 +113,6 @@ const FilterSidebar = ({ filters, setFilters, onApplyFilters }) => {
 
         <Separator className="bg-white/40" />
 
-        {/* AIRLINES FILTER (Filled In) */}
         <div className="space-y-3">
           <h4 className="text-zinc-200 font-semibold">Airlines</h4>
           <div className="space-y-2">
@@ -148,7 +134,6 @@ const FilterSidebar = ({ filters, setFilters, onApplyFilters }) => {
 
         <Separator className="bg-white/40" />
 
-        {/* DEPARTURE TIME FILTER (Filled In) */}
         <div className="space-y-3">
           <h4 className="text-zinc-200 font-semibold">Departure Time</h4>
           <div className="space-y-2">
@@ -170,7 +155,6 @@ const FilterSidebar = ({ filters, setFilters, onApplyFilters }) => {
 
         <Separator className="bg-white/40" />
 
-        {/* CABIN CLASS FILTER (Filled In) */}
         <div className="space-y-3">
           <h4 className="text-zinc-200 font-semibold">Cabin Class</h4>
           <div className="space-y-2">

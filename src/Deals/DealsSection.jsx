@@ -5,12 +5,10 @@ import { ChevronLeft, ChevronRight } from 'lucide-react';
 import {allDealsData,categories} from './allDealsData';
 
 const DealsSection = () => {
-  // Set default active tab to 'Cheapest flights'
   const [activeTab, setActiveTab] = useState('Cheapest flights');
   const scrollContainerRef = useRef(null);
   const navigate = useNavigate();
 
-  // Get deals based on active category
   const currentDeals = allDealsData[activeTab] || [];
 
   const handleScroll = (scrollOffset) => {
@@ -23,12 +21,10 @@ const DealsSection = () => {
   };
 
   const handleDealClick = (deal) => {
-    // searching for 30 days from now
     const dateObj = new Date();
-    dateObj.setDate(dateObj.getDate() + 30); // Add 30 days
+    dateObj.setDate(dateObj.getDate() + 30);
     const futureDate = dateObj.toISOString().split('T')[0];
 
-    // DEFINE ORIGIN: Cairo
     const originCode = 'CAI'; 
     const originName = 'Cairo';
     
@@ -42,8 +38,8 @@ const DealsSection = () => {
       origin: originCode,
       originName: originName,
       destination: deal.destCode,
-      destinationName: deal.dest, // Pass the full name so the Results Page looks nice immediately
-      date: futureDate, // Using the future date
+      destinationName: deal.dest,
+      date: futureDate,
       passengers: '1',
       cabin: "Economy",
       tripType: "One Way",
@@ -52,7 +48,6 @@ const DealsSection = () => {
     navigate(`/flights?${queryParams.toString()}`);
   };
 
-  // Handle category change with smooth transition
   const handleCategoryChange = (category) => {
     setActiveTab(category);
   };
@@ -62,8 +57,7 @@ const DealsSection = () => {
       <h2 className="text-4xl font-bold text-white mb-8 mt-5">
         Explore everywhere in November
       </h2>
-      
-      {/* Category Tabs Navigation */}
+
       <div className="relative mb-6"> 
         <div className="flex items-center gap-2">
           <button 
@@ -105,7 +99,6 @@ const DealsSection = () => {
         </div>
       </div>
 
-      {/* Active Category Display */}
       <div className="mb-4">
         <p className="text-zinc-400 text-sm">
           Showing <span className="text-yellow-400 font-semibold">{currentDeals.length}</span> destinations for{' '}
@@ -113,7 +106,6 @@ const DealsSection = () => {
         </p>
       </div>
 
-      {/* Grid of Deal Cards fade-in animation */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 animate-fadeIn">
         {currentDeals.map((deal, index) => (
           <div 
@@ -132,7 +124,6 @@ const DealsSection = () => {
         ))}
       </div>
 
-      {/* No results message */}
       {currentDeals.length === 0 && (
         <div className="text-center py-12">
           <p className="text-zinc-400 text-lg">
@@ -140,7 +131,6 @@ const DealsSection = () => {
           </p>
         </div>
       )}
-      {/* Removing white horizontal scroll bar for the categories container  */}
       <style>{`
         .scrollbar-hide::-webkit-scrollbar {
           display: none;

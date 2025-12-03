@@ -13,18 +13,15 @@ export function BaggageSelectionPage() {
   const [selectedBaggage, setSelectedBaggage] = useState([]);
   const [showSuccess, setShowSuccess] = useState(false);
 
-  // Load saved baggage from sessionStorage
   useEffect(() => {
     const saved = sessionStorage.getItem('selectedBaggage');
     if (saved) {
       setSelectedBaggage(JSON.parse(saved));
     } else {
-      // Initialize with default for each passenger
       setSelectedBaggage(Array(totalPassengers).fill('standard'));
     }
   }, [totalPassengers]);
 
-  // Redirect if no flight data
   useEffect(() => {
     if (!flight) {
       navigate('/flights');
@@ -104,18 +101,14 @@ export function BaggageSelectionPage() {
   };
 
   const handleConfirm = () => {
-    // Save to sessionStorage
     sessionStorage.setItem('selectedBaggage', JSON.stringify(selectedBaggage));
 
-    // Mark as completed
     const completed = JSON.parse(sessionStorage.getItem('bookingOptionsCompleted') || '{}');
     completed.baggage = true;
     sessionStorage.setItem('bookingOptionsCompleted', JSON.stringify(completed));
 
-    // Show success message
     setShowSuccess(true);
 
-    // Navigate back after short delay
     setTimeout(() => {
       navigate(returnRoute || '/booking/options', { state: location.state });
     }, 1500);
@@ -128,7 +121,6 @@ export function BaggageSelectionPage() {
   return (
     <div className="min-h-screen text-white pt-30 pb-12">
       <div className="container mx-auto px-8">
-        {/* Success Overlay */}
         {showSuccess && (
           <div className="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 flex items-center justify-center animate-in fade-in duration-300">
             <div className="bg-white/10 border border-emerald-400/30 rounded-xl p-8 max-w-md mx-4 animate-in zoom-in duration-300">
@@ -143,7 +135,6 @@ export function BaggageSelectionPage() {
           </div>
         )}
 
-        {/* Back Button */}
         <button
           onClick={() => navigate(returnRoute || '/booking/options', { state: location.state })}
           className="text-yellow-400 hover:text-yellow-300 mb-6 flex items-center gap-2 text-sm transition-colors"
@@ -152,16 +143,13 @@ export function BaggageSelectionPage() {
           <span>Back to Options</span>
         </button>
 
-        {/* Page Title */}
         <div className="mb-8">
           <h1 className="text-3xl font-bold text-yellow-400 mb-2">Select Baggage Allowance</h1>
           <p className="text-zinc-400">Choose baggage options for your {totalPassengers} passenger{totalPassengers > 1 ? 's' : ''}</p>
         </div>
 
         <div className="grid lg:grid-cols-3 gap-6">
-          {/* Main Content - Baggage Options */}
           <div className="lg:col-span-2 space-y-6">
-            {/* Baggage Options Grid */}
             <div className="grid md:grid-cols-3 gap-4">
               {baggageOptions.map(option => {
                 const Icon = option.icon;
@@ -177,14 +165,12 @@ export function BaggageSelectionPage() {
                         : 'border-white/20 hover:border-zinc-700'
                     } ${isPopular ? 'relative' : ''}`}
                   >
-                    {/* Recommended Badge */}
                     {isPopular && (
                       <div className="absolute top-0 left-0 right-0 bg-gradient-to-r from-yellow-400 to-yellow-500 text-zinc-950 text-xs font-bold py-1 px-3 text-center z-10">
                         ⭐ MOST POPULAR
                       </div>
                     )}
 
-                    {/* Image */}
                     <div className={`relative h-32 overflow-hidden ${isPopular ? 'mt-6' : ''}`}>
                       <img
                         src={option.image}
@@ -199,7 +185,6 @@ export function BaggageSelectionPage() {
                       )}
                     </div>
 
-                    {/* Details */}
                     <div className="p-4">
                       <div className="flex items-center gap-2 mb-2">
                         <Icon className={`w-5 h-5 text-${option.color}-400`} />
@@ -219,7 +204,6 @@ export function BaggageSelectionPage() {
 
                       <p className="text-zinc-400 text-xs mb-3">{option.description}</p>
 
-                      {/* Features */}
                       <ul className="space-y-1 mb-4">
                         {option.features.map((feature, idx) => (
                           <li key={idx} className="flex items-start gap-2 text-xs text-zinc-400">
@@ -229,7 +213,6 @@ export function BaggageSelectionPage() {
                         ))}
                       </ul>
 
-                      {/* Price */}
                       <div className="text-center mb-3 py-2 border-t border-white/20">
                         <span className="text-yellow-400 text-2xl font-bold">
                           {option.price === 0 ? 'Included' : `$${option.price}`}
@@ -239,7 +222,6 @@ export function BaggageSelectionPage() {
                         )}
                       </div>
 
-                      {/* Select Count Display */}
                       {count > 0 && (
                         <div className="text-center mb-2">
                           <Badge className="bg-emerald-400/20 text-emerald-300 border-emerald-400/30 text-xs">
@@ -253,7 +235,6 @@ export function BaggageSelectionPage() {
               })}
             </div>
 
-            {/* Passenger-wise Selection */}
             <div className="bg-white/10 border border-white/20 rounded-xl p-6">
               <h3 className="text-lg font-bold text-zinc-100 mb-4">Assign Baggage to Each Passenger</h3>
               <div className="space-y-3">
@@ -297,10 +278,8 @@ export function BaggageSelectionPage() {
             </div>
           </div>
 
-          {/* Sidebar */}
           <div className="lg:col-span-1">
             <div className="sticky top-24 space-y-4">
-              {/* Cost Summary */}
               <div className="bg-white/10 border border-white/20 rounded-xl p-6">
                 <h3 className="text-lg font-bold text-zinc-100 mb-4">Cost Summary</h3>
 
@@ -330,7 +309,6 @@ export function BaggageSelectionPage() {
                 </div>
               </div>
 
-              {/* Info */}
               <div className="bg-white/10 border border-white/20 rounded-xl p-6">
                 <h3 className="text-lg font-bold text-zinc-100 mb-3">Baggage Policy</h3>
                 <ul className="space-y-2 text-zinc-400 text-sm">
@@ -349,7 +327,6 @@ export function BaggageSelectionPage() {
                 </ul>
               </div>
 
-              {/* Action Buttons */}
               <div className="space-y-3">
                 <Button
                   onClick={() => navigate(returnRoute || '/booking/options', { state: location.state })}

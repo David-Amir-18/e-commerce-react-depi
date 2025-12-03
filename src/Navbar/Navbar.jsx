@@ -15,13 +15,11 @@ function Navbar() {
   const location = useLocation();
   const [configStyle, setConfigStyle] = useState();
 
-  // For sliding border effect
   const [activeLinkIndex, setActiveLinkIndex] = useState(null);
   const [borderStyle, setBorderStyle] = useState({ left: 0, width: 0, opacity: 0 });
   const linkRefs = useRef([]);
   const containerRef = useRef(null);
 
-  // Define navbar routes
   const navbarRoutes = ['/contact', '/about', '/admin/dashboard'];
 
   useEffect(() => {
@@ -44,16 +42,13 @@ function Navbar() {
     console.log('ConfigStyle changed to:', configStyle);
   }, [configStyle]);
 
-  // Check if current route is a navbar route
   useEffect(() => {
     const currentIndex = navbarRoutes.indexOf(location.pathname);
 
     if (currentIndex !== -1 && linkRefs.current[currentIndex] && containerRef.current) {
-      // Current page is a navbar route - show border
       setActiveLinkIndex(currentIndex);
       updateBorderPosition(currentIndex);
     } else {
-      // Current page is not a navbar route - hide border
       setBorderStyle(prev => ({ ...prev, opacity: 0 }));
       setActiveLinkIndex(null);
     }
@@ -83,7 +78,6 @@ function Navbar() {
     updateBorderPosition(index);
   };
 
-  // Recalculate border position on window resize
   useEffect(() => {
     if (activeLinkIndex !== null) {
       const handleResize = () => updateBorderPosition(activeLinkIndex);
@@ -106,7 +100,6 @@ function Navbar() {
 
             <div className="container mx-auto px-8">
               <div className="py-4 flex items-center justify-between rounded-2xl">
-                {/* Brand */}
                 <Link
                   to="/"
                   className="md:backdrop-blur-md md:py-4 md:px-8 md:border md:bg-white/5 rounded-xl flex items-center justify-center text-2xl font-semibold tracking-wide text-amber-400 hover:text-amber-300 transition-all hover:backdrop-blur-3xl hover:bg-amber-500/60 hover:shadow-[0px_0px_35px] shadow-amber-500"
@@ -115,22 +108,19 @@ function Navbar() {
                   <h1 className="text-amber-300">Elysium</h1>
                 </Link>
 
-                {/* Desktop Menu */}
                 <div className="flex items-center gap-4">
                   {!isMobile && (
                     <div className="flex items-center justify-between text-sm text-white">
-                      {/* Nav Links */}
                       <div
                         ref={containerRef}
                         className="backdrop-blur-md bg-white/5 border border-white/15 rounded-xl px-8 py-5 flex sm:w-[300px] lg:w-[550px] justify-between items-center relative"
                       >
-                        {/* Sliding Border Background */}
                         <div
                           className="absolute rounded-full bg-white/10 border border-white/20 transition-all duration-300 ease-out"
                           style={{
                             left: `${borderStyle.left - 15}px`,
                             width: `${borderStyle.width + 30}px`,
-                            height: '36px'/*calc(100% - 40px)'*/,
+                            height: '36px',
                             top: '20px',
                             opacity: borderStyle.opacity,
                             pointerEvents: 'none'

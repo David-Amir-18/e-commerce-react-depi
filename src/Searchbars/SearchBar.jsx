@@ -6,9 +6,9 @@ import { Globe, Building2, Plane } from "lucide-react";
 function SearchBar() {
   const [flightType, setFlightType] = useState("One Way");
   const [from, setFrom] = useState("");
-  const [fromCode, setFromCode] = useState(""); // Store airport code
+  const [fromCode, setFromCode] = useState(""); 
   const [to, setTo] = useState("");
-  const [toCode, setToCode] = useState(""); // Store airport code
+  const [toCode, setToCode] = useState(""); 
   const [departDate, setDepartDate] = useState("");
   const [returnDate, setReturnDate] = useState("");
   const [destinations, setDestinations] = useState([]);
@@ -19,12 +19,10 @@ function SearchBar() {
   const [children, setChildren] = useState(0);
   const [infants, setInfants] = useState(0);
 
-  const navigate = useNavigate(); //   INITIALIZE useNavigate
+  const navigate = useNavigate(); 
 
-  // Get today's date in YYYY-MM-DD format for min date validation
   const today = new Date().toISOString().split('T')[0];
 
-  // Swap function
   const swapLocations = () => {
     const tempCity = from;
     const tempCode = fromCode;
@@ -34,7 +32,6 @@ function SearchBar() {
     setToCode(tempCode);
   };
 
-  // Fetch destinations from JSON
   useEffect(() => {
     fetch("/destination.json")
       .then((res) => res.json())
@@ -42,7 +39,6 @@ function SearchBar() {
       .catch((err) => console.error("Error fetching Destination: ", err));
   }, []);
 
-  // Close dropdowns when clicking outside
   useEffect(() => {
     const handleClickOutside = () => {
       setSuggestions([]);
@@ -53,7 +49,6 @@ function SearchBar() {
     return () => document.removeEventListener("click", handleClickOutside);
   }, []);
 
-  // Handle input change with smart filtering
   const handleInputChange = (e, type) => {
     const value = e.target.value;
     setActiveInput(type);

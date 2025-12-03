@@ -24,7 +24,6 @@ function Register() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
 
-  // --- STYLING CONSTANTS (Using the flex-col layout to fix spacing) ---
   const dialogContentClasses = `
     bg-[#00000066] backdrop-blur-md rounded-2xl shadow-2xl p-8 border border-[#ffffff20]
     text-white
@@ -37,16 +36,13 @@ function Register() {
   const sectionTitleClasses = "text-lg font-semibold text-gray-100 mb-2";
   const textClasses = "leading-relaxed text-gray-200";
   const listClasses = "list-disc pl-6 space-y-1 text-gray-200";
-  // --- END STYLING CONSTANTS ---
 
-  // Validation functions
   const validateEmail = (email) => {
     const emailRegex = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
     return emailRegex.test(email);
   };
 
   const validatePassword = (password) => {
-    // At least 8 chars, uppercase, lowercase, number, special char
     const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
     return passwordRegex.test(password);
   };
@@ -55,19 +51,16 @@ function Register() {
     e.preventDefault();
     setError("");
 
-    // Validate email format
     if (!validateEmail(email)) {
       setError("Please enter a valid email address");
       return;
     }
 
-    // Validate password strength
     if (!validatePassword(password)) {
       setError("Password must be at least 8 characters and contain uppercase, lowercase, number, and special character (@$!%*?&)");
       return;
     }
 
-    // Validate passwords match
     if (password !== confirmPassword) {
       setError("Passwords don't match");
       return;
@@ -88,7 +81,6 @@ function Register() {
       });
 
       if (result.success) {
-        // Redirect to home page after successful registration
         navigate("/", { replace: true });
       } else {
         setError(result.error);
@@ -108,7 +100,6 @@ function Register() {
       const result = await googleLogin(credentialResponse.credential);
 
       if (result.success) {
-        // Redirect to home page after successful Google registration
         navigate("/", { replace: true });
       } else {
         setError(result.error);
@@ -150,7 +141,6 @@ function Register() {
         )}
 
         <form onSubmit={handleSubmit} className="space-y-5">
-          {/* Form Inputs (Full Name, Email, Password...) */}
           <div>
             <label
               htmlFor="fullName"
@@ -222,9 +212,7 @@ function Register() {
               required
             />
           </div>
-          {/* End Form Inputs */}
 
-          {/* --- MODIFIED TERMS SECTION --- */}
           <div className="flex items-start text-sm">
             <input
               type="checkbox"
@@ -236,7 +224,6 @@ function Register() {
             />
             <div className="text-gray-300 -mt-px">
               I agree to the{" "}
-              {/* --- TERMS OF SERVICE DIALOG (as provided) --- */}
               <Dialog>
                 <DialogTrigger asChild>
                   <button
@@ -257,7 +244,6 @@ function Register() {
                       Last updated: October 24, 2025
                     </DialogDescription>
                   </DialogHeader>
-                  {/* --- FIXED: Replaced div with ScrollArea --- */}
                   <ScrollArea className="max-h-[calc(80vh-150px)]">
                     <div className="space-y-4 text-sm pr-6">
                       <p className={textClasses}>
@@ -341,8 +327,7 @@ function Register() {
                   </ScrollArea>
                 </DialogContent>
               </Dialog>{" "}
-              and {/* --- PRIVACY POLICY DIALOG (as provided) --- */}
-              <Dialog>
+              and <Dialog>
                 <DialogTrigger asChild>
                   <button
                     type="button"
@@ -362,7 +347,6 @@ function Register() {
                       Last updated: October 24, 2025
                     </DialogDescription>
                   </DialogHeader>
-                  {/* --- FIXED: Replaced div with ScrollArea --- */}
                   <ScrollArea className="max-h-[calc(80vh-150px)]">
                     <div className="space-y-4 text-sm pr-6">
                       <p className={textClasses}>
@@ -449,7 +433,6 @@ function Register() {
               </Dialog>
             </div>
           </div>
-          {/* --- END MODIFIED TERMS SECTION --- */}
 
           <button
             type="submit"
@@ -473,7 +456,6 @@ function Register() {
         </div>
 
         <div className="mt-8 pt-6 border-t border-[#ffffff20]">
-          {/* ... Social Login ... */}
           <div className="relative mb-4">
             <div className="absolute inset-0 flex items-center">
               <div className="w-full border-[#ffffff20]"></div>
