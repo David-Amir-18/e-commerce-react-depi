@@ -3,11 +3,14 @@ import { useNavigate } from "react-router-dom";
 import UserMenuContent from "./UserMenuContent";
 
 
-export default function AccInlineMenu() {
+export default function AccInlineMenu({ closeMenu }) {
   const { user, logout } = useAuth();
   const navigate = useNavigate();
 
-  const handleProfileClick = () => navigate("/profile");
+  const handleProfileClick = () => {
+    navigate("/profile")
+    closeMenu()
+  }
   const handleLogout = () => {
     logout();
     navigate("/signin");

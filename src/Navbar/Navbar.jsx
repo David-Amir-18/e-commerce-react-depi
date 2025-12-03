@@ -93,7 +93,7 @@ function Navbar() {
           {isMobile && (
             <>
               <BurgerMenu isMenuOpen={isMenuOpen} setIsMenuOpen={setIsMenuOpen} />
-              <Overlay isMenuOpen={isMenuOpen} />
+              <Overlay isMenuOpen={isMenuOpen} setIsMenuOpen={setIsMenuOpen} />
             </>
           )}
           <div className="backdrop-blur-lg md:backdrop-blur-none w-full">

@@ -28,7 +28,7 @@ function Overlay({ isMenuOpen, setIsMenuOpen }) {
             </div>
 
             {isAuthenticated ? (
-              <AccInlineMenu />
+              <AccInlineMenu closeMenu={closeMenu}/>
             ) : (
               <SignInBtn />
             )}
