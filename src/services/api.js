@@ -9,6 +9,21 @@ class APIError extends Error {
   }
 }
 
+let isRefreshing = false;
+let failedQueue = [];
+
+const processQueue = (error, token = null) => {
+  failedQueue.forEach(prom => {
+    if (error) {
+      prom.reject(error);
+    } else {
+      prom.resolve(token);
+    }
+  });
+
+  failedQueue = [];
+};
+
 async function apiCall(endpoint, options = {}) {
   const token = sessionStorage.getItem('authToken');
 
@@ -26,6 +41,82 @@ async function apiCall(endpoint, options = {}) {
     const data = await response.json();
 
     if (!response.ok) {
+      // Handle 401 (Unauthorized) - Try to refresh token
+      // Don't auto-refresh for unauthenticated endpoints (login, register, etc.)
+      const unauthenticatedEndpoints = [
+        '/auth/login',
+        '/auth/register',
+        '/auth/google',
+        '/auth/refresh',
+        '/auth/forgot-password',
+        '/auth/verify-otp',
+        '/auth/reset-password'
+      ];
+
+      const shouldAttemptRefresh = response.status === 401 &&
+                                   !options._retry &&
+                                   !unauthenticatedEndpoints.includes(endpoint);
+
+      if (shouldAttemptRefresh) {
+        if (isRefreshing) {
+          // If already refreshing, queue this request
+          return new Promise((resolve, reject) => {
+            failedQueue.push({ resolve, reject });
+          }).then(token => {
+            config.headers['Authorization'] = `Bearer ${token}`;
+            return apiCall(endpoint, { ...options, _retry: true });
+          });
+        }
+
+        options._retry = true;
+        isRefreshing = true;
+
+        const refreshToken = localStorage.getItem('refreshToken');
+
+        if (!refreshToken) {
+          // No refresh token available, user needs to login
+          sessionStorage.removeItem('authToken');
+          sessionStorage.removeItem('user');
+          throw new APIError('Session expired. Please login again.', 401, data);
+        }
+
+        try {
+          // Call refresh endpoint directly to avoid circular dependency
+          const refreshResponse = await fetch(`${API_BASE_URL}/auth/refresh`, {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ refreshToken }),
+          });
+
+          const refreshData = await refreshResponse.json();
+
+          if (!refreshResponse.ok) {
+            // Refresh token is invalid or expired
+            sessionStorage.removeItem('authToken');
+            sessionStorage.removeItem('user');
+            localStorage.removeItem('refreshToken');
+            throw new APIError('Session expired. Please login again.', 401, refreshData);
+          }
+
+          // Update tokens
+          sessionStorage.setItem('authToken', refreshData.token);
+          localStorage.setItem('refreshToken', refreshData.refreshToken);
+
+          isRefreshing = false;
+          processQueue(null, refreshData.token);
+
+          // Retry original request with new token
+          config.headers['Authorization'] = `Bearer ${refreshData.token}`;
+          return apiCall(endpoint, options);
+        } catch (refreshError) {
+          isRefreshing = false;
+          processQueue(refreshError, null);
+          throw refreshError;
+        }
+      }
+
       throw new APIError(
         data.message || 'Something went wrong',
         response.status,
@@ -108,6 +199,20 @@ export const authAPI = {
       body: JSON.stringify({ currentPassword, newPassword }),
     });
   },
+
+  refreshToken: async (refreshToken) => {
+    return apiCall('/auth/refresh', {
+      method: 'POST',
+      body: JSON.stringify({ refreshToken }),
+    });
+  },
+
+  logout: async (refreshToken) => {
+    return apiCall('/auth/logout', {
+      method: 'POST',
+      body: JSON.stringify({ refreshToken }),
+    });
+  },
 };
 
 export const tokenService = {
@@ -121,6 +226,18 @@ export const tokenService = {
 
   removeToken: () => {
     sessionStorage.removeItem('authToken');
+  },
+
+  setRefreshToken: (refreshToken) => {
+    localStorage.setItem('refreshToken', refreshToken);
+  },
+
+  getRefreshToken: () => {
+    return localStorage.getItem('refreshToken');
+  },
+
+  removeRefreshToken: () => {
+    localStorage.removeItem('refreshToken');
   },
 
   setUser: (user) => {
@@ -139,6 +256,7 @@ export const tokenService = {
   clear: () => {
     sessionStorage.removeItem('authToken');
     sessionStorage.removeItem('user');
+    localStorage.removeItem('refreshToken');
   },
 };
 
