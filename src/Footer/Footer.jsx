@@ -1,9 +1,20 @@
 import PrivacyPolicy from "@/components/PrivacyPolicy";
 import TOS from "@/components/TOS";
-import { Link } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { Link, useLocation } from "react-router-dom";
 function Footer() {
+    let location = useLocation()
+    let [bg, setBg] = useState("")
+
+  useEffect(() => {
+    let exclusionList = ['/', "/about", '/contact', '/signin', "/forgetpass", '/verify-otp']
+    setBg(exclusionList.indexOf(location.pathname) != -1
+      ? "bg-black"
+      : "");
+  }, [location.pathname]);
+
     return (
-        <footer className="relative z-10 w-full text-white py-20 border-t border-white/20 ">
+        <footer className={`${bg} relative z-10 w-full text-white py-20 border-t border-white/20`}>
             <div className=" container mx-auto px-8 grid md:grid-cols-2 gap-10 items-start">
                 <div>
                     <Link to="/" className="text-2xl font-semibold text-amber-300 tracking-wide mb-4">ELYSIUM</Link>

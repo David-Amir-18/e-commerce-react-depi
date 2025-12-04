@@ -13,7 +13,7 @@ function Navbar() {
   const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
   const { isAuthenticated, user } = useAuth();
   const location = useLocation();
-  const [configStyle, setConfigStyle] = useState();
+  // const [configStyle, setConfigStyle] = useState();
 
   const [activeLinkIndex, setActiveLinkIndex] = useState(null);
   const [borderStyle, setBorderStyle] = useState({ left: 0, width: 0, opacity: 0 });
@@ -31,16 +31,16 @@ function Navbar() {
     return () => window.removeEventListener('resize', handleResize);
   }, []);
 
-  useEffect(() => {
-    let exclusionList = ['/flights', "/profile", '', '', '', '']
-    setConfigStyle(exclusionList.indexOf(location.pathname) != -1
-      ? "absolute "
-      : "fixed bg-black/0");
-  }, [location.pathname]);
+  // useEffect(() => {
+  //   let exclusionList = ['/flights', "/profile", '', '', '', '']
+  //   setConfigStyle(exclusionList.indexOf(location.pathname) != -1
+  //     ? "absolute "
+  //     : "fixed bg-black/0");
+  // }, [location.pathname]);
 
-  useEffect(() => {
-    console.log('ConfigStyle changed to:', configStyle);
-  }, [configStyle]);
+  // useEffect(() => {
+  //   console.log('ConfigStyle changed to:', configStyle);
+  // }, [configStyle]);
 
   useEffect(() => {
     const currentIndex = navbarRoutes.indexOf(location.pathname);
@@ -88,7 +88,7 @@ function Navbar() {
 
   return (
     <>
-      <nav className={`w-full ${configStyle} z-20`}>
+      <nav className={`w-full absolute z-20`}>
         <div className="relative h-full top-0 z-20">
           {isMobile && (
             <>
@@ -102,7 +102,7 @@ function Navbar() {
               <div className="py-4 flex items-center justify-between rounded-2xl ">
                 <Link
                   to="/"
-                  className="md:backdrop-blur-md md:py-4 md:px-8 md:border md:bg-white/5 rounded-xl max-md:rounded-full flex items-center justify-center text-2xl font-semibold tracking-wide text-amber-400 hover:text-amber-300 transition-all hover:backdrop-blur-3xl hover:bg-amber-500/60 hover:shadow-[0px_0px_35px] shadow-amber-500 max-md:p-2"
+                  className="md:backdrop-blur-md md:py-4 md:px-8 md:border border-white/20 md:bg-white/5 rounded-xl max-md:rounded-full flex items-center justify-center text-2xl font-semibold tracking-wide text-amber-400 hover:text-amber-300 transition-all hover:backdrop-blur-3xl hover:bg-amber-500/60 hover:shadow-[0px_0px_35px] shadow-amber-500 max-md:p-2"
                 >
                   <img src={logo} width={50} className="" />
                 </Link>
