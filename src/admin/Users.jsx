@@ -5,7 +5,7 @@ import goldParticles from "./assets/gold-particle.1920x1080.mp4";
 import Pagination from "./components/Pagination";
 import Loading from './components/Loading';
 import { useAlert } from './components/AlertModal';
-
+import EmptyState from './components/EmptyState';
 const Users = () => {
   const [users, setUsers] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -396,29 +396,12 @@ User ID: ${user._id}
           </div>
 
           {/* Empty State */}
-          {filteredUsers.length === 0 && (
-            <div className="bg-white/10 backdrop-blur-md rounded-2xl p-8 sm:p-12 text-center border border-white/10">
-              <User className="text-gray-400 mx-auto mb-4" size={48} />
-              <h3 className="text-base sm:text-lg font-medium text-white mb-2">No users found</h3>
-              <p className="text-sm sm:text-base text-gray-400">
-                {searchTerm ? 'Try adjusting your search criteria.' : 'Add your first user to get started!'}
-              </p>
-            </div>
-          )}
-        </div>
-
-        {/* Pagination - Fixed at bottom */}
-        <div className="mt-6 pb-4">
-          {filteredUsers.length > 0 && (
-            <Pagination
-              currentPage={currentPage}
-              totalPages={totalPages}
-              onPageChange={setCurrentPage}
-              itemsPerPage={itemsPerPage}
-              totalItems={filteredUsers.length}
-            />
-          )}
-        </div>
+{filteredUsers.length === 0 && (
+  <EmptyState icon={User} title="No users found"
+  message={searchTerm ? 'Try adjusting your search criteria.' : 'Add your first user to get started!'}
+  />
+)}
+  </div>
 
         {/* Add/Edit User Modal */}
         {showModal && (
@@ -540,6 +523,18 @@ User ID: ${user._id}
           </div>
         )}
 
+        {/* Pagination - Fixed at bottom */}
+        <div className="mt-6 pb-4">
+          {filteredUsers.length > 0 && (
+            <Pagination
+              currentPage={currentPage}
+              totalPages={totalPages}
+              onPageChange={setCurrentPage}
+              itemsPerPage={itemsPerPage}
+              totalItems={filteredUsers.length}
+            />
+          )}
+        </div>
         {/* Alert Modal */}
         <AlertComponent />
       </div>
