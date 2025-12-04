@@ -5,7 +5,7 @@ import goldParticles from "./assets/gold-particle.1920x1080.mp4";
 import Pagination from "./components/Pagination";
 import { useAlert } from './components/AlertModal';
 import Loading from './components/Loading';
-
+import EmptyState from './components/EmptyState';
 const Bookings = () => {
   const [bookings, setBookings] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -67,7 +67,7 @@ const Bookings = () => {
         try {
           const response = await bookingsAPI.delete(bookingId);
           if (response.success) {
-            setBookings(bookings.filter(booking => booking._id !== bookingId));
+            setBookings(bookings.filter(booking => booking.id !== bookingId));
             showAlert('success', 'Booking Deleted!', 'Booking has been deleted successfully.');
           } else {
             showAlert('error', 'Deletion Failed', response.message || 'Failed to delete booking.');
@@ -138,13 +138,12 @@ const Bookings = () => {
     const flightInfo = booking.flightId || booking.flightDetails || {};
     const flightOrigin = flightInfo.origin || flightInfo.from || 'N/A';
     const flightDestination = flightInfo.destination || flightInfo.to || 'N/A';
-
     const userName = booking.userId?.name || booking.contactDetails?.contactPerson || 'Guest';
     const userEmail = booking.userId?.email || booking.contactDetails?.email || 'N/A';
     const userPhone = booking.userId?.phoneNumber || booking.contactDetails?.phone || 'N/A';
 
     const details = [
-      `Booking Reference: ${booking.bookingReference || booking._id}`,
+      `Booking Reference: ${booking.bookingReference || booking.id}`,
       `Status: ${booking.status}`,
       '',
       `User: ${userName}`,
@@ -206,17 +205,13 @@ const Bookings = () => {
         {/* Bookings Grid */}
         <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-4 sm:gap-6">
           {paginatedBookings.map((booking) => {
-            // Get flight info from either flightId or flightDetails
             const flightInfo = booking.flightId || booking.flightDetails || booking.flight || {};
             const flightOrigin = flightInfo.origin || flightInfo.from || flightInfo.fromCode || 'N/A';
             const flightDestination = flightInfo.destination || flightInfo.to || flightInfo.toCode || 'N/A';
             const flightNumber = flightInfo.flightNumber || 'N/A';
             const flightPrice = flightInfo.price || 0;
-
-            // Get user info - fall back to contact details for guest bookings
             const userName = booking.userId?.name || booking.contactDetails?.contactPerson || 'Guest';
             const userEmail = booking.userId?.email || booking.contactDetails?.email || '';
-
             const totalPrice = booking.pricing?.totalCost || (booking.seats * flightPrice).toFixed(2);
 
             return (
@@ -295,16 +290,12 @@ const Bookings = () => {
           })}
         </div>
 
-        {/* Empty State */}
-        {filteredBookings.length === 0 && (
-          <div className="bg-white/10 backdrop-blur-md rounded-2xl p-8 sm:p-12 text-center">
-            <Calendar className="text-gray-400 mx-auto mb-4" size={48} />
-            <h3 className="text-base sm:text-lg font-medium text-white mb-2">No bookings found</h3>
-            <p className="text-sm sm:text-base text-gray-400">
-              {searchTerm ? 'Try adjusting your search criteria.' : 'No bookings have been made yet.'}
-            </p>
-          </div>
-        )}
+      {/* Bookings Empty State */}
+{filteredBookings.length === 0 && (
+  <EmptyState icon={Calendar} title="No bookings found"
+    message={searchTerm  ? 'Try adjusting your search criteria.' : 'No bookings have been made yet.'}
+  />
+)}
 
         {/* Pagination */}
         {filteredBookings.length > 0 && (
