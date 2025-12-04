@@ -52,10 +52,12 @@ const DealsSection = () => {
     setActiveTab(category);
   };
 
+  const currentMonthName = new Date().toLocaleString('en-US', { month: 'long' });
+
   return (
     <div className="relative z-10 pt-40 max-md:pt-10 px-8 max-md:px-0 mx-auto">
       <h2 className="text-4xl font-bold text-white mb-8 mt-5">
-        Explore everywhere in December
+        Explore everywhere in {currentMonthName}
       </h2>
 
       <div className="relative mb-6"> 
