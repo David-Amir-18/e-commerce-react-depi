@@ -269,7 +269,7 @@ function SearchBar() {
 
             {activeInput === "from" && suggestions.length > 0 && (
               <div className="absolute top-full left-0 right-0 mt-2 z-50">
-                <div className="bg-white/5 backdrop-blur-lg rounded-xl shadow-lg border border-white/20 max-h-60 overflow-y-auto">
+                <div className="bg-zinc-900 rounded-xl shadow-xl border border-white/20 max-h-60 overflow-y-auto z-50">
                   {suggestions.map((item) => (
                     <div
                       key={item.id}
@@ -491,7 +491,7 @@ function SearchBar() {
             {travellersOpen && (
               <div className="absolute top-full left-0 right-0 mt-2">
                 <div
-                  className="relative backdrop-blur-md bg-white/5 rounded-xl p-4 space-y-3 border border-white/20 shadow-xl"
+                  className="relative bg-zinc-900 rounded-xl p-4 space-y-3 border border-white/20 shadow-xl z-50"
                   onClick={(e) => e.stopPropagation()}
                 >
                   {[
