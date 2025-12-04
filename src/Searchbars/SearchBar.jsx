@@ -385,7 +385,7 @@ function SearchBar() {
 
             {activeInput === "to" && suggestions.length > 0 && (
               <div className="absolute top-full left-0 right-0 mt-2 z-50">
-                <div className="bg-white/5 backdrop-blur-lg rounded-xl shadow-lg border border-white/20 max-h-60 overflow-y-auto">
+                <div className="bg-zinc-900 rounded-xl shadow-xl border border-white/20 max-h-60 overflow-y-auto z-50">
                   {suggestions.map((item) => (
                     <div
                       key={item.id}
