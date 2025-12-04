@@ -88,7 +88,7 @@ const FlightResultsPage = () => {
         const totalPassengers = parseInt(criteria.passengers) || 1;
         const addRandomSeats = (flights) => {
           return flights.map(flight => ({
-            ...flight,
+            ...flight, 
             available: totalPassengers + Math.floor(Math.random() * 50) + 1
           }));
         };

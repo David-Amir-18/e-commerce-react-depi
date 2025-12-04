@@ -131,14 +131,14 @@ function SearchBar() {
 
     return depart < today;                      // true only if strictly before today
   }
-  //  ADD THE SUBMIT HANDLER ---
+  //  ADD THE SUBMIT HANDLER 
   const handleSubmit = (e) => {
     e.preventDefault();
     if (!from || !to || !departDate) {
       alert("Please fill in Origin, Destination, and Departure Date.");
       return;
     }
-
+    // if user searched but without dropdowns
     let finalOriginCode = fromCode;
     let finalDestinationCode = toCode;
 
@@ -172,7 +172,7 @@ function SearchBar() {
       const searchTerm = to.trim().toLowerCase();
       const match = destinations.find(
         (item) => 
-          // --- FIX: Added (item.name &&) check ---
+          
           (item.name && item.name.toLowerCase() === searchTerm) || 
           (item.code && item.code.toLowerCase() === searchTerm)
       );
@@ -235,7 +235,7 @@ function SearchBar() {
 
   return (
     <div className="flex items-center justify-center relative ">
-      {/* ---  WRAP THE CONTENT IN A <form> --- */}
+      {/*   WRAP THE CONTENT IN A <form>  */}
       <form
         onSubmit={handleSubmit}
         className="bg-white/5 border border-white/20 rounded-2xl shadow-2xl p-6 w-full max-w- text-white"

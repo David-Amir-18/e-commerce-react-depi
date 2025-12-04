@@ -55,7 +55,7 @@ const DealsSection = () => {
   return (
     <div className="relative z-10 pt-40 max-md:pt-10 px-8 max-md:px-0 mx-auto">
       <h2 className="text-4xl font-bold text-white mb-8 mt-5">
-        Explore everywhere in November
+        Explore everywhere in December
       </h2>
 
       <div className="relative mb-6"> 
