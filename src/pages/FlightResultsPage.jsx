@@ -109,7 +109,7 @@ const FlightResultsPage = () => {
 
     fetchData();
 
-  }, [criteria.origin, criteria.destination, criteria.date, API_BASE_URL]);
+  }, [criteria.origin, criteria.destination, criteria.date, API_BASE_URL, criteria.passengers, criteria.cabin]);
 
   const applyFilters = useCallback((currentFilters, currentSort) => {
     const filterFlightArray = (flights) => {
