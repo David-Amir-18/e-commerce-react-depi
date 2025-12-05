@@ -43,6 +43,7 @@ export const AuthProvider = ({ children }) => {
 
       if (response.success) {
         tokenService.setToken(response.token);
+        tokenService.setRefreshToken(response.refreshToken);
         tokenService.setUser(response.user);
         setUser(response.user);
         setIsAuthenticated(true);
@@ -62,6 +63,7 @@ export const AuthProvider = ({ children }) => {
 
       if (response.success) {
         tokenService.setToken(response.token);
+        tokenService.setRefreshToken(response.refreshToken);
         tokenService.setUser(response.user);
         setUser(response.user);
         setIsAuthenticated(true);
@@ -81,6 +83,7 @@ export const AuthProvider = ({ children }) => {
 
       if (response.success) {
         tokenService.setToken(response.token);
+        tokenService.setRefreshToken(response.refreshToken);
         tokenService.setUser(response.user);
         setUser(response.user);
         setIsAuthenticated(true);
@@ -94,10 +97,21 @@ export const AuthProvider = ({ children }) => {
     }
   };
 
-  const logout = () => {
-    tokenService.clear();
-    setUser(null);
-    setIsAuthenticated(false);
+  const logout = async () => {
+    try {
+      const refreshToken = tokenService.getRefreshToken();
+      if (refreshToken) {
+        // Call logout API to invalidate refresh token on server
+        await authAPI.logout(refreshToken);
+      }
+    } catch (error) {
+      console.error('Logout API error:', error);
+      // Continue with local logout even if API call fails
+    } finally {
+      tokenService.clear();
+      setUser(null);
+      setIsAuthenticated(false);
+    }
   };
 
   const updateUser = async (userData) => {
