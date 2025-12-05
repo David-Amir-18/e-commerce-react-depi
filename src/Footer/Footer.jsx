@@ -7,7 +7,7 @@ function Footer() {
     let [bg, setBg] = useState("")
 
   useEffect(() => {
-    let exclusionList = ['/', "/about", '/contact', '/signin', "/forgetpass", '/verify-otp']
+    let exclusionList = ['/', "/about", '/contact', '/signin', "/register", "/forgetpass", '/verify-otp']
     setBg(exclusionList.indexOf(location.pathname) != -1
       ? "bg-black"
       : "");
